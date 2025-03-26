@@ -1,0 +1,4 @@
+1. Funkcja forward:
+odpowiedzialna za możliwe ruchy do wykonania przez gracza
+2. Funkcja cost:
+odpowiedzialna za obliczanie wartości wydajności ruchu 
