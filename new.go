@@ -12,6 +12,11 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
+var windowWidth float64 = 960
+var windowHeight float64 = 540
+var gameWidth float64 = (3200 + windowWidth)
+var gameHeight float64 = (3200 + windowHeight)
+
 type Game struct {
 	player          *entities.Player
 	enemies         []*entities.Enemy
@@ -67,23 +72,21 @@ func (g *Game) Update() error {
 	}
 
 	// Infinite map illusion
-	// To FIX Player not teleporting to 0+16 coordinates
-	if g.player.X >= 640-16 {
-		g.player.X = 0 + 16
+	if g.player.X >= gameWidth-windowWidth {
+		g.player.X = 0 + windowWidth + 1
 	}
-	if g.player.X <= 0+16 {
-		g.player.X = 640 - 16
+	if g.player.X <= 0+windowWidth {
+		g.player.X = gameWidth - windowWidth - 1
 	}
-	if g.player.Y >= 480-16 {
-		g.player.Y = 0 + 16
-		println("Y: ", g.player.Y)
+	if g.player.Y >= gameHeight-windowHeight {
+		g.player.Y = 0 + windowHeight + 1
 	}
-	if g.player.Y <= 0+16 {
-		g.player.Y = 480 - 16
+	if g.player.Y <= 0+windowHeight {
+		g.player.Y = gameHeight - windowHeight - 1
 	}
-	// End of issue
-	g.cam.FollowTarget(g.player.X+16, g.player.Y+16, 320, 240)
-	g.cam.Constrain(640, 480, 320, 240)
+
+	g.cam.FollowTarget(g.player.X+16, g.player.Y+16, windowWidth, windowHeight)
+	g.cam.Constrain(gameWidth, gameHeight, windowWidth, windowHeight)
 
 	return nil
 }
@@ -106,6 +109,8 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	if g.animation_frame < 9 {
 		g.animation_frame += 0.2
 	} else {
+		println("X: ", g.player.X)
+		println("Y: ", g.player.Y)
 		g.animation_frame = 0
 	}
 	opts.GeoM.Reset()
@@ -140,11 +145,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 320, 240
+	return 960, 540
 }
 
 func main() {
-	ebiten.SetWindowSize(640, 480)
+	ebiten.SetWindowSize(1920, 1089)
 	ebiten.SetWindowTitle("ProjectEVA")
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 
@@ -166,8 +171,8 @@ func main() {
 		player: &entities.Player{
 			Sprite: &entities.Sprite{
 				Img: playerImg,
-				X:   100,
-				Y:   100,
+				X:   (gameWidth / 2) + 16,
+				Y:   (gameHeight / 2) + 16,
 			},
 			Speed:      5,
 			Efficiency: 1,
@@ -177,8 +182,8 @@ func main() {
 			{
 				Sprite: &entities.Sprite{
 					Img: enemiesImg,
-					X:   0,
-					Y:   0,
+					X:   windowWidth,
+					Y:   windowHeight,
 				},
 				HP:            0,
 				FollowsPLayer: false,
@@ -186,8 +191,8 @@ func main() {
 			{
 				Sprite: &entities.Sprite{
 					Img: enemiesImg,
-					X:   0,
-					Y:   480 - 64,
+					X:   windowWidth,
+					Y:   gameHeight - windowHeight,
 				},
 				HP:            0,
 				FollowsPLayer: false,
@@ -195,8 +200,8 @@ func main() {
 			{
 				Sprite: &entities.Sprite{
 					Img: enemiesImg,
-					X:   640 - 64,
-					Y:   0,
+					X:   gameWidth - windowWidth,
+					Y:   windowHeight,
 				},
 				HP:            0,
 				FollowsPLayer: false,
@@ -204,8 +209,8 @@ func main() {
 			{
 				Sprite: &entities.Sprite{
 					Img: enemiesImg,
-					X:   640 - 64,
-					Y:   480 - 64,
+					X:   gameWidth - windowWidth,
+					Y:   gameHeight - windowHeight,
 				},
 				HP:            0,
 				FollowsPLayer: false,
