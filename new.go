@@ -13,13 +13,16 @@ import (
 )
 
 type Game struct {
-	player   *entities.Player
-	enemies  []*entities.Enemy
-	vitamins []*entities.Vitamin
-	Cam      *Camera
+	player          *entities.Player
+	enemies         []*entities.Enemy
+	vitamins        []*entities.Vitamin
+	cam             *Camera
+	animation_frame float64
 }
 
 func (g *Game) Update() error {
+
+	// Player movement
 	if ebiten.IsKeyPressed(ebiten.KeyD) {
 		g.player.X += 1 + 2*(math.Log(g.player.Speed))
 
@@ -40,14 +43,14 @@ func (g *Game) Update() error {
 	for _, sprite := range g.enemies {
 
 		if sprite.FollowsPLayer {
-			if sprite.X < g.player.X {
+			if sprite.X+32 < g.player.X+16 {
 				sprite.X += 0.1
-			} else if sprite.X > g.player.X {
+			} else if sprite.X+32 > g.player.X+16 {
 				sprite.X -= 0.1
 			}
-			if sprite.Y < g.player.Y {
+			if sprite.Y+32 < g.player.Y+16 {
 				sprite.Y += 0.1
-			} else if sprite.Y > g.player.Y {
+			} else if sprite.Y+32 > g.player.Y+16 {
 				sprite.Y -= 0.1
 			}
 		}
@@ -63,7 +66,24 @@ func (g *Game) Update() error {
 		}
 	}
 
-	// g.Cam.FollowTarget(g.player.X+16, g.player.Y+16, 320, 240)
+	// Infinite map illusion
+	// To FIX Player not teleporting to 0+16 coordinates
+	if g.player.X >= 640-16 {
+		g.player.X = 0 + 16
+	}
+	if g.player.X <= 0+16 {
+		g.player.X = 640 - 16
+	}
+	if g.player.Y >= 480-16 {
+		g.player.Y = 0 + 16
+		println("Y: ", g.player.Y)
+	}
+	if g.player.Y <= 0+16 {
+		g.player.Y = 480 - 16
+	}
+	// End of issue
+	g.cam.FollowTarget(g.player.X+16, g.player.Y+16, 320, 240)
+	g.cam.Constrain(640, 480, 320, 240)
 
 	return nil
 }
@@ -75,20 +95,24 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	opts := ebiten.DrawImageOptions{}
 
 	opts.GeoM.Translate(g.player.X, g.player.Y)
-	// opts.GeoM.Translate(g.Cam.X, g.Cam.Y)
+	opts.GeoM.Translate(g.cam.X, g.cam.Y)
 
 	screen.DrawImage(
 		g.player.Img.SubImage(
-			image.Rect(0, 0, 32, 32),
+			image.Rect(32*int(g.animation_frame), 0, 32*int(g.animation_frame)+32, 32),
 		).(*ebiten.Image),
 		&opts,
 	)
-
+	if g.animation_frame < 9 {
+		g.animation_frame += 0.2
+	} else {
+		g.animation_frame = 0
+	}
 	opts.GeoM.Reset()
 
 	for _, sprite := range g.enemies {
 		opts.GeoM.Translate(sprite.X, sprite.Y)
-		// opts.GeoM.Translate(g.Cam.X, g.Cam.Y)
+		opts.GeoM.Translate(g.cam.X, g.cam.Y)
 
 		screen.DrawImage(
 			sprite.Img.SubImage(
@@ -102,11 +126,11 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 	for _, sprite := range g.vitamins {
 		opts.GeoM.Translate(sprite.X, sprite.Y)
-		// opts.GeoM.Translate(g.Cam.X, g.Cam.Y)
+		opts.GeoM.Translate(g.cam.X, g.cam.Y)
 
 		screen.DrawImage(
 			sprite.Img.SubImage(
-				image.Rect(0, 0, 32, 32),
+				image.Rect(32*int(g.animation_frame), 0, 32*int(g.animation_frame)+32, 32),
 			).(*ebiten.Image),
 			&opts,
 		)
@@ -145,7 +169,7 @@ func main() {
 				X:   100,
 				Y:   100,
 			},
-			Speed:      1,
+			Speed:      5,
 			Efficiency: 1,
 			HP:         10,
 		},
@@ -155,6 +179,33 @@ func main() {
 					Img: enemiesImg,
 					X:   0,
 					Y:   0,
+				},
+				HP:            0,
+				FollowsPLayer: false,
+			},
+			{
+				Sprite: &entities.Sprite{
+					Img: enemiesImg,
+					X:   0,
+					Y:   480 - 64,
+				},
+				HP:            0,
+				FollowsPLayer: false,
+			},
+			{
+				Sprite: &entities.Sprite{
+					Img: enemiesImg,
+					X:   640 - 64,
+					Y:   0,
+				},
+				HP:            0,
+				FollowsPLayer: false,
+			},
+			{
+				Sprite: &entities.Sprite{
+					Img: enemiesImg,
+					X:   640 - 64,
+					Y:   480 - 64,
 				},
 				HP:            0,
 				FollowsPLayer: false,
@@ -175,7 +226,8 @@ func main() {
 				StopCalory: false,
 			},
 		},
-		// Cam: NewCamera(0.0, 0.0),
+		cam:             NewCamera(0.0, 0.0),
+		animation_frame: 0,
 	}
 
 	if err := ebiten.RunGame(&game); err != nil {
