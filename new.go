@@ -14,13 +14,16 @@ import (
 
 var windowWidth float64 = 960
 var windowHeight float64 = 540
-var gameWidth float64 = (3200 + windowWidth)
-var gameHeight float64 = (3200 + windowHeight)
+var gameWidth float64 = 3200
+var gameHeight float64 = 3200
+var vitaminDuration float64 = 0
 
 type Game struct {
 	player          *entities.Player
 	enemies         []*entities.Enemy
 	vitamins        []*entities.Vitamin
+	tilemapJSON     *TilemapJSON
+	tilemapImg      *ebiten.Image
 	cam             *Camera
 	animation_frame float64
 }
@@ -29,19 +32,19 @@ func (g *Game) Update() error {
 
 	// Player movement
 	if ebiten.IsKeyPressed(ebiten.KeyD) {
-		g.player.X += 1 + 2*(math.Log(g.player.Speed))
+		g.player.X += (0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.TempSpeed
 
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyA) {
-		g.player.X -= 1 + 2*(math.Log(g.player.Speed))
+		g.player.X -= (0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.TempSpeed
 
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyW) {
-		g.player.Y -= 1 + 2*(math.Log(g.player.Speed))
+		g.player.Y -= (0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.TempSpeed
 
 	}
 	if ebiten.IsKeyPressed(ebiten.KeyS) {
-		g.player.Y += 1 + 2*(math.Log(g.player.Speed))
+		g.player.Y += (0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.TempSpeed
 	}
 
 	// enemy behavior
@@ -61,14 +64,27 @@ func (g *Game) Update() error {
 		}
 	}
 
+	// vitamin behavior
 	for _, vitamin := range g.vitamins {
+		// when vitamin picked (probably gonna move to function file in the future)
 		if (g.player.X >= vitamin.X && g.player.X <= vitamin.X+32) && (g.player.Y >= vitamin.Y && g.player.Y <= vitamin.Y+32) {
-			g.player.Speed += vitamin.Speed
-			g.player.Efficiency *= vitamin.Efficiency
 			fmt.Printf("Picked Vitamin")
-			vitamin.X = -32
-			vitamin.Y = -32
+			g.player.TempSpeed, g.player.TempHP, g.player.TempEfficiency = 1, 1, 0
+			g.player.TempSpeed = vitamin.Speed
+			g.player.TempEfficiency = vitamin.Efficiency
+			g.player.TempHP = vitamin.TempHP
+			if vitamin.StopCalory {
+				// Stop calory function
+			}
+			vitaminDuration = vitamin.Duration * 60
 		}
+	}
+	// vitamine countdown
+	if vitaminDuration > 0 {
+		vitaminDuration--
+	} else if vitaminDuration <= 0 {
+		g.player.TempSpeed, g.player.TempHP, g.player.TempEfficiency = 1, 1, 0
+		vitaminDuration = 0
 	}
 
 	// Infinite map illusion
@@ -94,23 +110,43 @@ func (g *Game) Update() error {
 func (g *Game) Draw(screen *ebiten.Image) {
 
 	screen.Fill(color.RGBA{128, 180, 255, 255})
-
 	opts := ebiten.DrawImageOptions{}
 
-	opts.GeoM.Translate(g.player.X, g.player.Y)
-	opts.GeoM.Translate(g.cam.X, g.cam.Y)
+	// loop over layers
+	for _, layer := range g.tilemapJSON.Layers {
+		for index, id := range layer.Data {
+			x := index % layer.Width
+			y := index / layer.Height
 
-	screen.DrawImage(
-		g.player.Img.SubImage(
-			image.Rect(32*int(g.animation_frame), 0, 32*int(g.animation_frame)+32, 32),
-		).(*ebiten.Image),
-		&opts,
-	)
-	if g.animation_frame < 9 {
+			x *= 16
+			y *= 16
+
+			srcX := (id - 1) % 12
+			srcY := (id - 1) / 12
+
+			srcX *= 16
+			srcY *= 16
+
+			opts.GeoM.Translate(float64(x), float64(y))
+			opts.GeoM.Translate(g.cam.X, g.cam.Y)
+
+			screen.DrawImage(
+				g.tilemapImg.SubImage(
+					image.Rect(srcX, srcY, srcX+16, srcY+16)).(*ebiten.Image),
+				&opts,
+			)
+			opts.GeoM.Reset()
+		}
+	}
+
+	if g.animation_frame < 29 {
 		g.animation_frame += 0.2
 	} else {
 		println("X: ", g.player.X)
 		println("Y: ", g.player.Y)
+		println("Speed: ", g.player.Speed)
+		println("Efficiency: ", g.player.Efficiency)
+		println("HP: ", g.player.HP)
 		g.animation_frame = 0
 	}
 	opts.GeoM.Reset()
@@ -135,12 +171,22 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 		screen.DrawImage(
 			sprite.Img.SubImage(
-				image.Rect(32*int(g.animation_frame), 0, 32*int(g.animation_frame)+32, 32),
+				image.Rect(32*int(g.animation_frame), 32*sprite.Type, 32*int(g.animation_frame)+32, 32*sprite.Type+32),
 			).(*ebiten.Image),
 			&opts,
 		)
 		opts.GeoM.Reset()
 	}
+	opts.GeoM.Reset()
+	opts.GeoM.Translate(g.player.X, g.player.Y)
+	opts.GeoM.Translate(g.cam.X, g.cam.Y)
+
+	screen.DrawImage(
+		g.player.Img.SubImage(
+			image.Rect(32*int(g.animation_frame), 0, 32*int(g.animation_frame)+32, 32),
+		).(*ebiten.Image),
+		&opts,
+	)
 	opts.GeoM.Reset()
 }
 
@@ -154,7 +200,7 @@ func main() {
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 
 	// Load Images
-	playerImg, _, err := ebitenutil.NewImageFromFile("assets/images/player.png")
+	playerImg, _, err := ebitenutil.NewImageFromFile("assets/images/enemies.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -166,6 +212,15 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	tilemapImg, _, err := ebitenutil.NewImageFromFile("assets/images/Water+.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	tilemapJSON, err := NewTilemapJSON("assets/maps/EVAmap.json")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	game := Game{
 		player: &entities.Player{
@@ -174,9 +229,12 @@ func main() {
 				X:   (gameWidth / 2) + 16,
 				Y:   (gameHeight / 2) + 16,
 			},
-			Speed:      5,
-			Efficiency: 1,
-			HP:         10,
+			Speed:          5,
+			Efficiency:     1,
+			HP:             10,
+			TempSpeed:      1,
+			TempEfficiency: 1,
+			TempHP:         0,
 		},
 		enemies: []*entities.Enemy{
 			{
@@ -188,49 +246,64 @@ func main() {
 				HP:            0,
 				FollowsPLayer: false,
 			},
-			{
-				Sprite: &entities.Sprite{
-					Img: enemiesImg,
-					X:   windowWidth,
-					Y:   gameHeight - windowHeight,
-				},
-				HP:            0,
-				FollowsPLayer: false,
-			},
-			{
-				Sprite: &entities.Sprite{
-					Img: enemiesImg,
-					X:   gameWidth - windowWidth,
-					Y:   windowHeight,
-				},
-				HP:            0,
-				FollowsPLayer: false,
-			},
-			{
-				Sprite: &entities.Sprite{
-					Img: enemiesImg,
-					X:   gameWidth - windowWidth,
-					Y:   gameHeight - windowHeight,
-				},
-				HP:            0,
-				FollowsPLayer: false,
-			},
 		},
 
 		vitamins: []*entities.Vitamin{
 			{
 				Sprite: &entities.Sprite{
 					Img: vitaminesImg,
-					X:   50,
-					Y:   100,
+					X:   (gameWidth / 2) + 16 + 100,
+					Y:   (gameHeight / 2) + 16 + 100,
 				},
 				Speed:      0.5,
 				Efficiency: 1.5,
 				TempHP:     0,
-				Duration:   1,
+				Duration:   3,
 				StopCalory: false,
+				Type:       0, // blue
+			},
+			{
+				Sprite: &entities.Sprite{
+					Img: vitaminesImg,
+					X:   (gameWidth / 2) + 16 + 100,
+					Y:   (gameHeight / 2) + 16 + 200,
+				},
+				Speed:      1.5,
+				Efficiency: 0.5,
+				TempHP:     0,
+				Duration:   3,
+				StopCalory: false,
+				Type:       1, // red
+			},
+			{
+				Sprite: &entities.Sprite{
+					Img: vitaminesImg,
+					X:   (gameWidth / 2) + 16 + 200,
+					Y:   (gameHeight / 2) + 16 + 100,
+				},
+				Speed:      0,
+				Efficiency: 0,
+				TempHP:     3,
+				Duration:   3,
+				StopCalory: false,
+				Type:       2, // green
+			},
+			{
+				Sprite: &entities.Sprite{
+					Img: vitaminesImg,
+					X:   (gameWidth / 2) + 16 + 200,
+					Y:   (gameHeight / 2) + 16 + 200,
+				},
+				Speed:      1,
+				Efficiency: 0,
+				TempHP:     0,
+				Duration:   3,
+				StopCalory: true,
+				Type:       3, // bronze
 			},
 		},
+		tilemapJSON:     tilemapJSON,
+		tilemapImg:      tilemapImg,
 		cam:             NewCamera(0.0, 0.0),
 		animation_frame: 0,
 	}

@@ -4,5 +4,6 @@ package entities
 
 type Player struct {
 	*Sprite
-	Speed, Efficiency, HP float64
+	Speed, Efficiency, HP             float64
+	TempSpeed, TempEfficiency, TempHP float64
 }
