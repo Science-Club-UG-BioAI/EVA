@@ -1,10 +1,10 @@
 package constants
 
 const (
-	WindowWidth     float64 = 960
-	WindowHeight    float64 = 540
-	GameWidth       float64 = 4800
-	GameHeight      float64 = 4800
-	VitaminDuration float64 = 0
-	Tilesize                = 32
+	WindowWidth  = 960
+	WindowHeight = 540
+	GameWidth    = 4800
+	GameHeight   = 4800
+	Tilesize     = 32
+	FoodLimit    = 100
 )

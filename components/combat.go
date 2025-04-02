@@ -11,6 +11,13 @@ type BasicCombat struct {
 	attackPower float64
 }
 
+func NewBasicCombat(health, attackPower float64) *BasicCombat {
+	return &BasicCombat{
+		health,
+		attackPower,
+	}
+}
+
 func (b *BasicCombat) AttackPower() float64 {
 	return b.attackPower
 }

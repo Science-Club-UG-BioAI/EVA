@@ -3,26 +3,21 @@ package main
 import (
 	"image"
 	"log"
+	"projectEVA/constants"
 	"projectEVA/entities"
 
 	"github.com/hajimehoshi/ebiten/v2"
 )
-
-var windowWidth float64 = 960
-var windowHeight float64 = 540
-var gameWidth float64 = 4800
-var gameHeight float64 = 4800
-var vitaminDuration float64 = 0
 
 func CheckCollisionHorizontal(sprite *entities.Sprite, colliders []image.Rectangle) {
 	for _, collider := range colliders {
 		if collider.Overlaps(image.Rect(
 			int(sprite.X),
 			int(sprite.Y),
-			int(sprite.X)+32,
-			int(sprite.Y)+32)) {
+			int(sprite.X)+constants.Tilesize,
+			int(sprite.Y)+constants.Tilesize)) {
 			if sprite.Dx > 0.0 {
-				sprite.X = float64(collider.Min.X) - 32
+				sprite.X = float64(collider.Min.X) - constants.Tilesize
 			} else if sprite.Dx < 0.0 {
 				sprite.X = float64(collider.Max.X)
 			}
@@ -34,10 +29,10 @@ func CheckCollisionVertical(sprite *entities.Sprite, colliders []image.Rectangle
 		if collider.Overlaps(image.Rect(
 			int(sprite.X),
 			int(sprite.Y),
-			int(sprite.X)+32,
-			int(sprite.Y)+32)) {
+			int(sprite.X)+constants.Tilesize,
+			int(sprite.Y)+constants.Tilesize)) {
 			if sprite.Dy > 0.0 {
-				sprite.Y = float64(collider.Min.Y) - 32
+				sprite.Y = float64(collider.Min.Y) - constants.Tilesize
 			} else if sprite.Dy < 0.0 {
 				sprite.Y = float64(collider.Max.Y)
 			}
