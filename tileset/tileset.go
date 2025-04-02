@@ -1,4 +1,4 @@
-package main
+package tileset
 
 import (
 	"encoding/json"

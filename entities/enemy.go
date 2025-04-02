@@ -7,7 +7,7 @@ import "projectEVA/components"
 type Enemy struct {
 	*Sprite
 	Follows    bool
-	CombatComp *components.BasicCombat
+	CombatComp *components.EnemyCombat
 }
 
 func (e *Enemy) FollowsTarget(target *Sprite) {

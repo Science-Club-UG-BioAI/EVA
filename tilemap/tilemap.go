@@ -1,9 +1,10 @@
-package main
+package tilemap
 
 import (
 	"encoding/json"
 	"os"
 	"path"
+	"projectEVA/tileset"
 )
 
 type TilemapLayerJSON struct {
@@ -18,13 +19,13 @@ type TilemapJSON struct {
 	Tilesets []map[string]any   `json:"tilesets"`
 }
 
-func (t *TilemapJSON) GenTilesets() ([]Tileset, error) {
+func (t *TilemapJSON) GenTilesets() ([]tileset.Tileset, error) {
 
-	tilesets := make([]Tileset, 0)
+	tilesets := make([]tileset.Tileset, 0)
 
 	for _, tilesetData := range t.Tilesets {
 		tilesetPath := path.Join("assets/maps/", tilesetData["source"].(string))
-		tileset, err := NewTileset(tilesetPath, int(tilesetData["firstgid"].(float64)))
+		tileset, err := tileset.NewTileset(tilesetPath, int(tilesetData["firstgid"].(float64)))
 		if err != nil {
 			return nil, err
 		}
