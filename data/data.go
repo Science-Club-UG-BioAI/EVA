@@ -82,6 +82,16 @@ func (cH *Genom) CreateNetwork() {
 	}
 }
 
+func (c *Connection) copy() Connection {
+	return Connection{
+		In_node:  c.In_node,
+		Out_node: c.Out_node,
+		Weight:   c.Weight,
+		Inno:     c.Inno,
+		Enabled:  c.Enabled,
+	}
+}
+
 func (cH *Genom) AddConnection() {
 	rand.Seed(time.Now().UnixNano())
 	n1 := cH.Nodes[rand.Intn(len(cH.Nodes))] //losujemy indeksy dla tablicy Nodes (wyciagamy randomowe neuronoy)
@@ -118,8 +128,73 @@ func (cH *Genom) AddConnection() {
 func (cH *Genom) Exists(nn int) bool {
 	for _, c := cH.Connections {
 		if c.Inno == nn {
-			return True
+			return true
 		}
-	return False
+	return false
 	}
+}
+
+//mutacje
+// mutacja z roznica wag
+func (cH *Genom) Mutate_weight() {
+	rand.Seed(time.Now().UnixNano())
+
+	for i, conn := range cH.Connections { //idziemy po wszystkich połączeniach
+		if rand.Float64() < 0.8 { //80% na małą zmianę, 20% na mega duza zmiane
+			delta := (rand.Float64() * 0.4) - 0.2 //losuje zmiane ktora dodamy do wagi z (-0.2,0.2)
+			conn.Weight += delta                  //dodajemy tą zmianę
+		} else {
+			conn.Weight = (rand.Float64() * 2.0) - 1.0 //przypisuje nowa wage z zakresu (-1.0,1.0)
+		}
+		// aktualizujemy nasza zmiane
+		cH.Connections[i] = conn // wprowadza aktualizację
+	}
+}
+// mutacje z tworzeniem nowych połączeń
+func (g *Genom) AddConnectionMutation() {
+	rand.Seed(time.Now().UnixNano())
+
+	var n1, n2 Node
+	valid := false
+
+	for !valid {
+		n1 = g.Nodes[rand.Intn(len(g.Nodes))]
+		n2 = g.Nodes[rand.Intn(len(g.Nodes))]
+
+		if n1.Layer == g.Output_Layer || n2.Layer == g.Input_Layer || n1.Layer >= n2.Layer {
+			continue
+		}
+
+		exists := false
+		for _, c := range g.Connections {
+			if c.In_node.Number == n1.Number && c.Out_node.Number == n2.Number {
+				exists = true
+				break
+			}
+		}
+
+		if !exists {
+			valid = true
+		}
+	}
+
+	histConn := g.Ch.Exists(&n1, &n2)
+
+	newConn := Connection{
+		In_node:  n1,
+		Out_node: n2,
+		Weight:   rand.Float64()*2.0 - 1.0, // waga [-1, 1]
+		Enabled:  true,
+	}
+
+	if histConn != nil {
+		newConn.Inno = histConn.Inno
+	} else {
+		newConn.Inno = g.Ch.Global_inno
+		g.Ch.Global_inno++
+		g.Ch.AllConnections = append(g.Ch.AllConnections, newConn.copy())
+	}
+
+	g.Connections = append(g.Connections, newConn)
+	n2.InConnections = append(n2.InConnections, newConn)
 }
