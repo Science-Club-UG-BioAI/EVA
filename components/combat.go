@@ -76,4 +76,31 @@ func (e *EnemyCombat) Update() {
 	e.timeSinceAttack += 1
 }
 
+type PlayerCombat struct {
+	*BasicCombat
+	attackCooldown  float64
+	timeSinceAttack float64
+}
+
+func NewPlayerCombat(health, attackPower, attackCooldown float64) *PlayerCombat {
+	return &PlayerCombat{
+		NewBasicCombat(health, attackPower),
+		attackCooldown,
+		0,
+	}
+}
+
+func (p *PlayerCombat) Attack() bool {
+	if p.timeSinceAttack >= p.attackCooldown {
+		p.attacking = true
+		p.timeSinceAttack = 0
+		return true
+	}
+	return false
+}
+
+func (e *PlayerCombat) Update() {
+	e.timeSinceAttack += 1
+}
+
 var _ Combat = (*EnemyCombat)(nil)
