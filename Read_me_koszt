@@ -1,0 +1,8 @@
+1. Funkcja forward:
+odpowiedzialna za możliwe ruchy do wykonania przez gracza i node pokarmu i przeciwnika:
+-8 ruchów 
+-1 nod dla pokarmu(roślina)
+-1 nod dla innych istot pokarm lub drapieżnik
+2. Funkcja cost:
+odpowiedzialna za obliczanie wartości wydajności ruchu 
+
