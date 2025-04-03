@@ -8,10 +8,14 @@ import (
 type PlayerState uint8
 
 const (
-	Down PlayerState = iota
-	Up
-	Left
-	Right
+	W PlayerState = iota
+	WD
+	D
+	DS
+	S
+	SA
+	A
+	AW
 	Idle
 )
 
@@ -23,22 +27,35 @@ type Player struct {
 	SpeedMultiplier      float64
 	EfficiencyMultiplier float64
 	TempHP               float64
+	Diet                 int
 	Animations           map[PlayerState]*animations.Animation
-	CombatComp           *components.BasicCombat
+	CombatComp           *components.PlayerCombat
 }
 
 func (p *Player) ActiveAnimation(dx, dy int) *animations.Animation {
-	if dx > 0 {
-		return p.Animations[Right]
+	if dy < 0 && dx == 0 {
+		return p.Animations[W]
 	}
-	if dx < 0 {
-		return p.Animations[Left]
+	if dx > 0 && dy < 0 {
+		return p.Animations[WD]
 	}
-	if dy > 0 {
-		return p.Animations[Down]
+	if dx > 0 && dy == 0 {
+		return p.Animations[D]
 	}
-	if dy < 0 {
-		return p.Animations[Up]
+	if dx > 0 && dy > 0 {
+		return p.Animations[DS]
+	}
+	if dy > 0 && dx == 0 {
+		return p.Animations[S]
+	}
+	if dy > 0 && dx < 0 {
+		return p.Animations[SA]
+	}
+	if dx < 0 && dy == 0 {
+		return p.Animations[A]
+	}
+	if dx < 0 && dy < 0 {
+		return p.Animations[AW]
 	} else {
 		return p.Animations[Idle]
 	}

@@ -7,4 +7,5 @@ const (
 	GameHeight   = 4800
 	Tilesize     = 32
 	FoodLimit    = 100
+	EnemyVision  = 200
 )
