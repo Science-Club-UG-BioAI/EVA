@@ -198,3 +198,130 @@ func (g *Genom) AddConnectionMutation() {
 	g.Connections = append(g.Connections, newConn)
 	n2.InConnections = append(n2.InConnections, newConn)
 }
+
+// wersja paleozoik (muszę dopracować przesuwanie warstw)
+func (cH *Genom) AddNodeMutation() {
+	if len(cH.Connections) == 0 {
+		fmt.Println("Sieć nie ma żadnych połączeń.")
+		return
+	}
+	rand.Seed(time.Now().UnixNano())
+	// bierzemy istniejące połączenie wraz z nodami
+	conn := &cH.Connections[rand.Intn(len(cH.Connections))]
+	n1 := &conn.In_node
+	n2 := &conn.Out_node
+	conn.Enabled = false // wyłączamy stare połączenie
+
+	// nowe połączenie powstanie pomiędzy n1 i n2, więc trzeba odpowiednio zwiększyć numery
+	// warstw wszystkich nodów należących do warstw za n1
+	for i := range cH.Nodes {
+		if cH.Nodes[i].Layer > n1.Layer {
+			cH.Nodes[i].Layer++
+		}
+	}
+
+	cH.Total_Nodes++ // będziemy dodawać nowy node, więc trzeba to zwiększyć
+
+	// Tworzymy nowy node
+	newNode := Node{ // nasz nowy node
+		Number: cH.Total_Nodes - 1, // bo indeksujemy od zera
+		Layer:  n1.Layer + 1,       // bo znajduje się za n1
+	}
+	cH.Nodes = append(cH.Nodes, newNode) // dodajemy nowy nod do genomu
+
+	// tworzymy połączenie między n1 a nowym nodem
+	newConn1 := Connection{
+		In_node:  *n1,
+		Out_node: newNode,
+		Weight:   rand.Float64()*2.0 - 1.0,
+		Enabled:  true,
+	}
+	// sprawdzamy, czy takie połączenie już istniało
+	histConn1 := cH.Ch.Exists(n1, &newNode)
+	if histConn1 != nil {
+		newConn1.Inno = histConn1.Inno
+	} else {
+		newConn1.Inno = cH.Ch.Global_inno
+		cH.Ch.Global_inno++
+		cH.Ch.AllConnections = append(cH.Ch.AllConnections, newConn1)
+	}
+
+	// tworzymy połączenie nowym nodem a n2
+	newConn2 := Connection{
+		In_node:  newNode,
+		Out_node: *n2,
+		Weight:   rand.Float64()*2.0 - 1.0,
+		Enabled:  true,
+	}
+	// sprawdzamy, czy takie połączenie już istniało
+	histConn2 := cH.Ch.Exists(&newNode, n2)
+	if histConn2 != nil {
+		newConn2.Inno = histConn2.Inno
+	} else {
+		newConn2.Inno = cH.Ch.Global_inno
+		cH.Ch.Global_inno++
+		cH.Ch.AllConnections = append(cH.Ch.AllConnections, newConn2)
+	}
+	// dodajemy nowe połączenia do nodów
+	n2.InConnections = append(n2.InConnections, newConn2)
+	newNode.InConnections = append(newNode.InConnections, newConn1)
+
+	// dodajemy nowe połączenia do genomu
+	cH.Connections = append(cH.Connections, newConn1, newConn2)
+	// warstwy nam się przesunęły, więc ostatnia warstwa zwiększa nam się o 1
+	cH.Output_Layer++
+}
+
+// prawie działa, jedynie muszę dopracować dziedziczenie warstw w nodach
+func crossover(parent1 *Genom, parent1FitScore int,
+	parent2 *Genom, parent2FitScore int) *Genom {
+	// upewnienie się, że parent1 będzie miał większy fitness
+	if parent2FitScore > parent1FitScore {
+		tmp := parent1
+		parent1 = parent2
+		parent2 = tmp
+	}
+	// tworzenie dzieciaka
+	offspring := Genom{}
+	offspring.Creation_Rate = parent1.Creation_Rate
+
+	// dzieciak dziedziczy nody po rodzicu z większym fitnessem
+	for _, node := range parent1.Nodes {
+		offspringNode := Node{
+			Number: node.Number,
+			Layer:  node.Layer,
+		}
+		offspring.Nodes = append(offspring.Nodes, offspringNode)
+	}
+	offspring.Inputs = parent1.Inputs
+	offspring.Outputs = parent1.Outputs
+	offspring.Input_Layer = parent1.Input_Layer
+	offspring.Output_Layer = parent1.Output_Layer
+
+	// dopasowujemy połączenia między nodami za pomocą Inno
+	for _, conn1 := range parent1.Connections {
+		for _, conn2 := range parent2.Connections {
+			if conn1.Inno == conn2.Inno {
+				rand.Seed(time.Now().UnixNano())
+				parentNum := rand.Intn(2) // dzieciak losowo odziedziczy połączenie po
+				if parentNum == 0 {       // którymś z rodziców
+					offspring.Connections = append(offspring.Connections, conn1)
+				} else { // ale warstwy dalej dziedziczy po bardziej fit rodzicu
+					conn2.In_node.Layer = conn1.In_node.Layer
+					conn2.Out_node.Layer = conn1.Out_node.Layer
+					offspring.Connections = append(offspring.Connections, conn2)
+				}
+				// jeśli u mniej fit rodzica nie będzie połączenia z tym samym Inno,
+				// połączenie jest dziedziczone po bardziej fit rodzicu
+			} else {
+				offspring.Connections = append(offspring.Connections, conn1)
+			}
+		}
+	}
+	// dodawanie połączeń do nodów dzieciaka
+	for _, conn := range offspring.Connections {
+		conn.Out_node.InConnections = append(conn.Out_node.InConnections, conn)
+	}
+	return &offspring
+}
+
