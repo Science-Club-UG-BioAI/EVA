@@ -30,6 +30,7 @@ type GameScene struct {
 	player             *entities.Player
 	playerSpriteSheet  *spritesheet.SpriteSheet
 	enemies            []*entities.Enemy
+	enemySpriteSheet   *spritesheet.SpriteSheet
 	vitamins           []*entities.Vitamin
 	vitaminSpriteSheet *spritesheet.SpriteSheet
 	vitaminDuration    float64
@@ -48,6 +49,7 @@ func NewGameScene() *GameScene {
 		player:             nil,
 		playerSpriteSheet:  nil,
 		enemies:            make([]*entities.Enemy, 0),
+		enemySpriteSheet:   nil,
 		vitamins:           make([]*entities.Vitamin, 0),
 		vitaminSpriteSheet: nil,
 		vitaminDuration:    0,
@@ -93,55 +95,46 @@ func (g *GameScene) Draw(screen *ebiten.Image) {
 			opts.GeoM.Reset()
 		}
 	}
-	opts.GeoM.Reset()
-	opts.GeoM.Translate(g.player.X, g.player.Y)
-	opts.GeoM.Translate(g.cam.X, g.cam.Y)
-
-	playerFrame := 0
-	activeAnim := g.player.ActiveAnimation(int(g.player.Dx), int(g.player.Dy))
-	if activeAnim != nil {
-		playerFrame = activeAnim.Frame()
-	}
-
-	screen.DrawImage(
-		g.player.Img.SubImage(
-			g.playerSpriteSheet.Rect(playerFrame),
-		).(*ebiten.Image),
-		&opts,
-	)
-	opts.GeoM.Reset()
 
 	for _, sprite := range g.enemies {
+		opts.GeoM.Reset()
 		if sprite.Type != 2 {
-			opts.GeoM.Scale(0.8, 0.8)
+			opts.GeoM.Scale(sprite.Size, sprite.Size)
 		}
 		opts.GeoM.Translate(sprite.X, sprite.Y)
 		opts.GeoM.Translate(g.cam.X, g.cam.Y)
 
+		enemyFrame := 0
+		activeAnim := sprite.ActiveAnimation(sprite.Type)
+		if activeAnim != nil {
+			enemyFrame = activeAnim.Frame()
+		}
 		screen.DrawImage(
 			sprite.Img.SubImage(
-				image.Rect(constants.Tilesize*sprite.Type, constants.Tilesize*sprite.Type, constants.Tilesize*sprite.Type+constants.Tilesize, constants.Tilesize*sprite.Type+constants.Tilesize),
+				g.enemySpriteSheet.Rect(enemyFrame),
 			).(*ebiten.Image),
 			&opts,
 		)
-		opts.GeoM.Reset()
 		ebitenutil.DebugPrintAt(screen,
 			fmt.Sprintf("EnemyHP:  %v", sprite.CombatComp.Health()), int(sprite.X)+int(g.cam.X), int(sprite.Y)+int(g.cam.Y))
+		opts.GeoM.Reset()
 	}
 	opts.GeoM.Reset()
 
 	for _, sprite := range g.vitamins {
+		opts.GeoM.Reset()
+		opts.GeoM.Scale(sprite.Size, sprite.Size)
 		opts.GeoM.Translate(sprite.X, sprite.Y)
 		opts.GeoM.Translate(g.cam.X, g.cam.Y)
 
 		vitaminFrame := 0
-		activeAnim := sprite.ActiveAnimation(int(sprite.Dx), int(sprite.Dy))
+		activeAnim := sprite.ActiveAnimation(sprite.Type)
 		if activeAnim != nil {
 			vitaminFrame = activeAnim.Frame()
 		}
 		screen.DrawImage(
 			sprite.Img.SubImage(
-				g.vitaminSpriteSheet.Rect(vitaminFrame*sprite.Type),
+				g.vitaminSpriteSheet.Rect(vitaminFrame),
 			).(*ebiten.Image),
 			&opts,
 		)
@@ -161,9 +154,26 @@ func (g *GameScene) Draw(screen *ebiten.Image) {
 			true,
 		)
 	}
+	opts.GeoM.Reset()
+	opts.GeoM.Translate(g.player.X, g.player.Y)
+	opts.GeoM.Translate(g.cam.X, g.cam.Y)
+
+	playerFrame := 0
+	activeAnim := g.player.ActiveAnimation(int(g.player.Dx), int(g.player.Dy))
+	if activeAnim != nil {
+		playerFrame = activeAnim.Frame()
+	}
+
+	screen.DrawImage(
+		g.player.Img.SubImage(
+			g.playerSpriteSheet.Rect(playerFrame),
+		).(*ebiten.Image),
+		&opts,
+	)
+	opts.GeoM.Reset()
 	ebitenutil.DebugPrint(screen,
-		fmt.Sprintf("Player Properties: \n Position(%0.1f, %0.1f)\n Calories: %0.0f/1000\n Speed: %0.1f\n Efficiency: %0.1f\n HP: %0.1f\n SpeedMultiplier: %0.1f\n EfficiencyMultiplier: %0.1f\n TempHP: %0.1f\n Vitamin Duration: %0.1f",
-			g.player.X, g.player.Y, g.player.Calories, g.player.Speed, g.player.Efficiency, g.player.CombatComp.Health(), g.player.SpeedMultiplier, g.player.EfficiencyMultiplier, g.player.TempHP, g.vitaminDuration))
+		fmt.Sprintf("Player Properties: \n Position(%0.1f, %0.1f)\n Calories: %0.0f/1000\n Diet: %v\n Speed: %0.1f\n Efficiency: %0.1f\n HP: %0.1f\n SpeedMultiplier: %0.1f\n EfficiencyMultiplier: %0.1f\n TempHP: %0.1f\n Vitamin Duration: %0.1f",
+			g.player.X, g.player.Y, g.player.Calories, g.player.Diet, g.player.Speed, g.player.Efficiency, g.player.CombatComp.Health(), g.player.SpeedMultiplier, g.player.EfficiencyMultiplier, g.player.TempHP, g.vitaminDuration))
 	ebitenutil.DebugPrintAt(screen,
 		fmt.Sprintf("Game State: \n Game Pause: %v\n Game Over: %v", g.gamePause, g.gameOver), 0, 300)
 	if g.gameOver {
@@ -201,13 +211,15 @@ func (g *GameScene) FirstLoad() {
 	}
 	// Load sptitesheets
 	playerSpriteSheet := spritesheet.NewSpriteSheet(30, 1, constants.Tilesize)
-	vitaminSpriteSheet := spritesheet.NewSpriteSheet(30, 3, constants.Tilesize)
+	vitaminSpriteSheet := spritesheet.NewSpriteSheet(30, 1, constants.Tilesize)
+	enemySpriteSheet := spritesheet.NewSpriteSheet(30, 1, constants.Tilesize)
 
 	g.player = &entities.Player{
 		Sprite: &entities.Sprite{
-			Img: playerImg,
-			X:   (constants.GameWidth / 2) + 16,
-			Y:   (constants.GameHeight / 2) + 16,
+			Img:  playerImg,
+			X:    (constants.GameWidth / 2) + 16,
+			Y:    (constants.GameHeight / 2) + 16,
+			Size: 1,
 		},
 		Calories:             500.00,
 		Speed:                5,
@@ -215,6 +227,7 @@ func (g *GameScene) FirstLoad() {
 		SpeedMultiplier:      1,
 		EfficiencyMultiplier: 1,
 		TempHP:               0,
+		Size:                 1,
 		Animations: map[entities.PlayerState]*animations.Animation{
 			// entities.W:    animations.NewAnimation(0, 29, 1, 5.0),
 			// entities.WD:   animations.NewAnimation(30, 59, 1, 5.0),
@@ -236,30 +249,44 @@ func (g *GameScene) FirstLoad() {
 			entities.Idle: animations.NewAnimation(240, 240, 1, 5.0),
 		},
 		CombatComp: components.NewPlayerCombat(3, 1, 1000),
+		Diet:       0,
 	}
 	g.playerSpriteSheet = playerSpriteSheet
 
 	g.enemies = []*entities.Enemy{
 		{
 			Sprite: &entities.Sprite{
-				Img: enemiesImg,
-				X:   (constants.GameWidth / 2) - 500,
-				Y:   (constants.GameHeight / 2) - 500,
+				Img:  enemiesImg,
+				X:    (constants.GameWidth / 2) - 500,
+				Y:    (constants.GameHeight / 2) - 500,
+				Size: 1,
+			},
+			Animations: map[entities.EnemyState]*animations.Animation{
+				entities.Meat:      animations.NewAnimation(0, 29, 1, 5.0),
+				entities.Plant:     animations.NewAnimation(30, 59, 1, 5.0),
+				entities.Agressive: animations.NewAnimation(60, 89, 1, 5.0),
 			},
 			Follows:    true,
 			CombatComp: components.NewEnemyCombat(10, 1, 1000),
 			Type:       2,
-			Size:       1,
 		},
 	}
-
+	g.enemySpriteSheet = enemySpriteSheet
 	g.vitamins = []*entities.Vitamin{
 		{
 			Sprite: &entities.Sprite{
-				Img: vitaminesImg,
-				X:   (constants.GameWidth / 2) + 16 + 100,
-				Y:   (constants.GameHeight / 2) + 16 + 200,
+				Img:  vitaminesImg,
+				X:    (constants.GameWidth / 2) + 16 + 100,
+				Y:    (constants.GameHeight / 2) + 16 + 100,
+				Size: constants.VitaminSize,
 			},
+			Animations: map[entities.VitaminState]*animations.Animation{
+				entities.Blue:   animations.NewAnimation(0, 29, 1, 5.0),
+				entities.Red:    animations.NewAnimation(30, 59, 1, 5.0),
+				entities.Green:  animations.NewAnimation(60, 89, 1, 5.0),
+				entities.Bronze: animations.NewAnimation(90, 119, 1, 5.0),
+			},
+			CombatComp: components.NewEnemyCombat(1, 0, 0),
 			Speed:      0.5,
 			Efficiency: 0.5,
 			TempHP:     0,
@@ -269,10 +296,18 @@ func (g *GameScene) FirstLoad() {
 		},
 		{
 			Sprite: &entities.Sprite{
-				Img: vitaminesImg,
-				X:   (constants.GameWidth / 2) + 16 + 100,
-				Y:   (constants.GameHeight / 2) + 16 + 200,
+				Img:  vitaminesImg,
+				X:    (constants.GameWidth / 2) + 16 + 100,
+				Y:    (constants.GameHeight / 2) + 16 + 200,
+				Size: constants.VitaminSize,
 			},
+			Animations: map[entities.VitaminState]*animations.Animation{
+				entities.Blue:   animations.NewAnimation(0, 29, 1, 5.0),
+				entities.Red:    animations.NewAnimation(30, 59, 1, 5.0),
+				entities.Green:  animations.NewAnimation(60, 89, 1, 5.0),
+				entities.Bronze: animations.NewAnimation(90, 119, 1, 5.0),
+			},
+			CombatComp: components.NewEnemyCombat(1, 0, 0),
 			Speed:      1.5,
 			Efficiency: 1.5,
 			TempHP:     0,
@@ -282,10 +317,18 @@ func (g *GameScene) FirstLoad() {
 		},
 		{
 			Sprite: &entities.Sprite{
-				Img: vitaminesImg,
-				X:   (constants.GameWidth / 2) + 16 + 200,
-				Y:   (constants.GameHeight / 2) + 16 + 100,
+				Img:  vitaminesImg,
+				X:    (constants.GameWidth / 2) + 16 + 200,
+				Y:    (constants.GameHeight / 2) + 16 + 100,
+				Size: constants.VitaminSize,
 			},
+			Animations: map[entities.VitaminState]*animations.Animation{
+				entities.Blue:   animations.NewAnimation(0, 29, 1, 5.0),
+				entities.Red:    animations.NewAnimation(30, 59, 1, 5.0),
+				entities.Green:  animations.NewAnimation(60, 89, 1, 5.0),
+				entities.Bronze: animations.NewAnimation(90, 119, 1, 5.0),
+			},
+			CombatComp: components.NewEnemyCombat(1, 0, 0),
 			Speed:      1,
 			Efficiency: 1,
 			TempHP:     3,
@@ -295,10 +338,18 @@ func (g *GameScene) FirstLoad() {
 		},
 		{
 			Sprite: &entities.Sprite{
-				Img: vitaminesImg,
-				X:   (constants.GameWidth / 2) + 16 + 200,
-				Y:   (constants.GameHeight / 2) + 16 + 200,
+				Img:  vitaminesImg,
+				X:    (constants.GameWidth / 2) + 16 + 200,
+				Y:    (constants.GameHeight / 2) + 16 + 200,
+				Size: constants.VitaminSize,
 			},
+			Animations: map[entities.VitaminState]*animations.Animation{
+				entities.Blue:   animations.NewAnimation(0, 29, 1, 5.0),
+				entities.Red:    animations.NewAnimation(30, 59, 1, 5.0),
+				entities.Green:  animations.NewAnimation(60, 89, 1, 5.0),
+				entities.Bronze: animations.NewAnimation(90, 119, 1, 5.0),
+			},
+			CombatComp: components.NewEnemyCombat(1, 0, 0),
 			Speed:      1,
 			Efficiency: 1,
 			TempHP:     0,
@@ -337,7 +388,7 @@ func (g *GameScene) Update() SceneId {
 	if !g.gamePause && !g.gameOver {
 		// Calories
 		if g.caloryCount {
-			g.player.Calories -= 0.1
+			g.player.Calories -= 0.1 * g.player.Efficiency * g.player.EfficiencyMultiplier
 		}
 		// Player movement
 		g.player.Dx = 0.0
@@ -383,71 +434,80 @@ func (g *GameScene) Update() SceneId {
 			activeAnim.Update()
 		}
 
-		// enemy behavior
-		for _, sprite := range g.enemies {
-
-			sprite.Dx = 0.0
-			sprite.Dy = 0.0
-
-			if sprite.Follows {
-				sprite.FollowsTarget(g.player.Sprite)
-			}
-
-			sprite.X += sprite.Dx
-			CheckCollisionHorizontal(sprite.Sprite, g.colliders)
-
-			sprite.Y += sprite.Dy
-			CheckCollisionVertical(sprite.Sprite, g.colliders)
-		}
-		// Manage atatcks
-		clicked := inpututil.IsMouseButtonJustPressed(ebiten.MouseButton0)
-		cX, cY := ebiten.CursorPosition()
-		cX -= int(g.cam.X)
-		cY -= int(g.cam.Y)
-		g.player.CombatComp.Update()
+		// clicked := inpututil.IsMouseButtonJustPressed(ebiten.MouseButton0)
+		// cX, cY := ebiten.CursorPosition()
+		// cX -= int(g.cam.X)
+		// cY -= int(g.cam.Y)
+		// g.player.CombatComp.Update()
 		pRect := image.Rect(
 			int(g.player.X),
 			int(g.player.Y),
-			int(g.player.X)+constants.Tilesize,
-			int(g.player.Y)+constants.Tilesize,
+			int(g.player.X+(constants.Tilesize*g.player.Size)),
+			int(g.player.Y+(constants.Tilesize*g.player.Size)),
 		)
 
 		deadEnemies := make(map[int]struct{})
 		for index, enemy := range g.enemies {
+			activeAnim := enemy.ActiveAnimation(enemy.Type)
+			if activeAnim != nil {
+				activeAnim.Update()
+			}
+			enemy.Dx = 0.0
+			enemy.Dy = 0.0
+
+			if enemy.Follows {
+				enemy.FollowsTarget(g.player.Sprite)
+			}
 			enemy.CombatComp.Update()
 			g.player.CombatComp.Update()
 			rect := image.Rect(
 				int(enemy.X),
 				int(enemy.Y),
 				int(enemy.X+(constants.Tilesize*enemy.Size)),
-				int(enemy.Y)+constants.Tilesize,
+				int(enemy.Y+(constants.Tilesize*enemy.Size)),
 			)
+			enemy.X += enemy.Dx
+			CheckCollisionHorizontal(enemy.Sprite, g.colliders)
+			CheckCollisionHorizontal(enemy.Sprite, []image.Rectangle{pRect})
+			enemy.Y += enemy.Dy
+			CheckCollisionVertical(enemy.Sprite, g.colliders)
+			CheckCollisionVertical(enemy.Sprite, []image.Rectangle{pRect})
 
 			if rect.Overlaps(pRect) {
+
+				// enemy attack player
 				if enemy.CombatComp.Attack() {
-					g.player.CombatComp.Damage(enemy.CombatComp.AttackPower())
+					g.player.CombatComp.Damage(enemy.CombatComp.AttackPower(), g.player.TempHP)
 					if g.player.CombatComp.Health() <= 0 {
 						g.gameOver = true
 						// Game over screen here
 					}
 				}
-				if g.player.CombatComp.Attack() {
-					enemy.CombatComp.Damage(g.player.CombatComp.AttackPower())
-					if enemy.CombatComp.Health() <= 0 {
-						g.player.Calories += 50
-						deadEnemies[index] = struct{}{}
+				// player attack enemy
+				if g.player.Diet == enemy.Type || enemy.Type == 2 {
+					if g.player.CombatComp.Attack() {
+						enemy.CombatComp.Damage(g.player.CombatComp.AttackPower())
+						if enemy.CombatComp.Health() <= 0 {
+							if enemy.Type == 2 {
+								g.player.Calories += 200
+							} else {
+								g.player.Calories += 50
+							}
+							deadEnemies[index] = struct{}{}
+						}
 					}
 				}
+
 			}
 			// if g.player.X > float64(rect.Min.X) && g.player.X < float64(rect.Max.X) && g.player.Y > float64(rect.Min.Y) && g.player.Y < float64(rect.Max.Y) {
-			if cX > rect.Min.X && cX < rect.Max.X && cY > rect.Min.Y && cY < rect.Max.Y {
-				if clicked {
-					enemy.CombatComp.Damage(g.player.CombatComp.AttackPower())
-				}
-				if enemy.CombatComp.Health() <= 0 {
-					deadEnemies[index] = struct{}{}
-				}
-			}
+			// if cX > rect.Min.X && cX < rect.Max.X && cY > rect.Min.Y && cY < rect.Max.Y {
+			// 	if clicked {
+			// 		enemy.CombatComp.Damage(g.player.CombatComp.AttackPower())
+			// 	}
+			// 	if enemy.CombatComp.Health() <= 0 {
+			// 		deadEnemies[index] = struct{}{}
+			// 	}
+			// }
 		}
 		if len(deadEnemies) > 0 {
 			newEnemies := make([]*entities.Enemy, 0)
@@ -460,20 +520,44 @@ func (g *GameScene) Update() SceneId {
 		}
 
 		// vitamin behavior
-		for _, vitamin := range g.vitamins {
-			// when vitamin picked (probably gonna move to function file in the future)
-			// temp 'colision'
-			if (g.player.X >= vitamin.X && g.player.X <= vitamin.X+constants.Tilesize) && (g.player.Y >= vitamin.Y && g.player.Y <= vitamin.Y+constants.Tilesize) {
-				fmt.Printf("Picked Vitamin")
-				g.player.SpeedMultiplier, g.player.TempHP, g.player.EfficiencyMultiplier = 1, 1, 0
-				g.player.SpeedMultiplier = vitamin.Speed
-				g.player.EfficiencyMultiplier = vitamin.Efficiency
-				g.player.TempHP = vitamin.TempHP
-				if vitamin.StopCalory {
-					g.caloryCount = false
+		deadVitamins := make(map[int]struct{})
+		for index, vitamin := range g.vitamins {
+			vitamin.CombatComp.Update()
+			g.player.CombatComp.Update()
+			rect := image.Rect(
+				int(vitamin.X),
+				int(vitamin.Y),
+				int(vitamin.X+(constants.Tilesize*vitamin.Size)),
+				int(vitamin.Y+(constants.Tilesize*vitamin.Size)),
+			)
+
+			if rect.Overlaps(pRect) {
+				if g.player.CombatComp.Attack() {
+					vitamin.CombatComp.Damage(1)
+					deadVitamins[index] = struct{}{}
+					g.player.SpeedMultiplier, g.player.TempHP, g.player.EfficiencyMultiplier = 1, 1, 0
+					g.player.SpeedMultiplier = vitamin.Speed
+					g.player.EfficiencyMultiplier = vitamin.Efficiency
+					g.player.TempHP = vitamin.TempHP
+					if vitamin.StopCalory {
+						g.caloryCount = false
+					}
+					g.vitaminDuration = vitamin.Duration * 60
 				}
-				g.vitaminDuration = vitamin.Duration * 60
 			}
+			activeAnim := vitamin.ActiveAnimation(vitamin.Type)
+			if activeAnim != nil {
+				activeAnim.Update()
+			}
+		}
+		if len(deadVitamins) > 0 {
+			newVitamins := make([]*entities.Vitamin, 0)
+			for index, vitamin := range g.vitamins {
+				if _, exists := deadVitamins[index]; !exists {
+					newVitamins = append(newVitamins, vitamin)
+				}
+			}
+			g.vitamins = newVitamins
 		}
 		// vitamine countdown
 		if g.vitaminDuration > 0 {
@@ -520,28 +604,95 @@ func (g *GameScene) Update() SceneId {
 		if len(g.enemies) < constants.FoodLimit {
 			chanceForFood := rand.IntN(2)
 			if chanceForFood%2 == 0 {
-				EnemiesImg, _, err := ebitenutil.NewImageFromFile("assets/images/enemies.png")
+				enemiesImg, _, err := ebitenutil.NewImageFromFile("assets/images/enemies.png")
 				if err != nil {
 					log.Fatal(err)
 				}
 				newFood := &entities.Enemy{Sprite: &entities.Sprite{
-					Img: EnemiesImg,
-					X:   float64(randRange(0+constants.WindowWidth, constants.GameWidth-constants.WindowWidth)),
-					Y:   float64(randRange(0+constants.WindowHeight, constants.GameHeight-constants.WindowHeight)),
+					Img:  enemiesImg,
+					X:    float64(randRange(0+constants.WindowWidth, constants.GameWidth-constants.WindowWidth)),
+					Y:    float64(randRange(0+constants.WindowHeight, constants.GameHeight-constants.WindowHeight)),
+					Size: constants.FoodSize,
 				},
+					Animations: map[entities.EnemyState]*animations.Animation{
+						entities.Meat:      animations.NewAnimation(0, 29, 1, 5.0),
+						entities.Plant:     animations.NewAnimation(30, 59, 1, 5.0),
+						entities.Agressive: animations.NewAnimation(60, 89, 1, 5.0),
+					},
 					Follows:    false,
 					CombatComp: components.NewEnemyCombat(1, 0, 30),
 					Type:       rand.IntN(2),
-					Size:       0.8,
 				}
 				g.enemies = append(g.enemies, newFood)
-				// rect := image.Rect(
-				// 	int(newFood.X),
-				// 	int(newFood.Y),
-				// 	int(newFood.X+(constants.Tilesize*0.8)),
-				// 	int(newFood.Y+(constants.Tilesize*0.8)),
-				// )
-				// g.colliders = append(g.colliders, rect)
+			}
+		}
+
+		// Vitamin spawning
+		if len(g.vitamins) < constants.VitaminLimit {
+			chanceForFood := rand.IntN(2)
+			if chanceForFood%2 == 0 {
+				vitaminesImg, _, err := ebitenutil.NewImageFromFile("assets/images/vitamines.png")
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				Vspeed := 0.5
+				Vefficiency := 0.5
+				VtempHP := 0
+				Vduration := 3
+				VstopCalory := false
+				VTypeSpawn := rand.IntN(3)
+
+				if VTypeSpawn == 0 {
+					Vspeed = 0.5
+					Vefficiency = 0.5
+					VtempHP = 0
+					Vduration = 3
+					VstopCalory = false
+				}
+				if VTypeSpawn == 1 {
+					Vspeed = 1.5
+					Vefficiency = 1.5
+					VtempHP = 0
+					Vduration = 3
+					VstopCalory = false
+				}
+				if VTypeSpawn == 2 {
+					Vspeed = 1
+					Vefficiency = 1
+					VtempHP = 10
+					Vduration = 3
+					VstopCalory = false
+				}
+				if VTypeSpawn == 3 {
+					Vspeed = 1
+					Vefficiency = 1
+					VtempHP = 0
+					Vduration = 3
+					VstopCalory = true
+				}
+				newVitamin := &entities.Vitamin{
+					Sprite: &entities.Sprite{
+						Img:  vitaminesImg,
+						X:    float64(randRange(0+constants.WindowWidth, constants.GameWidth-constants.WindowWidth)),
+						Y:    float64(randRange(0+constants.WindowHeight, constants.GameHeight-constants.WindowHeight)),
+						Size: constants.VitaminSize,
+					},
+					Animations: map[entities.VitaminState]*animations.Animation{
+						entities.Blue:   animations.NewAnimation(0, 29, 1, 5.0),
+						entities.Red:    animations.NewAnimation(30, 59, 1, 5.0),
+						entities.Green:  animations.NewAnimation(60, 89, 1, 5.0),
+						entities.Bronze: animations.NewAnimation(90, 119, 1, 5.0),
+					},
+					CombatComp: components.NewEnemyCombat(1, 0, 0),
+					Speed:      Vspeed,
+					Efficiency: Vefficiency,
+					TempHP:     float64(VtempHP),
+					Duration:   float64(Vduration),
+					StopCalory: VstopCalory,
+					Type:       VTypeSpawn,
+				}
+				g.vitamins = append(g.vitamins, newVitamin)
 			}
 		}
 	}

@@ -9,13 +9,20 @@ import (
 
 // import "github.com/hajimehoshi/ebiten/v2"
 
+type EnemyState uint8
+
+const (
+	Meat EnemyState = iota
+	Plant
+	Agressive
+)
+
 type Enemy struct {
 	*Sprite
 	Follows    bool
 	CombatComp *components.EnemyCombat
-	Animations map[PlayerState]*animations.Animation
+	Animations map[EnemyState]*animations.Animation
 	Type       int
-	Size       float64
 }
 
 var directions = [2]int{-1, 1}
@@ -40,5 +47,15 @@ func (e *Enemy) FollowsTarget(target *Sprite) {
 			e.Sprite.Dx = directionX
 			e.Sprite.Dy = directionY
 		}
+	}
+}
+func (e *Enemy) ActiveAnimation(eType int) *animations.Animation {
+	if eType == 0 {
+		return e.Animations[Meat]
+	}
+	if eType == 1 {
+		return e.Animations[Plant]
+	} else {
+		return e.Animations[Agressive]
 	}
 }

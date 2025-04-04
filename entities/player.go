@@ -30,6 +30,7 @@ type Player struct {
 	Diet                 int
 	Animations           map[PlayerState]*animations.Animation
 	CombatComp           *components.PlayerCombat
+	Size                 float64
 }
 
 func (p *Player) ActiveAnimation(dx, dy int) *animations.Animation {

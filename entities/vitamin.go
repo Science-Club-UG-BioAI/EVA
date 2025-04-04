@@ -1,13 +1,19 @@
 package entities
 
-import "projectEVA/animations"
+import (
+	"projectEVA/animations"
+	"projectEVA/components"
+)
 
 // import "github.com/hajimehoshi/ebiten/v2"
 
 type VitaminState uint8
 
 const (
-	VitaminIdle VitaminState = iota
+	Blue VitaminState = iota
+	Red
+	Green
+	Bronze
 )
 
 type Vitamin struct {
@@ -15,9 +21,23 @@ type Vitamin struct {
 	Speed, Efficiency, TempHP, Duration float64
 	StopCalory                          bool
 	Type                                int
-	Animations                          map[PlayerState]*animations.Animation
+	CombatComp                          *components.EnemyCombat
+	Animations                          map[VitaminState]*animations.Animation
 }
 
-func (v *Vitamin) ActiveAnimation(dx, dy int) *animations.Animation {
-	return v.Animations[PlayerState(VitaminIdle)]
+func (v *Vitamin) ActiveAnimation(vtype int) *animations.Animation {
+	if vtype == 0 {
+		return v.Animations[Blue]
+	}
+	if vtype == 1 {
+		return v.Animations[Red]
+	}
+	if vtype == 2 {
+		return v.Animations[Green]
+	}
+	if vtype == 3 {
+		return v.Animations[Bronze]
+	} else {
+		return nil
+	}
 }
