@@ -17,6 +17,7 @@ type DietSelectionScene struct {
 	omnivoreButtonRect   Rect
 	herbivoreButtonRect  Rect
 	selectedDiet         string
+	startButtonRect      Rect
 }
 
 func NewDietSelectionScene() *DietSelectionScene {
@@ -24,6 +25,7 @@ func NewDietSelectionScene() *DietSelectionScene {
 		carnivoreButtonRect: Rect{X: 100, Y: 150, Width: 200, Height: 50},
 		omnivoreButtonRect:  Rect{X: 100, Y: 220, Width: 200, Height: 50},
 		herbivoreButtonRect: Rect{X: 100, Y: 290, Width: 200, Height: 50},
+		startButtonRect:     Rect{X: 380, Y: 400, Width: 200, Height: 50},
 	}
 }
 
@@ -57,6 +59,17 @@ func (s *DietSelectionScene) Update() SceneId {
 		}
 	}
 
+	// Handle "START" button click
+	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
+		cursorX, cursorY := ebiten.CursorPosition()
+		if cursorX >= s.startButtonRect.X && cursorX <= s.startButtonRect.X+s.startButtonRect.Width &&
+			cursorY >= s.startButtonRect.Y && cursorY <= s.startButtonRect.Y+s.startButtonRect.Height {
+			if s.selectedDiet != "" {
+				return GameSceneId // Transition to the game scene
+			}
+		}
+	}
+
 	// if needed this id can be updated to transition to another scene 
 	return DietSelectionSceneId
 }
@@ -71,6 +84,10 @@ func (s *DietSelectionScene) Draw(screen *ebiten.Image) {
 	s.drawButton(screen, s.carnivoreButtonRect, "Carnivore", color.RGBA{R: 249, G: 209, B: 66, A: 100}, "assets/images/meat.png")
 	s.drawButton(screen, s.omnivoreButtonRect, "Omnivore", color.RGBA{R: 249, G: 209, B: 66, A: 100}, "assets/images/all-foods.png")
 	s.drawButton(screen, s.herbivoreButtonRect, "Herbivore", color.RGBA{R: 249, G: 209, B: 66, A: 100}, "assets/images/plant.png")
+
+	// Draw "START" button
+	buttonColor := color.RGBA{R: 66, G: 135, B: 245, A: 255}
+	s.drawButton(screen, s.startButtonRect, "START", buttonColor, "")
 
 	// Display selected diet
 	if s.selectedDiet != "" {

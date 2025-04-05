@@ -16,6 +16,7 @@ func NewGame() *Game {
 	sceneMap := map[scenes.SceneId]scenes.Scene{
 		scenes.StartSceneId:        scenes.NewStartScene(),
 		scenes.DietSelectionSceneId: scenes.NewDietSelectionScene(),
+		scenes.GameSceneId:         scenes.NewGameScene(), // Add GameScene
 	}
 	activeSceneId := scenes.StartSceneId // Set starting scene
 	sceneMap[activeSceneId].FirstLoad()
@@ -33,16 +34,13 @@ func (g *Game) Update() error {
 		return ebiten.Termination
 	}
 	if nextSceneId != g.activeSceneId {
-		nextSene := g.sceneMap[nextSceneId]
-		// if not loaded then load in
-		if !nextSene.IsLoaded() {
-			nextSene.FirstLoad()
-		}
-		nextSene.OnEnter()
 		g.sceneMap[g.activeSceneId].OnExit()
-
+		g.activeSceneId = nextSceneId
+		if !g.sceneMap[g.activeSceneId].IsLoaded() {
+			g.sceneMap[g.activeSceneId].FirstLoad()
+		}
+		g.sceneMap[g.activeSceneId].OnEnter()
 	}
-	g.activeSceneId = nextSceneId
 	return nil
 }
 
