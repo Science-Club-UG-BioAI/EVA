@@ -3,6 +3,7 @@ module projectEVA
 go 1.24.1
 
 require (
+	github.com/gbatagian/deepsort v0.1.4
 	github.com/hajimehoshi/ebiten/v2 v2.8.6
 	golang.org/x/image v0.20.0
 )
@@ -14,5 +15,4 @@ require (
 	github.com/jezek/xgb v1.1.1 // indirect
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.25.0 // indirect
-	golang.org/x/text v0.18.0 // indirect
 )

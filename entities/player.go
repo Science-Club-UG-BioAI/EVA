@@ -31,6 +31,8 @@ type Player struct {
 	Animations           map[PlayerState]*animations.Animation
 	CombatComp           *components.PlayerCombat
 	Size                 float64
+	Dmg                  float64
+	MaxHealth            float64
 }
 
 func (p *Player) ActiveAnimation(dx, dy int) *animations.Animation {

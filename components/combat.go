@@ -103,12 +103,12 @@ func (p *PlayerCombat) Update() {
 	p.timeSinceAttack += 1
 }
 
-func (p *PlayerCombat) Damage(amount, tempHP float64) {
-	blockedDMG := tempHP - amount
-	if blockedDMG < 0 {
-		p.health -= blockedDMG
-	}
+// func (p *PlayerCombat) Damage(amount, tempHP float64) {
+// 	blockedDMG := tempHP - amount
+// 	if blockedDMG < 0 {
+// 		p.health -= blockedDMG
+// 	}
 
-}
+// }
 
 var _ Combat = (*EnemyCombat)(nil)

@@ -23,12 +23,13 @@ type Enemy struct {
 	CombatComp *components.EnemyCombat
 	Animations map[EnemyState]*animations.Animation
 	Type       int
+	Speed      float64
 }
 
 var directions = [2]int{-1, 1}
 
-func (e *Enemy) FollowsTarget(target *Sprite) {
-	if math.Abs(target.X-e.Sprite.X) < 200 && math.Abs(target.Y-e.Sprite.Y) < 200 {
+func (e *Enemy) FollowsTarget(target *Sprite, vision float64) {
+	if math.Abs(target.X-e.Sprite.X) < vision && math.Abs(target.Y-e.Sprite.Y) < vision {
 		if e.Sprite.X < target.X {
 			e.Sprite.Dx = 1
 		} else if e.Sprite.X > target.X {
@@ -40,12 +41,34 @@ func (e *Enemy) FollowsTarget(target *Sprite) {
 			e.Sprite.Dy = -1
 		}
 	} else {
-		steps := rand.IntN(100)
-		directionX := float64(directions[rand.IntN(len(directions))])
-		directionY := float64(directions[rand.IntN(len(directions))])
-		for i := 0; i < steps; i++ {
-			e.Sprite.Dx = directionX
-			e.Sprite.Dy = directionY
+		steps := rand.IntN(7)
+		if steps == 0 {
+			e.Sprite.Dx = (0.1 + 2*(math.Log(1+e.Speed)))
+		}
+		if steps == 1 {
+			e.Sprite.Dx = -(0.1 + 2*(math.Log(1+e.Speed)))
+		}
+		if steps == 2 {
+			e.Sprite.Dy = -(0.1 + 2*(math.Log(1+e.Speed)))
+		}
+		if steps == 3 {
+			e.Sprite.Dy = (0.1 + 2*(math.Log(1+e.Speed)))
+		}
+		if steps == 4 {
+			e.Sprite.Dx = (0.1 + 2*(math.Log(1+e.Speed))) / 1.4
+			e.Sprite.Dy = -(0.1 + 2*(math.Log(1+e.Speed))) / 1.4
+		}
+		if steps == 5 {
+			e.Sprite.Dx = -(0.1 + 2*(math.Log(1+e.Speed))) / 1.4
+			e.Sprite.Dy = -(0.1 + 2*(math.Log(1+e.Speed))) / 1.4
+		}
+		if steps == 6 {
+			e.Sprite.Dx = (0.1 + 2*(math.Log(1+e.Speed))) / 1.4
+			e.Sprite.Dy = (0.1 + 2*(math.Log(1+e.Speed))) / 1.4
+		}
+		if steps == 7 {
+			e.Sprite.Dx = -(0.1 + 2*(math.Log(1+e.Speed))) / 1.4
+			e.Sprite.Dy = (0.1 + 2*(math.Log(1+e.Speed))) / 1.4
 		}
 	}
 }
