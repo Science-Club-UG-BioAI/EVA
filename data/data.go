@@ -6,60 +6,60 @@ import (
 	"time"
 )
 
-type Node struct {
-	Number int
-	Layer  int
-	InConnections []Connection
+type Node struct { //reprezentuje pojedynczy neouron
+	Number        int          //"ID" neuornu
+	Layer         int          //numer warstwy,w której się znajduej
+	InConnections []Connection //jakie połączenie wchodzi do neuronu
 }
 
-type Connection struct {
-	In_node  Node
-	Out_node Node
-	Weight   float64
-	Inno     int
-	Enabled  bool
+type Connection struct { //reprezentuje połączenie między dwoma nueonami
+	In_node  Node    //neuron wejsciowy
+	Out_node Node    //neuorn wyjsciowy
+	Weight   float64 //waga
+	Inno     int     // numer innowacji ?
+	Enabled  bool    // czy połączenie jest aktywne
 }
 
-func (c Connection) ShowConn() {
+func (c Connection) ShowConn() { //wypisuje dane połączenie: neuron wejscia i wyjscia, waga, id i aktywacja
 	fmt.Printf("Connection: In_node: %d, Out_node: %d, Weight: %f, Inno: %d, Enabled: %v\n",
 		c.In_node, c.Out_node, c.Weight, c.Inno, c.Enabled)
 }
 
-type Connectionh struct {
-	Inputs         int
-	Outputs        int
-	AllConnections []Connection
-	Global_inno    int
+type Connectionh struct { //historia wszystkich połączen
+	Inputs         int          //liczba wejsc
+	Outputs        int          //liczba wyjsc
+	AllConnections []Connection //wszystkie znane połączenia
+	Global_inno    int          //licznik innowacji
 }
 
-func (cH *Connectionh) Exists(n1, n2 *Node) *Connection {
+func (cH *Connectionh) Exists(n1, n2 *Node) *Connection { //sprawdza czy polaczenie pomiedzy dwoma neuronami juz istnieje
 	for _, c := range cH.AllConnections {
 		if c.In_node.Number == n1.Number && c.Out_node.Number == n2.Number {
-			return &c
+			return &c //zwraca chyba id polaczenia
 		}
 	}
-	return nil
+	return nil //zwraca nil jesli nie ma takiego polaczenia
 }
 
 type Genom struct {
-	Ch            Connectionh //bierzemy obiekt Connectionh - historia polaczen neurowno
-	Inputs        int         // ilosc neornow wejscjowych
-	Outputs       int         // ilosc neronow wyjsciowych
-	Input_Layer   int         //numer warstwy input
-	Output_Layer  int         //numer warstwy output
-	Total_Nodes   int         //laczna liczba neuronow (poczatkowo 0)
-	Creation_Rate float64
+	Ch            Connectionh  //bierzemy obiekt Connectionh - historia polaczen neuronow (lokalna kopia)
+	Inputs        int          // ilosc neornow wejscjowych
+	Outputs       int          // ilosc neronow wyjsciowych
+	Input_Layer   int          //numer warstwy input
+	Output_Layer  int          //numer warstwy output
+	Total_Nodes   int          //laczna liczba neuronow (poczatkowo 0) - pozwala uniknac dodanie tego samego "ID" różnym neuronom
+	Creation_Rate float64      //szansa na dodanie nowego połączenia pomiędzy losowymi neuronami podczas tworzenia sieci
 	Nodes         []Node       //lista wezlow
-	Connections   []Connection //lista polaczen
+	Connections   []Connection //lista polaczen aktywnych
 	Create        bool         //potrzebujemy do tego czy uruchomic CreateNetwork(), czasem chcemy np. tylko ogolny szkielet genomu, np
 	// krzyzyujac genomy , nowy genom ma miec pewne cechy rodzica, wiec automatyczne uruchomienie CreateNetwork() nadpisze te cechy - bez sensu
 	// i pozniej na podsatawie danych z connectionh mozemy stworzyc genom
 }
 
-func (cH *Genom) CreateNetwork() {
+func (cH *Genom) CreateNetwork() { //tworzy genom dla kazdego osobnika z naszej populacji
 	// dodajemy tutaj wezly wejsciowe
 	for i := 0; i < cH.Inputs; i++ { // to jest petla while (wyrazona za pomoca for bo nie ma while w golangu)
-		cH.Nodes = append(cH.Nodes, Node{
+		cH.Nodes = append(cH.Nodes, Node{ //przypisuje kazdemu neuronowi "id" i warstwe
 			Number: cH.Total_Nodes,
 			Layer:  cH.Input_Layer,
 		})
@@ -74,7 +74,7 @@ func (cH *Genom) CreateNetwork() {
 		cH.Total_Nodes++
 		rand.Seed(time.Now().UnixNano()) //to potrzebne do losowisci w nastepnej petli -> ziarno generatora zalezne od czasu (w nanosekudnach)
 		// bez tego sekwencja losowych liczb - taka sama za kazdym razem
-		for i := 0; i < cH.Outputs*cH.Inputs; i++ {
+		for i := 0; i < cH.Outputs*cH.Inputs; i++ { //tworzenie losowych połączen miedzy neuronami zaleznie od creation_rate
 			if rand.Float64() < cH.Creation_Rate {
 				cH.AddConnection()
 			}
@@ -82,7 +82,7 @@ func (cH *Genom) CreateNetwork() {
 	}
 }
 
-func (c *Connection) copy() Connection {
+func (c *Connection) copy() Connection { //tworzy kopie polaczenia - potrzebne aby, nie nadpisac historii polaczen
 	return Connection{
 		In_node:  c.In_node,
 		Out_node: c.Out_node,
@@ -92,13 +92,16 @@ func (c *Connection) copy() Connection {
 	}
 }
 
-func (cH *Genom) AddConnection() {
-	rand.Seed(time.Now().UnixNano())
-	n1 := cH.Nodes[rand.Intn(len(cH.Nodes))] //losujemy indeksy dla tablicy Nodes (wyciagamy randomowe neuronoy)
+//MUTACJE
+//mutacja z tworzeniem nowych połączeń
+
+func (cH *Genom) AddConnection() { //odpowiada za tworzenie NOWEGO połączenia między neuronami
+	rand.Seed(time.Now().UnixNano())         //losujemy wybor dwoch neuronow
+	n1 := cH.Nodes[rand.Intn(len(cH.Nodes))] //losujemy indeksy dla tablicy Nodes (wyciagamy randomowe neurony)
 	n2 := cH.Nodes[rand.Intn(len(cH.Nodes))]
 
 	for n1.Layer == cH.Output_Layer { //petla while (for sprawdza za kazdym razem dany warunek, jesli prawidzwy->wykonuje funkcje)
-		n1 = cH.Nodes[rand.Intn(len(cH.Nodes))] // sprawdzamy czy peirwszy wyvrany neuron nie jest czasem w ooutput warstwie ->												//
+		n1 = cH.Nodes[rand.Intn(len(cH.Nodes))] // sprawdzamy czy peirwszy wyvrany neuron nie jest czasem w ooutput warstwie ->
 	} //bo nie moze byc!! nie ma nic za to warstwa, wiec z jakim neuronem ma zrobic polaczenie
 
 	for n2.Layer == cH.Input_Layer || n2.Layer <= n1.Layer { //tez petla while; || to or; sprawdzamy czy drugi neuron nie jest w warstwie wejsciowej
@@ -106,34 +109,35 @@ func (cH *Genom) AddConnection() {
 	} // byc pierwszy neuron
 
 	// c to tutaj nasz wskaznik wskazujacy polaczenie miedzy losowymi neuronami, moze byc pusty->polecznie nie istnieje
-	c := cH.Ch.Exists(&n1, &n2) // * - wyciaga wartosc ze wskaznika; & - wklada wartosc do wskaznika
+	c := cH.Ch.Exists(&n1, &n2)  // * - wyciaga wartosc ze wskaznika; & - wklada wartosc do wskaznika
 	x := Connection{In_node: n1, //tu tworzymy nowe polaczenie miedzy neuronami nawet jesli juz istnieje
 		Out_node: n2}
 
 	if c != nil { //jesli wskaznik nie jes tpusty -> polaczenie juz istnialo (w jakimkolwiek genomie) to jego numer innowacji przypisujemy nowemu polaczneiu x
 		x.Inno = c.Inno
 		if !cH.Exists(x.Inno) { //tu sprawdzamy czy polaczenie istnieje w GENOMIE
-			cH.Connections = append(cH.Connections, x) //glowna lista akutalnych polaczen w GENOMIE (a nie w calej populacji jak w przypadku Connectionh)
+			cH.Connections = append(cH.Connections, x)     //glowna lista akutalnych polaczen w GENOMIE (a nie w calej populacji jak w przypadku Connectionh)
 			n2.InConnections = append(n2.InConnections, x) //lista polaczen ktore wchodza do neuornu n2 #w type node musisz dodac ten atrybut (patrz wyzej)
 		} // tu chcemy po prostu zapobiec dodaniu jakiegos drugiego polaczenia miedzy tymi samymi neuronami, i nawet jesli takie poalczenie kiedsy istialo
 		// to moze go juz nie byc w genomie i wtedy mozemy na spokojnie je dodac znowu
-	} 	else  {
-		x.Inno = cH.Ch.Global_inno // jesli polaczenia nigdy nie bylo - nowe innovation number
-		cH.Ch.Global_inno += 1 //dodajemy sobie tu 1 zeby przygotowac nasteona liczbe dla nowego polaczenia, ktore nigdy nie istnialo
-		cH.Connections = append(cH.Connections, x) //dodajemy polaczenie do genomu
+	} else {
+		x.Inno = cH.Ch.Global_inno                                    // jesli polaczenia nigdy nie bylo - nowe innovation number
+		cH.Ch.Global_inno += 1                                        //dodajemy sobie tu 1 zeby przygotowac nasteona liczbe dla nowego polaczenia, ktore nigdy nie istnialo
+		cH.Connections = append(cH.Connections, x)                    //dodajemy polaczenie do genomu
 		cH.Ch.AllConnections = append(cH.Ch.AllConnections, x.copy()) //musimy tu dodac kopie polaczenia, ale trzeba zdefiniowac funckje copy
-		n2.InConnections = append(n2.InConnections, x) //dodajemy do listy wejsiowych polaczen neuronu n2
-	}} //musimy miec dwa rozne polaczenia dla populacji i dla genomu bo np. mutacje w jednym genomie nie moga wplywac na historie polaczen populacji
+		n2.InConnections = append(n2.InConnections, x)                //dodajemy do listy wejsiowych polaczen neuronu n2
+	}
+} //musimy miec dwa rozne polaczenia dla populacji i dla genomu bo np. mutacje w jednym genomie nie moga wplywac na historie polaczen populacji
 // InConnections dla neuronu sa wazne dla backwawrd i forward propagation
-func (cH *Genom) Exists(nn int) bool {
-	for _, c := cH.Connections {
+
+func (cH *Genom) Exists(nn int) bool { //funkcja sprawdzajaca czy dane polaczenie juz istnieje
+	for _, c := range cH.Connections {
 		if c.Inno == nn {
 			return true
 		}
-	return false
 	}
+	return false
 }
-
 //mutacje
 // mutacja z roznica wag
 func (cH *Genom) Mutate_weight() {
