@@ -88,7 +88,7 @@ func (cH *Genom) CreateNetwork() {
 	}
 }
 
-<<<<<<< HEAD
+
 func (c *Connection) copy() Connection {
 	return Connection{
 		In_node:  c.In_node,
@@ -99,9 +99,7 @@ func (c *Connection) copy() Connection {
 	}
 }
 
-=======
-// define Genom's function
->>>>>>> d873d22 (comments)
+
 func (cH *Genom) AddConnection() {
 	rand.Seed(time.Now().UnixNano())
 	n1 := cH.Nodes[rand.Intn(len(cH.Nodes))] // drawing index (taking random Node)
