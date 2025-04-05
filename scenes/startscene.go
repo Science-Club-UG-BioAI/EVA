@@ -13,8 +13,8 @@ import (
 type SceneIdd int
 
 const (
-    StartSceneIdd SceneIdd = iota
-    CharacterSelectionSceneId
+	CharacterSelectionSceneId = 1
+	DietSelectionSceneId = 2 
 )
 
 type StartScene struct {
@@ -47,17 +47,15 @@ func (s *StartScene) IsLoaded() bool {
 }
 
 func (s *StartScene) Update() SceneId {
-    
-	// Obsługa kliknięcia przycisku START
+	// Handle "PLAY" button click
 	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
 		cursorX, cursorY := ebiten.CursorPosition()
 		if cursorX >= s.startButtonRect.X && cursorX <= s.startButtonRect.X+s.startButtonRect.Width &&
 			cursorY >= s.startButtonRect.Y && cursorY <= s.startButtonRect.Y+s.startButtonRect.Height {
-			return GameSceneId // Przełącz na GameScene
+			return DietSelectionSceneId // Transition to DietSelectionScene
 		}
 	}
-
-    return StartSceneId
+	return StartSceneId // Remain in StartScene
 }
 
 func (s *StartScene) Draw(screen *ebiten.Image) {
@@ -66,40 +64,38 @@ func (s *StartScene) Draw(screen *ebiten.Image) {
 		screen.DrawImage(s.backgroundImage, op)
 	}
 
-	// Tworzenie obrazu dla tekstu "EVA"
+	// creating "EVA"
 	evaColor := color.White
 	textToCenter := "EVA"
 	bounds := text.BoundString(basicfont.Face7x13, textToCenter)
 	textWidth := bounds.Dx()
 	textHeight := bounds.Dy()
 
-	// Tworzenie obrazu tekstu
 	textImage := ebiten.NewImage(textWidth, textHeight)
 	text.Draw(textImage, textToCenter, basicfont.Face7x13, 0, textHeight, evaColor)
 
-	// Skalowanie obrazu tekstu
 	op := &ebiten.DrawImageOptions{}
-	scaleFactor := 4.0 // Powiększenie tekstu 4x
+	scaleFactor := 4.0 
 	op.GeoM.Scale(scaleFactor, scaleFactor)
 
-	// Wyśrodkowanie tekstu na ekranie
+	// centering "EVA" 
 	screenWidth, screenHeight := screen.Size()
 	x := (float64(screenWidth) - float64(textWidth)*scaleFactor) / 2
 	y := (float64(screenHeight) - float64(textHeight)*scaleFactor) / 2
 	op.GeoM.Translate(x, y)
 
-	// Rysowanie powiększonego tekstu
+	// enlarging screen text
 	screen.DrawImage(textImage, op)
 
-	// Przycisk "START" poniżej tekstu "EVA"
+	// "PLAY" below "EVA"
 	s.startButtonRect.X = (screenWidth - s.startButtonRect.Width) / 2
 	s.startButtonRect.Y = int(y + float64(textHeight)*scaleFactor + 60)
 
-	// Rysowanie prostokątnego przycisku z zaokrąglonymi rogami
+	// drawing rectangle with rounded edges
 	buttonColor := color.RGBA{R: 249, G: 209, B: 66, A: 100}
-	radius := 4 // Promień zaokrąglenia rogów
+	radius := 4 // used to round the edges
 
-	// Rysowanie wypełnienia prostokąta (bez rogów)
+	// filling of button "PLAY"
 	for dx := radius; dx < s.startButtonRect.Width-radius; dx++ {
 		for dy := 0; dy < s.startButtonRect.Height; dy++ {
 			screen.Set(s.startButtonRect.X+dx, s.startButtonRect.Y+dy, buttonColor)
@@ -111,31 +107,30 @@ func (s *StartScene) Draw(screen *ebiten.Image) {
 		}
 	}
 
-	// Rysowanie rogów jako okręgów
+	// rounding the edges of a button
 	for dx := -radius; dx <= radius; dx++ {
 		for dy := -radius; dy <= radius; dy++ {
 			if dx*dx+dy*dy <= radius*radius {
-				// Lewy górny róg
+
 				screen.Set(s.startButtonRect.X+radius+dx, s.startButtonRect.Y+radius+dy, buttonColor)
-				// Prawy górny róg
+
 				screen.Set(s.startButtonRect.X+s.startButtonRect.Width-radius+dx, s.startButtonRect.Y+radius+dy, buttonColor)
-				// Lewy dolny róg
+
 				screen.Set(s.startButtonRect.X+radius+dx, s.startButtonRect.Y+s.startButtonRect.Height-radius+dy, buttonColor)
-				// Prawy dolny róg
+
 				screen.Set(s.startButtonRect.X+s.startButtonRect.Width-radius+dx, s.startButtonRect.Y+s.startButtonRect.Height-radius+dy, buttonColor)
 			}
 		}
 	}
 
-	// Wyśrodkowanie napisu "START" na przycisku
-	startText := "START"
+	// centering text on a button
+	startText := "PLAY"
 	startBounds := text.BoundString(basicfont.Face7x13, startText)
 	startTextWidth := startBounds.Dx()
 	startTextHeight := startBounds.Dy()
 	startTextX := s.startButtonRect.X + (s.startButtonRect.Width-startTextWidth)/2
 	startTextY := s.startButtonRect.Y + (s.startButtonRect.Height+startTextHeight)/2
 
-	// Rysowanie tekstu "START" na przycisku
 	text.Draw(screen, startText, basicfont.Face7x13, startTextX, startTextY, color.RGBA{R: 189, G: 77, B: 39, A: 255})
 }
 
