@@ -8,9 +8,8 @@ import (
 
 type Node struct { //reprezentuje pojedynczy neouron
 	Number        int          //"ID" neuornu
-	Layer         int          //numer warstwy,w której się znajduje
+	Layer         int          //numer warstwy,w której się znajduej
 	InConnections []Connection //jakie połączenie wchodzi do neuronu
-
 }
 
 type Connection struct { //reprezentuje połączenie między dwoma nueonami
@@ -146,7 +145,6 @@ func (cH *Genom) Exists(nn int) bool { //funkcja sprawdzajaca czy dane polaczeni
 	return false
 }
 
-// mutacje
 // mutacja z roznica wag
 func (cH *Genom) Mutate_weight() {
 	rand.Seed(time.Now().UnixNano())
@@ -162,56 +160,6 @@ func (cH *Genom) Mutate_weight() {
 		cH.Connections[i] = conn // wprowadza aktualizację
 	}
 }
-
-// mutacje z tworzeniem nowych połączeń
-func (g *Genom) AddConnectionMutation() {
-	rand.Seed(time.Now().UnixNano())
-
-	var n1, n2 Node
-	valid := false
-
-	for !valid {
-		n1 = g.Nodes[rand.Intn(len(g.Nodes))]
-		n2 = g.Nodes[rand.Intn(len(g.Nodes))]
-
-		if n1.Layer == g.Output_Layer || n2.Layer == g.Input_Layer || n1.Layer >= n2.Layer {
-			continue
-		}
-
-		exists := false
-		for _, c := range g.Connections {
-			if c.In_node.Number == n1.Number && c.Out_node.Number == n2.Number {
-				exists = true
-				break
-			}
-		}
-
-		if !exists {
-			valid = true
-		}
-	}
-
-	histConn := g.Ch.Exists(&n1, &n2)
-
-	newConn := Connection{
-		In_node:  n1,
-		Out_node: n2,
-		Weight:   rand.Float64()*2.0 - 1.0, // waga [-1, 1]
-		Enabled:  true,
-	}
-
-	if histConn != nil {
-		newConn.Inno = histConn.Inno
-	} else {
-		newConn.Inno = g.Ch.Global_inno
-		g.Ch.Global_inno++
-		g.Ch.AllConnections = append(g.Ch.AllConnections, newConn.copy())
-	}
-
-	g.Connections = append(g.Connections, newConn)
-	n2.InConnections = append(n2.InConnections, newConn)
-}
-
 // wersja paleozoik (muszę dopracować przesuwanie warstw)
 func (cH *Genom) AddNodeMutation() {
 	if len(cH.Connections) == 0 {
