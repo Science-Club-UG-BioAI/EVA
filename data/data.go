@@ -8,8 +8,9 @@ import (
 
 type Node struct { //reprezentuje pojedynczy neouron
 	Number        int          //"ID" neuornu
-	Layer         int          //numer warstwy,w której się znajduej
+	Layer         int          //numer warstwy,w której się znajduje
 	InConnections []Connection //jakie połączenie wchodzi do neuronu
+
 }
 
 type Connection struct { //reprezentuje połączenie między dwoma nueonami
@@ -18,11 +19,6 @@ type Connection struct { //reprezentuje połączenie między dwoma nueonami
 	Weight   float64 //waga
 	Inno     int     // numer innowacji ?
 	Enabled  bool    // czy połączenie jest aktywne
-}
-
-func (c Connection) ShowConn() { //wypisuje dane połączenie: neuron wejscia i wyjscia, waga, id i aktywacja
-	fmt.Printf("Connection: In_node: %d, Out_node: %d, Weight: %f, Inno: %d, Enabled: %v\n",
-		c.In_node, c.Out_node, c.Weight, c.Inno, c.Enabled)
 }
 
 type Connectionh struct { //historia wszystkich połączen
@@ -80,6 +76,17 @@ func (cH *Genom) CreateNetwork() { //tworzy genom dla kazdego osobnika z naszej 
 			}
 		}
 	}
+	cH.Update_Output_Layer() //uaktulnia numer warstwy
+}
+
+func (g *Genom) Update_Output_Layer() { //updateowanie numeru warstwy output
+	StonestStoner := 0
+	for _, node := range g.Nodes {
+		if node.Layer > StonestStoner {
+			StonestStoner = node.Layer
+		}
+	}
+	g.Output_Layer = StonestStoner + 1
 }
 
 func (c *Connection) copy() Connection { //tworzy kopie polaczenia - potrzebne aby, nie nadpisac historii polaczen
@@ -138,6 +145,8 @@ func (cH *Genom) Exists(nn int) bool { //funkcja sprawdzajaca czy dane polaczeni
 	}
 	return false
 }
+
+// mutacje
 // mutacja z roznica wag
 func (cH *Genom) Mutate_weight() {
 	rand.Seed(time.Now().UnixNano())
@@ -152,6 +161,55 @@ func (cH *Genom) Mutate_weight() {
 		// aktualizujemy nasza zmiane
 		cH.Connections[i] = conn // wprowadza aktualizację
 	}
+}
+
+// mutacje z tworzeniem nowych połączeń
+func (g *Genom) AddConnectionMutation() {
+	rand.Seed(time.Now().UnixNano())
+
+	var n1, n2 Node
+	valid := false
+
+	for !valid {
+		n1 = g.Nodes[rand.Intn(len(g.Nodes))]
+		n2 = g.Nodes[rand.Intn(len(g.Nodes))]
+
+		if n1.Layer == g.Output_Layer || n2.Layer == g.Input_Layer || n1.Layer >= n2.Layer {
+			continue
+		}
+
+		exists := false
+		for _, c := range g.Connections {
+			if c.In_node.Number == n1.Number && c.Out_node.Number == n2.Number {
+				exists = true
+				break
+			}
+		}
+
+		if !exists {
+			valid = true
+		}
+	}
+
+	histConn := g.Ch.Exists(&n1, &n2)
+
+	newConn := Connection{
+		In_node:  n1,
+		Out_node: n2,
+		Weight:   rand.Float64()*2.0 - 1.0, // waga [-1, 1]
+		Enabled:  true,
+	}
+
+	if histConn != nil {
+		newConn.Inno = histConn.Inno
+	} else {
+		newConn.Inno = g.Ch.Global_inno
+		g.Ch.Global_inno++
+		g.Ch.AllConnections = append(g.Ch.AllConnections, newConn.copy())
+	}
+
+	g.Connections = append(g.Connections, newConn)
+	n2.InConnections = append(n2.InConnections, newConn)
 }
 
 // wersja paleozoik (muszę dopracować przesuwanie warstw)
@@ -224,7 +282,8 @@ func (cH *Genom) AddNodeMutation() {
 	// dodajemy nowe połączenia do genomu
 	cH.Connections = append(cH.Connections, newConn1, newConn2)
 	// warstwy nam się przesunęły, więc ostatnia warstwa zwiększa nam się o 1
-	cH.Output_Layer++
+	cH.Update_Output_Layer()
+
 }
 
 // prawie działa, jedynie muszę dopracować dziedziczenie warstw w nodach
@@ -279,4 +338,3 @@ func crossover(parent1 *Genom, parent1FitScore int,
 	}
 	return &offspring
 }
-
