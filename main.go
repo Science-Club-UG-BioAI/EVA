@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	ebiten.SetWindowSize(1920, 1080)
+	ebiten.SetWindowSize(800, 600)
 	ebiten.SetWindowTitle("ProjectEVA")
 	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 

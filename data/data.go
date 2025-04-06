@@ -4,15 +4,13 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
-
-	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
-
 
 type Node struct { //reprezentuje pojedynczy neouron
 	Number        int          //"ID" neuornu
 	Layer         int          //numer warstwy,w której się znajduej
 	InConnections []Connection //jakie połączenie wchodzi do neuronu
+	IsOutput      bool
 }
 
 type Connection struct { //reprezentuje połączenie między dwoma nueonami
@@ -42,7 +40,6 @@ func (cH *Connectionh) Exists(n1, n2 *Node) *Connection { //sprawdza czy polacze
 
 // define Genom class
 type Genom struct {
-
 	Ch            Connectionh  //bierzemy obiekt Connectionh - historia polaczen neuronow (lokalna kopia)
 	Inputs        int          // ilosc neornow wejscjowych
 	Outputs       int          // ilosc neronow wyjsciowych
@@ -52,39 +49,54 @@ type Genom struct {
 	Creation_Rate float64      //szansa na dodanie nowego połączenia pomiędzy losowymi neuronami podczas tworzenia sieci
 	Nodes         []Node       //lista wezlow
 	Connections   []Connection //lista polaczen aktywnych
+	Fitness       float64      //wartosc naszego fitness score
 	Create        bool         //potrzebujemy do tego czy uruchomic CreateNetwork(), czasem chcemy np. tylko ogolny szkielet genomu, np
 	// krzyzyujac genomy , nowy genom ma miec pewne cechy rodzica, wiec automatyczne uruchomienie CreateNetwork() nadpisze te cechy - bez sensu
 	// i pozniej na podsatawie danych z connectionh mozemy stworzyc genom
 }
 
-func (cH *Genom) CreateNetwork() { //tworzy genom dla kazdego osobnika z naszej populacji
-	// dodajemy tutaj wezly wejsciowe
-	for i := 0; i < cH.Inputs; i++ { // to jest petla while (wyrazona za pomoca for bo nie ma while w golangu)
-		cH.Nodes = append(cH.Nodes, Node{ //przypisuje kazdemu neuronowi "id" i warstwe
-
+// tworzenie sieci
+func (cH *Genom) CreateNetwork() {
+	fmt.Println("--- Starting CreateNetwork ---")
+	for i := 0; i < cH.Inputs; i++ {
+		node := Node{
 			Number: cH.Total_Nodes,
 			Layer:  cH.Input_Layer,
-		})
-		cH.Total_Nodes++ // increasing Total_Nodes by 1 (in order to add another Node in loop)
-	}
-
-	// adding output Nodes
-	for i := 0; i < cH.Outputs; i++ { // works like above
-		cH.Nodes = append(cH.Nodes, Node{
-			Number: cH.Total_Nodes,
-			Layer:  cH.Output_Layer,
-		})
+		}
+		fmt.Printf("Creating input node: %+v\n", node)
+		cH.Nodes = append(cH.Nodes, node)
 		cH.Total_Nodes++
-		rand.Seed(time.Now().UnixNano()) //to potrzebne do losowisci w nastepnej petli -> ziarno generatora zalezne od czasu (w nanosekudnach)
-		// bez tego sekwencja losowych liczb - taka sama za kazdym razem
-		for i := 0; i < cH.Outputs*cH.Inputs; i++ { //tworzenie losowych połączen miedzy neuronami zaleznie od creation_rate
-			if rand.Float64() < cH.Creation_Rate {
-
-				cH.AddConnection()
-			}
+	}
+	for i := 0; i < cH.Outputs; i++ {
+		outputNode := Node{
+			Number:   cH.Total_Nodes,
+			Layer:    cH.Output_Layer,
+			IsOutput: true,
+		}
+		fmt.Printf("Stworzyłem output node: %+v\n", outputNode)
+		cH.Nodes = append(cH.Nodes, outputNode)
+		cH.Total_Nodes++
+	}
+	fmt.Println("--- Finished creating input/output nodes ---")
+	fmt.Println("All nodes:")
+	for _, node := range cH.Nodes {
+		fmt.Printf("Node: %+v\n", node)
+	}
+	rand.Seed(time.Now().UnixNano())
+	totalConnections := cH.Outputs * cH.Inputs
+	for i := 0; i < totalConnections; i++ {
+		if rand.Float64() < cH.Creation_Rate {
+			fmt.Printf("Attempting to add connection %d\n", i)
+			cH.AddConnection()
 		}
 	}
-	cH.Update_Output_Layer() //uaktulnia numer warstwy
+	fmt.Println("--- Finished creating connections ---")
+	fmt.Println("All connections:")
+	for _, conn := range cH.Ch.AllConnections {
+		fmt.Printf("Connection: %+v\n", conn)
+	}
+	cH.Update_Output_Layer()
+	fmt.Println("--- Finished CreateNetwork ---")
 }
 
 func (g *Genom) Update_Output_Layer() { //updateowanie numeru warstwy output
@@ -97,102 +109,117 @@ func (g *Genom) Update_Output_Layer() { //updateowanie numeru warstwy output
 	g.Output_Layer = StonestStoner + 1
 }
 
-
-func (c *Connection) copy() Connection { //tworzy kopie polaczenia - potrzebne aby, nie nadpisac historii polaczen
-
-	return Connection{
-		In_node:  c.In_node,
-		Out_node: c.Out_node,
-		Weight:   c.Weight,
-		Inno:     c.Inno,
-		Enabled:  c.Enabled,
-	}
-}
-
-//funckja forward
+// funkcja forward
 func (g *Genom) Forward(inputs []float64) []float64 {
+	fmt.Println("=== START FORWARD ===")
+	fmt.Printf("Wejścia: %v\n", inputs)
 	nodeValues := make(map[int]float64)
-
 	for i := 0; i < g.Inputs; i++ {
 		nodeValues[g.Nodes[i].Number] = inputs[i]
 	}
-	sortedNodes := make([]Node, len(g.Nodes))
-	copy(sortedNodes, g.Nodes)
-	sort.Slice(sortedNodes, func(i, j int) bool {
-		return sortedNodes[i].Layer < sortedNodes[j].Layer
-	})
-	for _, node := range sortedNodes {
-		if node.Layer == g.Input_Layer {
+	for _, conn := range g.Ch.AllConnections {
+		if !conn.Enabled {
 			continue
 		}
-		sum := 0.0
-		for _,conn := range node.InConnections {
-			if conn.Enabled {
-				sum += nodeValues[conn.In_node.Number] * conn.Weight
-			}
-		}
-		nodeValues[node.Number] = relu(sum)
+		inVal := nodeValues[conn.In_node.Number]
+		nodeValues[conn.Out_node.Number] += inVal * conn.Weight
+		fmt.Printf("Połączenie: %+v => Przekazuje: %.3f * %.3f = %.3f\n",
+			conn, inVal, conn.Weight, inVal*conn.Weight)
+	}
+	fmt.Println("Zawartość nodeValues:")
+	for k, v := range nodeValues {
+		fmt.Printf("Node %d = %.4f\n", k, v)
 	}
 	outputs := []float64{}
 	for _, node := range g.Nodes {
-		if node.Layer == g.Output_Layer {
-			outputs = append(outputs, nodeValues[node.Number])
+		if node.IsOutput {
+			val, exists := nodeValues[node.Number]
+			if exists {
+				outputs = append(outputs, val)
+			} else {
+				outputs = append(outputs, 0)
+				fmt.Printf("⚠️ Output node %d nie ma wartości — ustawiamy 0\n", node.Number)
+			}
 		}
 	}
+	fmt.Println("=== KONIEC FORWARD ===")
+	fmt.Printf("Outputs: %v\n", outputs)
 	return outputs
 }
-//funkcja aktywacji relu
+
+// funkcja aktywacji relu
 func relu(x float64) float64 {
 	if x > 0 {
 		return x
 	}
-	return 0 
+	return 0
 }
 
+// funkcja mierzenia fitness
+func (g *Genom) EvaluateFitness(score int, foodEaten int, enemiesKilled int, timeSurvived int, hp float64) float64 {
+	fitness := float64(score) + float64(foodEaten)*10 + float64(enemiesKilled)*20 + hp*5 - float64(timeSurvived)*0.1
+	g.Fitness = fitness
+	return fitness
+}
 
 //MUTACJE
 //mutacja z tworzeniem nowych połączeń
 
-func (cH *Genom) AddConnection() { //odpowiada za tworzenie NOWEGO połączenia między neuronami
-	rand.Seed(time.Now().UnixNano())         //losujemy wybor dwoch neuronow
-	n1 := cH.Nodes[rand.Intn(len(cH.Nodes))] //losujemy indeksy dla tablicy Nodes (wyciagamy randomowe neurony)
-	n2 := cH.Nodes[rand.Intn(len(cH.Nodes))]
-
-	for n1.Layer == cH.Output_Layer { //petla while (for sprawdza za kazdym razem dany warunek, jesli prawidzwy->wykonuje funkcje)
-		n1 = cH.Nodes[rand.Intn(len(cH.Nodes))] // sprawdzamy czy peirwszy wyvrany neuron nie jest czasem w ooutput warstwie ->
-	} //bo nie moze byc!! nie ma nic za to warstwa, wiec z jakim neuronem ma zrobic polaczenie
-
-
-	for n2.Layer == cH.Input_Layer || n2.Layer <= n1.Layer { // checking if Node2 belong to input layer and if Nodes are one after another
-		n2 = cH.Nodes[rand.Intn(len(cH.Nodes))] // taking new random nNode if so
+func (cH *Genom) AddConnection() {
+	if len(cH.Nodes) == 0 {
+		return
 	}
 
+	// Wybieramy dwa różne nody: n1 (źródło), n2 (cel)
+	n1 := cH.Nodes[rand.Intn(len(cH.Nodes))]
+	n2 := cH.Nodes[rand.Intn(len(cH.Nodes))]
 
-	// c to tutaj nasz wskaznik wskazujacy polaczenie miedzy losowymi neuronami, moze byc pusty->polecznie nie istnieje
-	c := cH.Ch.Exists(&n1, &n2)  // * - wyciaga wartosc ze wskaznika; & - wklada wartosc do wskaznika
-	x := Connection{In_node: n1, //tu tworzymy nowe polaczenie miedzy neuronami nawet jesli juz istnieje
-		Out_node: n2}
+	// Unikamy self-loop i połączeń wstecznych (ważne dla feed-forward sieci)
+	if n1.Number == n2.Number || n1.Layer >= n2.Layer {
+		return
+	}
 
+	// Sprawdź, czy takie połączenie już istnieje
+	if cH.Ch.Exists(&n1, &n2) != nil {
+		return // Połączenie już istnieje, nie dodajemy duplikatu
+	}
 
-	if c != nil { // if Connection's pointer exists -> Connection was made before (in any Genom and it may be gone now) -> Connection x gets its innovation number
-		x.Inno = c.Inno
+	// Tworzymy połączenie
+	newConn := Connection{
+		In_node:  n1,
+		Out_node: n2,
+		Weight:   rand.Float64()*2 - 1, // losowa waga [-1, 1]
+		Inno:     cH.Ch.Global_inno,    // unikalny numer innowacji
+		Enabled:  true,
+	}
 
-		if !cH.Exists(x.Inno) { // does Connection exists in this Genom?
-			cH.Connections = append(cH.Connections, x) // if no -> adding Connection to Connections' list in Genom
-			n2.InConnections = append(n2.InConnections, x) // if no -> adding Connection to output Node's Connections
+	// Zwiększamy licznik innowacji i dodajemy połączenie do historii
+	cH.Ch.Global_inno++
+	cH.Ch.AllConnections = append(cH.Ch.AllConnections, newConn)
+	cH.Connections = append(cH.Connections, newConn)
+	fmt.Printf("[AddConnection] Nowe połączenie: z %d do %d, waga: %.2f, enabled: %v\n",
+		newConn.In_node.Number, newConn.Out_node.Number, newConn.Weight, newConn.Enabled)
+	// Dodajemy to połączenie do nodu docelowego
+	for i := range cH.Nodes {
+		if cH.Nodes[i].Number == n2.Number {
+			cH.Nodes[i].InConnections = append(cH.Nodes[i].InConnections, newConn)
+			break
 		}
-		
-	} 	else  { // Connection's pointer doesn't exist -> Connection was never made
-		x.Inno = cH.Ch.Global_inno // new innovation number for Connection
-		cH.Ch.Global_inno += 1 // increasing global innovation number by 1 (prepare for next Connection)
-		cH.Connections = append(cH.Connections, x) // adding Connection to Genom
-		cH.Ch.AllConnections = append(cH.Ch.AllConnections, x.copy()) // adding Connection's copy to Connectionh (we have to distinguish Genom's Connections and Population's Connections)
-		n2.InConnections = append(n2.InConnections, x) // adding Connection to output Node's Connection
-	}}
+	}
+}
+
+func (g *Genom) GetNodeByNumber(num int) *Node {
+	for i := range g.Nodes {
+		if g.Nodes[i].Number == num {
+			return &g.Nodes[i]
+		}
+	}
+	return nil
+}
 
 // define Genom's function
-func (cH *Genom) Exists(nn int) bool { // taking Connection's innovation number 
-	for _, c := cH.Connections { // return true if Connection exists, False otherwise
+func (cH *Genom) Exists(nn int) bool { // taking Connection's innovation number
+	for _, c := range cH.Connections { // return true if Connection exists, False otherwise
 
 		if c.Inno == nn {
 			return true
@@ -216,6 +243,7 @@ func (cH *Genom) Mutate_weight() {
 		cH.Connections[i] = conn // wprowadza aktualizację
 	}
 }
+
 // wersja paleozoik (muszę dopracować przesuwanie warstw)
 func (cH *Genom) AddNodeMutation() {
 	if len(cH.Connections) == 0 {
