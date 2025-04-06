@@ -875,11 +875,16 @@ var NEARFOODS []([]float64) = make([][]float64, 0)
 //laczenie AI z gra
 
 func (g *GameScene) ControlByAI(genom *data.Genom) {
-	print("cokolwiek")
+	print("=== AI CONTROL ===")
 	inputs := g.PrepareInputs()
+	fmt.Printf("INPUTS to NEAT: %v\n", inputs)
 	outputs := genom.Forward(inputs)
+	fmt.Printf("OUTPUTS z NEAT: %v (len: %d)\n", outputs, len(outputs))
+	if len(outputs) < 2 {
+		fmt.Println("❌ Błąd: Zbyt mało outputów! Zatrzymuję AI sterowanie.")
+		return
+	}
 	moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
-	fmt.Printf("outputs: %v, len: %d\n", outputs, len(outputs)) //testing
 	g.player.Dx = (outputs[0]*2 - 1) * moveScale
 	g.player.Dy = (outputs[1]*2 - 1) * moveScale
 
