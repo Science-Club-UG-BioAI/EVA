@@ -95,6 +95,9 @@ func (cH *Genom) CreateNetwork() {
 	for _, conn := range cH.Ch.AllConnections {
 		fmt.Printf("Connection: %+v\n", conn)
 	}
+	if len(cH.Connections) == 0 { //wymuszanie stworzenia polaczenia jesli jakims cudem genom nie stworzyl zadnych
+		cH.ForceAddConnection()
+	}
 	cH.Update_Output_Layer()
 	fmt.Println("--- Finished CreateNetwork ---")
 }
@@ -138,7 +141,7 @@ func (g *Genom) Forward(inputs []float64) []float64 {
 				outputs = append(outputs, val)
 			} else {
 				outputs = append(outputs, 0)
-				fmt.Printf("⚠️ Output node %d nie ma wartości — ustawiamy 0\n", node.Number)
+				fmt.Printf("Output node %d nie ma wartości — ustawiamy 0\n", node.Number)
 			}
 		}
 	}
@@ -147,13 +150,13 @@ func (g *Genom) Forward(inputs []float64) []float64 {
 	return outputs
 }
 
-// funkcja aktywacji relu
-func relu(x float64) float64 {
-	if x > 0 {
-		return x
-	}
-	return 0
-}
+// // funkcja aktywacji relu
+// func relu(x float64) float64 {
+// 	if x > 0 {
+// 		return x
+// 	}
+// 	return 0
+// }
 
 // funkcja mierzenia fitness
 func (g *Genom) EvaluateFitness(score int, foodEaten int, enemiesKilled int, timeSurvived int, hp float64) float64 {
@@ -161,9 +164,6 @@ func (g *Genom) EvaluateFitness(score int, foodEaten int, enemiesKilled int, tim
 	g.Fitness = fitness
 	return fitness
 }
-
-//MUTACJE
-//mutacja z tworzeniem nowych połączeń
 
 func (cH *Genom) AddConnection() {
 	if len(cH.Nodes) == 0 {
@@ -208,6 +208,40 @@ func (cH *Genom) AddConnection() {
 	}
 }
 
+// funkcja wymuszajaca polaczenie w genomie aby zaden genom nie skonczyl bez polaczen
+func (cH *Genom) ForceAddConnection() {
+	for attempt := 0; attempt < 100; attempt++ {
+		n1 := cH.Nodes[rand.Intn(len(cH.Nodes))]
+		n2 := cH.Nodes[rand.Intn(len(cH.Nodes))]
+		if n1.Number == n2.Number || n1.Layer >= n2.Layer {
+			continue
+		}
+		if cH.Ch.Exists(&n1, &n2) != nil {
+			continue
+		}
+		newConn := Connection{
+			In_node:  n1,
+			Out_node: n2,
+			Weight:   rand.Float64()*2 - 1,
+			Inno:     cH.Ch.Global_inno,
+			Enabled:  true,
+		}
+
+		cH.Ch.Global_inno++
+		cH.Ch.AllConnections = append(cH.Ch.AllConnections, newConn)
+		cH.Connections = append(cH.Connections, newConn)
+
+		for i := range cH.Nodes {
+			if cH.Nodes[i].Number == n2.Number {
+				cH.Nodes[i].InConnections = append(cH.Nodes[i].InConnections, newConn)
+				break
+			}
+		}
+		fmt.Printf("Wymuszone połączenie: %d -> %d\n", n1.Number, n2.Number)
+		return
+	}
+}
+
 func (g *Genom) GetNodeByNumber(num int) *Node {
 	for i := range g.Nodes {
 		if g.Nodes[i].Number == num {
@@ -228,6 +262,7 @@ func (cH *Genom) Exists(nn int) bool { // taking Connection's innovation number
 	return false
 }
 
+// MUTACJE
 // mutacja z roznica wag
 func (cH *Genom) Mutate_weight() {
 	rand.Seed(time.Now().UnixNano())
@@ -244,6 +279,7 @@ func (cH *Genom) Mutate_weight() {
 	}
 }
 
+// mutacja z dodawaniem nodeow
 // wersja paleozoik (muszę dopracować przesuwanie warstw)
 func (cH *Genom) AddNodeMutation() {
 	if len(cH.Connections) == 0 {
@@ -318,6 +354,7 @@ func (cH *Genom) AddNodeMutation() {
 
 }
 
+// CROSSOVER
 // prawie działa, jedynie muszę dopracować dziedziczenie warstw w nodach
 func crossover(parent1 *Genom, parent1FitScore int,
 	parent2 *Genom, parent2FitScore int) *Genom {

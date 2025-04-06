@@ -297,6 +297,7 @@ func (g *GameScene) FirstLoad() {
 
 	//tworzenie ai do testow
 	population = []*data.Genom{}
+	sharedHistory := &data.Connectionh{}
 	for i := 0; i < 100; i++ {
 		g := &data.Genom{
 			Inputs:        6,
@@ -304,18 +305,39 @@ func (g *GameScene) FirstLoad() {
 			Creation_Rate: 1.0,
 			Input_Layer:   0,
 			Output_Layer:  1,
-			Ch:            data.Connectionh{},
+			Ch:            *sharedHistory,
 			Create:        true,
 		}
 		g.CreateNetwork()
-		fmt.Printf("Genom %d: Wezly: %d, Polaczenia: %d\n", i, len(g.Nodes), len(g.Connections))
+		fmt.Printf("\nGENOM #%d\n", i)
+		for _, c := range g.Connections {
+			fmt.Printf("Połączenie: In=%d (Layer %d) → Out=%d (Layer %d), Waga=%.2f\n",
+				c.In_node.Number, c.In_node.Layer,
+				c.Out_node.Number, c.Out_node.Layer,
+				c.Weight,
+			)
+		}
 		population = append(population, g)
 	}
 	currentGenIndex = 0
 	currentGenom = population[currentGenIndex]
 	// fmt.Println("Test fitness:", testGenom.EvaluateFitness(120, 3, 56, 32, 2)) //sprawdzanie dzialania funkcji fitness
 	// fmt.Printf("Utworzono populację z %d genomów\n", len(population)) //sprawdzanie czy populacja zostala stworzona
-
+	//print sprawdzajacy polaczenia w kazdym genomie
+	fmt.Println("=== PODGLĄD POPULACJI ===")
+	for i, genom := range population {
+		fmt.Printf("GENOM %d:\n", i)
+		fmt.Printf("  NODES:\n")
+		for _, node := range genom.Nodes {
+			fmt.Printf("    Node %d (Layer: %d)\n", node.Number, node.Layer)
+		}
+		fmt.Printf("  CONNECTIONS:\n")
+		for _, conn := range genom.Connections {
+			fmt.Printf("    [%d] %d -> %d | Weight: %.2f | Enabled: %v\n",
+				conn.Inno, conn.In_node.Number, conn.Out_node.Number, conn.Weight, conn.Enabled)
+		}
+		fmt.Println("----------------------------------")
+	}
 	g.loaded = true
 
 }
