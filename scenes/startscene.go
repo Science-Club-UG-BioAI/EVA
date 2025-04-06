@@ -10,17 +10,17 @@ import (
 	"golang.org/x/image/font/basicfont"
 )
 
-type SceneIdd int
+// type SceneIdd int
 
-const (
-	CharacterSelectionSceneId = 1
-	DietSelectionSceneId = 2 
-)
+// const (
+// CharacterSelectionSceneId = 1
+// DietSelectionSceneId = 2
+// )
 
 type StartScene struct {
-    loaded          bool
-    backgroundImage *ebiten.Image
-		startButtonRect Rect
+	loaded          bool
+	backgroundImage *ebiten.Image
+	startButtonRect Rect
 }
 
 type Rect struct {
@@ -34,16 +34,16 @@ func NewStartScene() *StartScene {
 }
 
 func (s *StartScene) FirstLoad() {
-    s.loaded = true
-    img, _, err := ebitenutil.NewImageFromFile("assets/images/start_background.png")
-    if (err != nil) {
-        log.Fatalf("failed to load background image: %v", err)
-    }
-    s.backgroundImage = img
+	s.loaded = true
+	img, _, err := ebitenutil.NewImageFromFile("assets/images/start_background.png")
+	if err != nil {
+		log.Fatalf("failed to load background image: %v", err)
+	}
+	s.backgroundImage = img
 }
 
 func (s *StartScene) IsLoaded() bool {
-    return s.loaded
+	return s.loaded
 }
 
 func (s *StartScene) Update() SceneId {
@@ -75,10 +75,10 @@ func (s *StartScene) Draw(screen *ebiten.Image) {
 	text.Draw(textImage, textToCenter, basicfont.Face7x13, 0, textHeight, evaColor)
 
 	op := &ebiten.DrawImageOptions{}
-	scaleFactor := 4.0 
+	scaleFactor := 4.0
 	op.GeoM.Scale(scaleFactor, scaleFactor)
 
-	// centering "EVA" 
+	// centering "EVA"
 	screenWidth, screenHeight := screen.Size()
 	x := (float64(screenWidth) - float64(textWidth)*scaleFactor) / 2
 	y := (float64(screenHeight) - float64(textHeight)*scaleFactor) / 2
@@ -135,4 +135,4 @@ func (s *StartScene) Draw(screen *ebiten.Image) {
 }
 
 func (s *StartScene) OnEnter() {}
-func (s *StartScene) OnExit() {}
+func (s *StartScene) OnExit()  {}

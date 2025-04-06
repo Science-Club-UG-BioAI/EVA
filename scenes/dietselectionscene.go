@@ -11,13 +11,13 @@ import (
 )
 
 type DietSelectionScene struct {
-	loaded               bool
-	backgroundImage      *ebiten.Image
-	carnivoreButtonRect  Rect
-	omnivoreButtonRect   Rect
-	herbivoreButtonRect  Rect
-	selectedDiet         string
-	startButtonRect      Rect
+	loaded              bool
+	backgroundImage     *ebiten.Image
+	carnivoreButtonRect Rect
+	omnivoreButtonRect  Rect
+	herbivoreButtonRect Rect
+	selectedDiet        string
+	startButtonRect     Rect
 }
 
 var Carnivore = 0
@@ -29,6 +29,7 @@ var SelectedDiet int // Global variable to store the selected diet
 func SetSelectedDiet(diet int) {
 	SelectedDiet = diet
 }
+
 
 func NewDietSelectionScene() *DietSelectionScene {
 	return &DietSelectionScene{
@@ -60,15 +61,18 @@ func (s *DietSelectionScene) Update() SceneId {
 		if cursorX >= s.carnivoreButtonRect.X && cursorX <= s.carnivoreButtonRect.X+s.carnivoreButtonRect.Width &&
 			cursorY >= s.carnivoreButtonRect.Y && cursorY <= s.carnivoreButtonRect.Y+s.carnivoreButtonRect.Height {
 			s.selectedDiet = "Carnivore"
-			SetSelectedDiet(Carnivore) // Use Carnivore constant
+			SetSelectedDiet(Carnivore)
+			log.Printf("Selected diet: %s", s.selectedDiet) // Log selected diet
 		} else if cursorX >= s.omnivoreButtonRect.X && cursorX <= s.omnivoreButtonRect.X+s.omnivoreButtonRect.Width &&
 			cursorY >= s.omnivoreButtonRect.Y && cursorY <= s.omnivoreButtonRect.Y+s.omnivoreButtonRect.Height {
 			s.selectedDiet = "Omnivore"
-			SetSelectedDiet(Omnivore) // Use Omnivore constant
+			SetSelectedDiet(Omnivore)
+			log.Printf("Selected diet: %s", s.selectedDiet) // Log selected diet
 		} else if cursorX >= s.herbivoreButtonRect.X && cursorX <= s.herbivoreButtonRect.X+s.herbivoreButtonRect.Width &&
 			cursorY >= s.herbivoreButtonRect.Y && cursorY <= s.herbivoreButtonRect.Y+s.herbivoreButtonRect.Height {
 			s.selectedDiet = "Herbivore"
-			SetSelectedDiet(Herbivore) // Use Herbivore constant
+			SetSelectedDiet(Herbivore)
+			log.Printf("Selected diet: %s", s.selectedDiet) // Log selected diet
 		}
 	}
 
@@ -83,7 +87,7 @@ func (s *DietSelectionScene) Update() SceneId {
 		}
 	}
 
-	// if needed this id can be updated to transition to another scene 
+	// if needed this id can be updated to transition to another scene
 	return DietSelectionSceneId
 }
 
@@ -178,4 +182,4 @@ func (s *DietSelectionScene) drawButton(screen *ebiten.Image, rect Rect, label s
 }
 
 func (s *DietSelectionScene) OnEnter() {}
-func (s *DietSelectionScene) OnExit() {}
+func (s *DietSelectionScene) OnExit()  {}

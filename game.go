@@ -14,9 +14,10 @@ type Game struct {
 func NewGame() *Game {
 	// List of scenes
 	sceneMap := map[scenes.SceneId]scenes.Scene{
-		scenes.StartSceneId:        scenes.NewStartScene(),
+		scenes.StartSceneId:         scenes.NewStartScene(),
 		scenes.DietSelectionSceneId: scenes.NewDietSelectionScene(),
-		scenes.GameSceneId:         scenes.NewGameScene(), // Add GameScene
+		scenes.PauseSceneId:         scenes.NewPauseScene(),
+		scenes.GameSceneId:          scenes.NewGameScene(), // Add GameScene
 	}
 	activeSceneId := scenes.StartSceneId // Set starting scene
 	sceneMap[activeSceneId].FirstLoad()

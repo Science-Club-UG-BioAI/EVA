@@ -43,6 +43,7 @@ type GameScene struct {
 	foodEaten          int
 	enemyKilled        int
 	timePassed         int
+	diet 						   int
 }
 
 func NewGameScene() *GameScene {
@@ -66,6 +67,7 @@ func NewGameScene() *GameScene {
 		enemyKilled:        0,
 		foodEaten:          0,
 		timePassed:         0,
+		diet:               SelectedDiet,
 	}
 }
 
@@ -256,7 +258,7 @@ func (g *GameScene) FirstLoad() {
 			entities.Idle: animations.NewAnimation(240, 240, 1, 5.0),
 		},
 		CombatComp: components.NewPlayerCombat(3, 1, 6000),
-		Diet:       SelectedDiet, // Use the diet selected by the user
+		Diet:       SelectedDiet,
 		Dmg:        1,
 		MaxHealth:  3,
 	}
@@ -386,7 +388,7 @@ func (g *GameScene) Update() SceneId {
 			int(g.player.X+(constants.Tilesize*g.player.Size)),
 			int(g.player.Y+(constants.Tilesize*g.player.Size)),
 		)
-
+		// enemy behavior
 		deadEnemies := make(map[int]struct{})
 		numberOfEnemies = 0
 		numberOfFood = 0
@@ -702,7 +704,7 @@ func (g *GameScene) Update() SceneId {
 					entities.Agressive: animations.NewAnimation(60, 89, 1, 5.0),
 				},
 				Follows:    true,
-				CombatComp: components.NewEnemyCombat(float64(randRange(int(g.player.MaxHealth*0.9), int(g.player.MaxHealth*1.1))), float64(randRange(int(g.player.Dmg*0.9), int(g.player.Dmg*1.1))), 3000),
+				CombatComp: components.NewEnemyCombat(float64(randRange(int(g.player.MaxHealth*0.9), int(g.player.MaxHealth*1.1))), math.Max(1, float64(randRange(int(g.player.Dmg*0.9), int(g.player.Dmg*1.1)))), 3000),
 				Type:       2,
 				Speed:      float64(randRange(int(g.player.Speed*0.9), int(g.player.Speed*1.1))),
 			}
@@ -750,11 +752,12 @@ func (g *GameScene) Update() SceneId {
 		}
 		NEARFOODS = newNEARFOODS
 		if len(NEARFOODS) > 0 {
-			println(NEARFOODS[0][0]) // Ensure NEARFOODS is not empty before accessing
-		}
+			println(NEARFOODS[0][0])
+	} else {
+			println("No nearby foods found")
+	}
 		// println(ENEMIES[0][0])
 	}
-
 	return GameSceneId
 
 }

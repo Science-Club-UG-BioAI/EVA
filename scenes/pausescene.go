@@ -1,7 +1,7 @@
 package scenes
 
 import (
-	"image/color"
+	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -9,7 +9,8 @@ import (
 )
 
 type PauseScene struct {
-	loaded bool
+	loaded          bool
+	backgroundImage *ebiten.Image
 }
 
 func NewPauseScene() *PauseScene {
@@ -18,15 +19,23 @@ func NewPauseScene() *PauseScene {
 	}
 }
 
-// Draw implements Scene.
+// Draw implements Scene
 func (p *PauseScene) Draw(screen *ebiten.Image) {
-	screen.Fill(color.RGBA{200, 200, 50, 1})
-	ebitenutil.DebugPrint(screen, "Press escape unpause")
+	if p.backgroundImage != nil {
+			op := &ebiten.DrawImageOptions{}
+			screen.DrawImage(p.backgroundImage, op)
+	}
+	ebitenutil.DebugPrint(screen, "Press escape to unpause")
 }
 
 // FirstLoad implements Scene.
 func (p *PauseScene) FirstLoad() {
 	p.loaded = true
+	img, _, err := ebitenutil.NewImageFromFile("assets/images/start_background.png")
+	if err != nil {
+			log.Fatalf("failed to load background image: %v", err)
+	}
+	p.backgroundImage = img
 }
 
 // IsLoaded implements Scene.
