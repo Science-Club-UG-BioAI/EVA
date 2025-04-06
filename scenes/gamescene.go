@@ -755,11 +755,6 @@ func (g *GameScene) Update() SceneId {
 		// println(ENEMIES[0][0])
 	}
 
-	if g.gameOver {
-		// Transition back to DietSelectionScene when the game is over
-		return ExitSceneId
-	}
-
 	return GameSceneId
 
 }
