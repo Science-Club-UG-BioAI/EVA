@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 
@@ -105,6 +107,46 @@ func (c *Connection) copy() Connection { //tworzy kopie polaczenia - potrzebne a
 		Inno:     c.Inno,
 		Enabled:  c.Enabled,
 	}
+}
+
+//funckja forward
+func (g *Genom) Forward(inputs []float64) []float64 {
+	nodeValues := make(map[int]float64)
+
+	for i := 0; i < g.Inputs; i++ {
+		nodeValues[g.Nodes[i].Number] = inputs[i]
+	}
+	sortedNodes := make([]Node, len(g.Nodes))
+	copy(sortedNodes, g.Nodes)
+	sort.Slice(sortedNodes, func(i, j int) bool {
+		return sortedNodes[i].Layer < sortedNodes[j].Layer
+	})
+	for _, node := range sortedNodes {
+		if node.Layer == g.Input_Layer {
+			continue
+		}
+		sum := 0.0
+		for _,conn := range node.InConnections {
+			if conn.Enabled {
+				sum += nodeValues[conn.In_node.Number] * conn.Weight
+			}
+		}
+		nodeValues[node.Number] = relu(sum)
+	}
+	outputs := []float64{}
+	for _, node := range g.Nodes {
+		if node.Layer == g.Output_Layer {
+			outputs = append(outputs, nodeValues[node.Number])
+		}
+	}
+	return outputs
+}
+//funkcja aktywacji relu
+func relu(x float64) float64 {
+	if x > 0 {
+		return x
+	}
+	return 0 
 }
 
 
