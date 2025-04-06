@@ -256,7 +256,7 @@ func (g *GameScene) FirstLoad() {
 			entities.Idle: animations.NewAnimation(240, 240, 1, 5.0),
 		},
 		CombatComp: components.NewPlayerCombat(3, 1, 6000),
-		Diet:       0,
+		Diet:       SelectedDiet, // Use the diet selected by the user
 		Dmg:        1,
 		MaxHealth:  3,
 	}
@@ -749,9 +749,17 @@ func (g *GameScene) Update() SceneId {
 			}
 		}
 		NEARFOODS = newNEARFOODS
-		println(NEARFOODS[0][0])
+		if len(NEARFOODS) > 0 {
+			println(NEARFOODS[0][0]) // Ensure NEARFOODS is not empty before accessing
+		}
 		// println(ENEMIES[0][0])
 	}
+
+	if g.gameOver {
+		// Transition back to DietSelectionScene when the game is over
+		return ExitSceneId
+	}
+
 	return GameSceneId
 
 }

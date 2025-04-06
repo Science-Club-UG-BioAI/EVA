@@ -20,6 +20,16 @@ type DietSelectionScene struct {
 	startButtonRect      Rect
 }
 
+var Carnivore = 0
+var Omnivore = 1
+var Herbivore = 2
+
+var SelectedDiet int // Global variable to store the selected diet
+
+func SetSelectedDiet(diet int) {
+	SelectedDiet = diet
+}
+
 func NewDietSelectionScene() *DietSelectionScene {
 	return &DietSelectionScene{
 		carnivoreButtonRect: Rect{X: 100, Y: 150, Width: 200, Height: 50},
@@ -50,12 +60,15 @@ func (s *DietSelectionScene) Update() SceneId {
 		if cursorX >= s.carnivoreButtonRect.X && cursorX <= s.carnivoreButtonRect.X+s.carnivoreButtonRect.Width &&
 			cursorY >= s.carnivoreButtonRect.Y && cursorY <= s.carnivoreButtonRect.Y+s.carnivoreButtonRect.Height {
 			s.selectedDiet = "Carnivore"
+			SetSelectedDiet(Carnivore) // Use Carnivore constant
 		} else if cursorX >= s.omnivoreButtonRect.X && cursorX <= s.omnivoreButtonRect.X+s.omnivoreButtonRect.Width &&
 			cursorY >= s.omnivoreButtonRect.Y && cursorY <= s.omnivoreButtonRect.Y+s.omnivoreButtonRect.Height {
 			s.selectedDiet = "Omnivore"
+			SetSelectedDiet(Omnivore) // Use Omnivore constant
 		} else if cursorX >= s.herbivoreButtonRect.X && cursorX <= s.herbivoreButtonRect.X+s.herbivoreButtonRect.Width &&
 			cursorY >= s.herbivoreButtonRect.Y && cursorY <= s.herbivoreButtonRect.Y+s.herbivoreButtonRect.Height {
 			s.selectedDiet = "Herbivore"
+			SetSelectedDiet(Herbivore) // Use Herbivore constant
 		}
 	}
 
