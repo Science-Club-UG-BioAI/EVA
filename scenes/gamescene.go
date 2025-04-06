@@ -11,6 +11,7 @@ import (
 	"projectEVA/camera"
 	"projectEVA/components"
 	"projectEVA/constants"
+	"projectEVA/data"
 	"projectEVA/entities"
 	"projectEVA/spritesheet"
 	"projectEVA/tilemap"
@@ -805,3 +806,43 @@ var PLAYERY float64 = 0
 
 var ENEMIES []([3]float64) = make([][3]float64, 0)
 var NEARFOODS []([]float64) = make([][]float64, 0)
+
+//laczenie AI z gra
+
+func (g *GameScene) ControlByAI(genom *data.Genom) {
+	inputs := g.PrepareInputs()
+	outputs := genom.Forward(inputs)
+	moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
+
+	g.player.Dx = (outputs[0]*2 - 1) * moveScale
+	g.player.Dy = (outputs[1]*2 - 1) * moveScale
+
+}
+
+func (g *GameScene) PrepareInputs() []float64 {
+	inputs := []float64{
+		PLAYERHP / 10.0,
+		PLAYERDMG / 10.0,
+		PLAYERSPEED / 10.0,
+		PLAYEREFFICIENCY / 10.0,
+		PLAYERX / float64(constants.GameWidth),
+		PLAYERY / float64(constants.GameHeight),
+	}
+	if len(NEARFOODS) > 0 {
+		distance := NEARFOODS[0][0] / 500.0
+		angle := NEARFOODS[0][1] / 180.0
+		inputs = append(inputs, distance, angle)
+	} else {
+		inputs = append(inputs, 0.0, 0.0)
+	}
+	if len(ENEMIES) > 0 {
+		distance := ENEMIES[0][0] / 500.0
+		angle := ENEMIES[0][1] / 180.0
+		enemyHP := ENEMIES[0][2] / 10.0
+		inputs = append(inputs, distance, angle, enemyHP)
+	} else {
+		inputs = append(inputs, 0.0, 0.0, 0.0)
+	}
+	fmt.Printf("INPUTS to NEAT: %+v\n", inputs)
+	return inputs
+}
