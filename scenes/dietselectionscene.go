@@ -11,13 +11,13 @@ import (
 )
 
 type DietSelectionScene struct {
-	loaded               bool
-	backgroundImage      *ebiten.Image
-	carnivoreButtonRect  Rect
-	omnivoreButtonRect   Rect
-	herbivoreButtonRect  Rect
-	selectedDiet         string
-	startButtonRect      Rect
+	loaded              bool
+	backgroundImage     *ebiten.Image
+	carnivoreButtonRect Rect
+	omnivoreButtonRect  Rect
+	herbivoreButtonRect Rect
+	selectedDiet        string
+	startButtonRect     Rect
 }
 
 func NewDietSelectionScene() *DietSelectionScene {
@@ -70,7 +70,7 @@ func (s *DietSelectionScene) Update() SceneId {
 		}
 	}
 
-	// if needed this id can be updated to transition to another scene 
+	// if needed this id can be updated to transition to another scene
 	return DietSelectionSceneId
 }
 
@@ -165,4 +165,4 @@ func (s *DietSelectionScene) drawButton(screen *ebiten.Image, rect Rect, label s
 }
 
 func (s *DietSelectionScene) OnEnter() {}
-func (s *DietSelectionScene) OnExit() {}
+func (s *DietSelectionScene) OnExit()  {}

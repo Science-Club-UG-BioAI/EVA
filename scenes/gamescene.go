@@ -386,7 +386,7 @@ func (g *GameScene) Update() SceneId {
 			int(g.player.X+(constants.Tilesize*g.player.Size)),
 			int(g.player.Y+(constants.Tilesize*g.player.Size)),
 		)
-
+		// enemy behavior
 		deadEnemies := make(map[int]struct{})
 		numberOfEnemies = 0
 		numberOfFood = 0
@@ -702,7 +702,7 @@ func (g *GameScene) Update() SceneId {
 					entities.Agressive: animations.NewAnimation(60, 89, 1, 5.0),
 				},
 				Follows:    true,
-				CombatComp: components.NewEnemyCombat(float64(randRange(int(g.player.MaxHealth*0.9), int(g.player.MaxHealth*1.1))), float64(randRange(int(g.player.Dmg*0.9), int(g.player.Dmg*1.1))), 3000),
+				CombatComp: components.NewEnemyCombat(float64(randRange(int(g.player.MaxHealth*0.9), int(g.player.MaxHealth*1.1))), math.Max(1, float64(randRange(int(g.player.Dmg*0.9), int(g.player.Dmg*1.1)))), 3000),
 				Type:       2,
 				Speed:      float64(randRange(int(g.player.Speed*0.9), int(g.player.Speed*1.1))),
 			}

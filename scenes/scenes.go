@@ -9,6 +9,8 @@ const (
 	GameSceneId SceneId = iota
 	StartSceneId
 	PauseSceneId
+	DietSelectionSceneId
+	CharacterSelectionSceneId
 	ExitSceneId
 )
 
