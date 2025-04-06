@@ -1,0 +1,20 @@
+package scenes
+
+type NazwaSceny struct{}
+
+var _ Scene = (*NazwaSceny)(nil)
+
+// teraz jak najedziesz na podkreślenie i dasz szybką naprawe błedu 'define cośtam'
+// to uzupełni wszystkie potrzebne funkcje i nie trzeba pisać z palca
+// treść funkcji możesz skopiować z startscene tam jest giga podstawowe potrzebne tylko
+
+// ważne żeby do struct wpisywać rzeczy dopiero po uzupełnieniu bo inaczej autouzupełnianie
+// nie działa
+
+// potem jeszcze dodać konstruktor 
+
+func NewNazwaSceny() *NazwaSceny {
+	return &NazwaSceny{
+		loaded: false,
+	}
+}

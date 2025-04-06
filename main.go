@@ -1,21 +1,19 @@
-// TESTOWA DO NODE I CONNECTION
 package main
 
 import (
-	"NEAT/data"
-	"math/rand"
+	"log"
+
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 func main() {
-	n1 := data.Node{Number: 1, Layer: 2}
-	n2 := data.Node{Number: 2, Layer: 3}
-	con := data.Connection{
-		In_node:  n1,
-		Out_node: n2,
-		Weight:   rand.Float64()*2 - 1,
-		Inno:     -1,
-		Enabled:  true,
-	}
-	con.ShowConn()
+	ebiten.SetWindowSize(1920, 1080)
+	ebiten.SetWindowTitle("ProjectEVA")
+	ebiten.SetWindowResizingMode(ebiten.WindowResizingModeEnabled)
 
+	game := NewGame()
+
+	if err := ebiten.RunGame(game); err != nil {
+		log.Fatal(err)
+	}
 }
