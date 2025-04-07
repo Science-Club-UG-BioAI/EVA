@@ -295,13 +295,13 @@ func (g *GameScene) FirstLoad() {
 	g.enemyKilled = 0
 	g.timePassed = 0
 
-	//tworzenie ai do testow
+	//tworzenie ai do testow - START
 	population = []*data.Genom{}
 	sharedHistory := &data.Connectionh{}
 	for i := 0; i < 100; i++ {
 		g := &data.Genom{
 			Inputs:        6,
-			Outputs:       2,
+			Outputs:       8,
 			Creation_Rate: 1.0,
 			Input_Layer:   0,
 			Output_Layer:  1,
@@ -338,6 +338,7 @@ func (g *GameScene) FirstLoad() {
 		}
 		fmt.Println("----------------------------------")
 	}
+	//AI - koniec
 	g.loaded = true
 
 }
@@ -359,10 +360,11 @@ func (g *GameScene) Update() SceneId {
 	}
 	if !g.gamePause && !g.gameOver {
 		// Calories
-		//testowanie do ai
+		//testowanie do ai - start
 		if currentGenom != nil {
 			g.ControlByAI(currentGenom)
 		}
+		//testowanie do ai - koniec
 		if g.caloryCount {
 			g.player.Calories -= 0.1 * g.player.Efficiency * g.player.EfficiencyMultiplier
 			g.timePassed += 1
@@ -825,7 +827,7 @@ func (g *GameScene) Update() SceneId {
 		// println(ENEMIES[0][0])
 	}
 	// dane do funkcji kosztu
-	//przechodzenie po genomach
+	//przechodzenie po genomach - start
 	if g.gameOver || g.timePassed >= GenomLifetimeFrames {
 		fitness := currentGenom.EvaluateFitness(SCORE, g.foodEaten, g.enemyKilled, g.timePassed, g.player.CombatComp.Health())
 		fmt.Printf("Genom %d fitness: %f\n", currentGenIndex, fitness)
@@ -840,7 +842,7 @@ func (g *GameScene) Update() SceneId {
 			g.gamePause = true
 		}
 	}
-
+	//przchodzenie po genomach - koniec
 	return GameSceneId
 
 }
