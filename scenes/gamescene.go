@@ -301,7 +301,7 @@ func (g *GameScene) FirstLoad() {
 	for i := 0; i < 100; i++ {
 		g := &data.Genom{
 			Inputs:        6,
-			Outputs:       2,
+			Outputs:       8,
 			Creation_Rate: 1.0,
 			Input_Layer:   0,
 			Output_Layer:  1,
@@ -903,7 +903,6 @@ func (g *GameScene) ControlByAI(genom *data.Genom) {
 	outputs := genom.Forward(inputs)
 	fmt.Printf("OUTPUTS z NEAT: %v (len: %d)\n", outputs, len(outputs))
 	if len(outputs) < 2 {
-		fmt.Println("❌ Błąd: Zbyt mało outputów! Zatrzymuję AI sterowanie.")
 		return
 	}
 	moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
