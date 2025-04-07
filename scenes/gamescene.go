@@ -300,9 +300,9 @@ func (g *GameScene) FirstLoad() {
 	sharedHistory := &data.InnovationHistory{}
 	for i := 0; i < 100; i++ {
 		g := &data.Genom{
-			NumInputs:        6,
-			NumOutputs:       2,
-			TotalNodes:       8,
+			NumInputs:        15,
+			NumOutputs:       8,
+			TotalNodes:       23,
 			Nodes:            []*data.Node{},
 			ConnCreationRate: 1.0,
 			IH:               sharedHistory,
@@ -779,6 +779,7 @@ func (g *GameScene) Update() SceneId {
 		}
 
 		// AI VARS ?
+		PLAYERCALORIES = g.player.Calories
 		PLAYERHP = g.player.CombatComp.Health()
 		PLAYERDMG = g.player.Dmg
 		PLAYERSPEED = g.player.Speed
@@ -787,6 +788,7 @@ func (g *GameScene) Update() SceneId {
 		PLAYERY = g.player.Y
 		ENEMIES = make([][3]float64, 0)
 		NEARFOODS = make([][]float64, 0)
+		NEARVITAMINS = make([][]float64, 0)
 		for _, enemy := range g.enemies {
 			if enemy.Type == 2 {
 				dystans := math.Sqrt(math.Pow(g.player.X-enemy.X, 2) + math.Pow(g.player.Y-enemy.Y, 2))
@@ -817,11 +819,27 @@ func (g *GameScene) Update() SceneId {
 				break
 			}
 		}
+		deepsort.DeepSort(&NEARVITAMINS, []float64{0})
+		newNEARVITAMINS := make([][]float64, 0)
+		for index, _ := range NEARVITAMINS {
+			if index < 10 {
+				newNEARVITAMINS = append(newNEARVITAMINS, NEARVITAMINS[index])
+			} else {
+				break
+			}
+		}
 		NEARFOODS = newNEARFOODS
 		//zapewnia nie danie pustej tablicy (wypluwa wtedy puste outputy)
 		if len(NEARFOODS) > 0 {
 			if len(NEARFOODS[0]) > 0 {
 				fmt.Println(NEARFOODS[0][0])
+			}
+		}
+		NEARVITAMINS = newNEARVITAMINS
+		//zapewnia nie danie pustej tablicy (wypluwa wtedy puste outputy)
+		if len(NEARVITAMINS) > 0 {
+			if len(NEARVITAMINS[0]) > 0 {
+				fmt.Println(NEARVITAMINS[0][0])
 			}
 		}
 		// println(ENEMIES[0][0])
@@ -885,7 +903,9 @@ func randRange(min, max int) int {
 
 var numberOfFood int = 0
 var numberOfEnemies int = 0
+var numberOfVitamins int = 0
 
+var PLAYERCALORIES float64 = 0
 var SCORE int = 0
 var PLAYERHP float64 = 0
 var PLAYERDMG float64 = 0
@@ -896,6 +916,7 @@ var PLAYERY float64 = 0
 
 var ENEMIES []([3]float64) = make([][3]float64, 0)
 var NEARFOODS []([]float64) = make([][]float64, 0)
+var NEARVITAMINS []([]float64) = make([][]float64, 0)
 
 //laczenie AI z gra
 
@@ -905,24 +926,52 @@ func (g *GameScene) ControlByAI(genom *data.Genom) {
 	fmt.Printf("INPUTS to NEAT: %v\n", inputs)
 	outputs := genom.Forward(inputs)
 	fmt.Printf("OUTPUTS z NEAT: %v (len: %d)\n", outputs, len(outputs))
-	if len(outputs) < 2 {
+	if len(outputs) < 8 {
 		return
 	}
-	moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
-	g.player.Dx = (outputs[0]*2 - 1) * moveScale
-	g.player.Dy = (outputs[1]*2 - 1) * moveScale
+	directions := [8][2]float64{
+		{0, -1},  // ↑
+		{0, 1},   // ↓
+		{-1, 0},  // ←
+		{1, 0},   // →
+		{-1, -1}, // ↖
+		{1, -1},  // ↗
+		{1, 1},   // ↘
+		{-1, 1},  // ↙
+	}
+	// szukamy kierunku o najwyższym output
+	bestIndex := 0
+	bestValue := outputs[0]
+	for i, val := range outputs {
+		if val > bestValue {
+			bestValue = val
+			bestIndex = i
+		}
+	}
 
+	moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
+	dir := directions[bestIndex]
+
+	length := math.Sqrt(dir[0]*dir[0] + dir[1]*dir[1])
+	if length != 0 {
+		dir[0] /= length
+		dir[1] /= length
+	}
+	g.player.Dx = (dir[0]*2 - 1) * moveScale
+	g.player.Dy = (dir[1]*2 - 1) * moveScale
 }
 
 // przygotowanie inputow dla NEATA
 func (g *GameScene) PrepareInputs() []float64 {
 	inputs := []float64{
-		0.2,
-		0.1,
-		0.3,
-		0.2,
-		0.15,
-		0.4,
+		float64(SCORE) / 10.0,
+		PLAYERHP / 10.0,
+		PLAYERDMG / 10.0,
+		PLAYERSPEED / 10.0,
+		PLAYEREFFICIENCY / 10.0,
+		PLAYERX / float64(constants.GameWidth),
+		PLAYERY / float64(constants.GameHeight),
+		PLAYERCALORIES / 10.0,
 	}
 
 	if len(NEARFOODS) > 0 {
@@ -931,7 +980,17 @@ func (g *GameScene) PrepareInputs() []float64 {
 		inputs = append(inputs, distance, angle)
 	} else {
 		inputs = append(inputs, 0.0, 0.0)
+
 	}
+
+	if len(NEARVITAMINS) > 0 {
+		distance := NEARVITAMINS[0][0] / 500.0
+		angle := NEARFOODS[0][1] / 180.0
+		inputs = append(inputs, distance, angle)
+	} else {
+		inputs = append(inputs, 0.0, 0.0)
+	}
+
 	if len(ENEMIES) > 0 {
 		distance := ENEMIES[0][0] / 500.0
 		angle := ENEMIES[0][1] / 180.0
