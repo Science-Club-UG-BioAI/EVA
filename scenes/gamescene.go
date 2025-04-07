@@ -297,23 +297,23 @@ func (g *GameScene) FirstLoad() {
 
 	//tworzenie ai do testow - START
 	population = []*data.Genom{}
-	sharedHistory := &data.Connectionh{}
+	sharedHistory := &data.InnovationHistory{}
 	for i := 0; i < 100; i++ {
 		g := &data.Genom{
-			Inputs:        6,
-			Outputs:       8,
-			Creation_Rate: 1.0,
-			Input_Layer:   0,
-			Output_Layer:  1,
-			Ch:            *sharedHistory,
-			Create:        true,
+			NumInputs:        6,
+			NumOutputs:       2,
+			TotalNodes:       8,
+			Nodes:            []*data.Node{},
+			ConnCreationRate: 1.0,
+			IH:               sharedHistory,
+			Fitness:          0,
 		}
 		g.CreateNetwork()
 		fmt.Printf("\nGENOM #%d\n", i)
 		for _, c := range g.Connections {
-			fmt.Printf("Połączenie: In=%d (Layer %d) → Out=%d (Layer %d), Waga=%.2f\n",
-				c.In_node.Number, c.In_node.Layer,
-				c.Out_node.Number, c.Out_node.Layer,
+			fmt.Printf("Połączenie: In=%d (Type %d) → Out=%d (Type %d), Waga=%.2f\n",
+				c.InNode.ID, c.InNode.Type,
+				c.OutNode.ID, c.OutNode.Type,
 				c.Weight,
 			)
 		}
@@ -329,12 +329,12 @@ func (g *GameScene) FirstLoad() {
 		fmt.Printf("GENOM %d:\n", i)
 		fmt.Printf("  NODES:\n")
 		for _, node := range genom.Nodes {
-			fmt.Printf("    Node %d (Layer: %d)\n", node.Number, node.Layer)
+			fmt.Printf("    Node %d (Type: %d)\n", node.ID, node.Type)
 		}
 		fmt.Printf("  CONNECTIONS:\n")
 		for _, conn := range genom.Connections {
 			fmt.Printf("    [%d] %d -> %d | Weight: %.2f | Enabled: %v\n",
-				conn.Inno, conn.In_node.Number, conn.Out_node.Number, conn.Weight, conn.Enabled)
+				conn.Innovation, conn.InNode.ID, conn.OutNode.ID, conn.Weight, conn.Enabled)
 		}
 		fmt.Println("----------------------------------")
 	}
@@ -917,12 +917,12 @@ func (g *GameScene) ControlByAI(genom *data.Genom) {
 // przygotowanie inputow dla NEATA
 func (g *GameScene) PrepareInputs() []float64 {
 	inputs := []float64{
-		PLAYERHP / 10.0,
-		PLAYERDMG / 10.0,
-		PLAYERSPEED / 10.0,
-		PLAYEREFFICIENCY / 10.0,
-		PLAYERX / float64(constants.GameWidth),
-		PLAYERY / float64(constants.GameHeight),
+		0.2,
+		0.1,
+		0.3,
+		0.2,
+		0.15,
+		0.4,
 	}
 
 	if len(NEARFOODS) > 0 {
