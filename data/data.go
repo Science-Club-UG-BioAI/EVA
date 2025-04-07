@@ -80,7 +80,7 @@ func (genom *Genom) CreateNetwork() {
 	// adding inputs nodes
 	for i := 0; i < genom.NumInputs; i++ {
 		genom.Nodes = append(genom.Nodes, &Node{ID: genom.TotalNodes, Type: Input})
-		genom.TotalNodes++
+		genom.TotalNodes++ //sprawdzic bo podwaja nodey
 	}
 	// adding output nodes
 	for i := 0; i < genom.NumOutputs; i++ {
@@ -208,7 +208,7 @@ func (genom *Genom) Forward(inputs []float64) []float64 {
 		}
 		inVal := nodeValues[conn.InNode.ID]
 		weightedVal := inVal * conn.Weight
-		nodeValues[conn.OutNode.ID] += weightedVal
+		nodeValues[conn.OutNode.ID] += relu(weightedVal)
 		fmt.Printf("Połączenie: %+v => Przekazuje: %.3f * %.3f = %.3f\n",
 			conn, inVal, conn.Weight, inVal*conn.Weight)
 	}
@@ -425,6 +425,13 @@ func (pop *Population) sameSpecies(genom1, genom2 *Genom) bool {
 	return delta < pop.Threshold
 }
 
+func relu(x float64) float64 { //funkcja aktywacji relu - wywolywana w funkcji forward
+	if x > 0 {
+		return x
+	}
+	return 0
+}
+
 // – – – – – – – – – – – – – – – – – TESTING – – – – – – – – – – – – – – – – – – – – – – –
 
 func (t NodeType) String() string {
@@ -466,26 +473,26 @@ func (genom *Genom) showNodes() {
 	}
 }
 
-func main() {
-	// testing
+// func main() {
+// 	// testing
 
-	globalInno := InnovationHistory{
-		History: map[InnovationKey]int{},
-	}
-	pop := Population{
-		PopSize:           2,
-		CurrentGeneration: 0,
-		C1:                1.0,
-		C2:                1.0,
-		Threshold:         2.0,
-	}
+// 	globalInno := InnovationHistory{
+// 		History: map[InnovationKey]int{},
+// 	}
+// 	pop := Population{
+// 		PopSize:           2,
+// 		CurrentGeneration: 0,
+// 		C1:                1.0,
+// 		C2:                1.0,
+// 		Threshold:         2.0,
+// 	}
 
-	g1 := Genom{NumInputs: 1, NumOutputs: 1, IH: &globalInno, ConnCreationRate: 1.0}
-	g2 := Genom{NumInputs: 1, NumOutputs: 1, IH: &globalInno, ConnCreationRate: 0.0}
-	g1.CreateNetwork()
-	g2.CreateNetwork()
-	pop.addToSpecies(&g1)
-	pop.addToSpecies(&g2)
+// 	g1 := Genom{NumInputs: 1, NumOutputs: 1, IH: &globalInno, ConnCreationRate: 1.0}
+// 	g2 := Genom{NumInputs: 1, NumOutputs: 1, IH: &globalInno, ConnCreationRate: 0.0}
+// 	g1.CreateNetwork()
+// 	g2.CreateNetwork()
+// 	pop.addToSpecies(&g1)
+// 	pop.addToSpecies(&g2)
 
-	fmt.Println("num species:", len(pop.AllSpecies))
-}
+// 	fmt.Println("num species:", len(pop.AllSpecies))
+// }

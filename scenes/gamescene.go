@@ -302,7 +302,7 @@ func (g *GameScene) FirstLoad() {
 		g := &data.Genom{
 			NumInputs:        15,
 			NumOutputs:       8,
-			TotalNodes:       23,
+			TotalNodes:       23, //uwazac bo createnetwork tutaj dodaje
 			Nodes:            []*data.Node{},
 			ConnCreationRate: 1.0,
 			IH:               sharedHistory,
