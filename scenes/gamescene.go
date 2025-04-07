@@ -24,6 +24,17 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/vector"
 )
 
+// testowanie populacji
+var population []*data.Genom
+var currentGenom *data.Genom
+var currentGenIndex int
+var generation int = 1
+
+// Limit czasu trwania życia genomu (w sekundach i klatkach)
+const GenomLifetimeInSeconds = 10
+const FramesPerSecond = 60
+const GenomLifetimeFrames = GenomLifetimeInSeconds * FramesPerSecond
+
 type GameScene struct {
 	loaded             bool
 	gamePause          bool
@@ -184,6 +195,13 @@ func (g *GameScene) Draw(screen *ebiten.Image) {
 			g.player.X, g.player.Y, g.player.Calories, g.player.Diet, g.player.Speed, g.player.Efficiency, g.player.CombatComp.Health(), g.player.SpeedMultiplier, g.player.EfficiencyMultiplier, g.player.TempHP, g.vitaminDuration))
 	ebitenutil.DebugPrintAt(screen,
 		fmt.Sprintf("Game State: \n Game Pause: %v\n Game Over: %v\n Score: %v\n Enemies on map: %v\n Food on map: %v\n Vitamins on map: %v", g.gamePause, g.gameOver, SCORE, numberOfEnemies, numberOfFood, len(g.vitamins)), 0, 300)
+	if currentGenom != nil {
+		ebitenutil.DebugPrintAt(screen,
+			fmt.Sprintf("Genom: %d/%d\nGeneracja: %d\nFitness: %.2f",
+				currentGenIndex+1, len(population), generation, currentGenom.Fitness),
+			10, 500)
+	}
+
 	if g.gameOver {
 		ebitenutil.DebugPrintAt(screen,
 			fmt.Sprintf("GAME OVER\n"), 480, 270)
@@ -277,7 +295,51 @@ func (g *GameScene) FirstLoad() {
 	g.enemyKilled = 0
 	g.timePassed = 0
 
+	//tworzenie ai do testow
+	population = []*data.Genom{}
+	sharedHistory := &data.Connectionh{}
+	for i := 0; i < 100; i++ {
+		g := &data.Genom{
+			Inputs:        6,
+			Outputs:       2,
+			Creation_Rate: 1.0,
+			Input_Layer:   0,
+			Output_Layer:  1,
+			Ch:            *sharedHistory,
+			Create:        true,
+		}
+		g.CreateNetwork()
+		fmt.Printf("\nGENOM #%d\n", i)
+		for _, c := range g.Connections {
+			fmt.Printf("Połączenie: In=%d (Layer %d) → Out=%d (Layer %d), Waga=%.2f\n",
+				c.In_node.Number, c.In_node.Layer,
+				c.Out_node.Number, c.Out_node.Layer,
+				c.Weight,
+			)
+		}
+		population = append(population, g)
+	}
+	currentGenIndex = 0
+	currentGenom = population[currentGenIndex]
+	// fmt.Println("Test fitness:", testGenom.EvaluateFitness(120, 3, 56, 32, 2)) //sprawdzanie dzialania funkcji fitness
+	// fmt.Printf("Utworzono populację z %d genomów\n", len(population)) //sprawdzanie czy populacja zostala stworzona
+	//print sprawdzajacy polaczenia w kazdym genomie
+	fmt.Println("=== PODGLĄD POPULACJI ===")
+	for i, genom := range population {
+		fmt.Printf("GENOM %d:\n", i)
+		fmt.Printf("  NODES:\n")
+		for _, node := range genom.Nodes {
+			fmt.Printf("    Node %d (Layer: %d)\n", node.Number, node.Layer)
+		}
+		fmt.Printf("  CONNECTIONS:\n")
+		for _, conn := range genom.Connections {
+			fmt.Printf("    [%d] %d -> %d | Weight: %.2f | Enabled: %v\n",
+				conn.Inno, conn.In_node.Number, conn.Out_node.Number, conn.Weight, conn.Enabled)
+		}
+		fmt.Println("----------------------------------")
+	}
 	g.loaded = true
+
 }
 
 func (g *GameScene) OnEnter() {
@@ -297,6 +359,10 @@ func (g *GameScene) Update() SceneId {
 	}
 	if !g.gamePause && !g.gameOver {
 		// Calories
+		//testowanie do ai
+		if currentGenom != nil {
+			g.ControlByAI(currentGenom)
+		}
 		if g.caloryCount {
 			g.player.Calories -= 0.1 * g.player.Efficiency * g.player.EfficiencyMultiplier
 			g.timePassed += 1
@@ -750,9 +816,30 @@ func (g *GameScene) Update() SceneId {
 			}
 		}
 		NEARFOODS = newNEARFOODS
-		println(NEARFOODS[0][0])
+		if len(NEARFOODS) > 0 {
+			if len(NEARFOODS[0]) > 0 {
+				fmt.Println(NEARFOODS[0][0])
+			}
+		}
 		// println(ENEMIES[0][0])
 	}
+	// dane do funkcji kosztu
+	//przechodzenie po genomach
+	if g.gameOver || g.timePassed >= GenomLifetimeFrames {
+		fitness := currentGenom.EvaluateFitness(SCORE, g.foodEaten, g.enemyKilled, g.timePassed, g.player.CombatComp.Health())
+		fmt.Printf("Genom %d fitness: %f\n", currentGenIndex, fitness)
+
+		currentGenIndex++
+		if currentGenIndex < len(population) {
+			currentGenom = population[currentGenIndex]
+			g.ResetGameState()
+		} else {
+			fmt.Println("Koniec pokolenia")
+			// TODO: tu dodamy selekcję, krzyżowanie, mutację
+			g.gamePause = true
+		}
+	}
+
 	return GameSceneId
 
 }
@@ -810,15 +897,22 @@ var NEARFOODS []([]float64) = make([][]float64, 0)
 //laczenie AI z gra
 
 func (g *GameScene) ControlByAI(genom *data.Genom) {
+	print("=== AI CONTROL ===")
 	inputs := g.PrepareInputs()
+	fmt.Printf("INPUTS to NEAT: %v\n", inputs)
 	outputs := genom.Forward(inputs)
+	fmt.Printf("OUTPUTS z NEAT: %v (len: %d)\n", outputs, len(outputs))
+	if len(outputs) < 2 {
+		fmt.Println("❌ Błąd: Zbyt mało outputów! Zatrzymuję AI sterowanie.")
+		return
+	}
 	moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
-
 	g.player.Dx = (outputs[0]*2 - 1) * moveScale
 	g.player.Dy = (outputs[1]*2 - 1) * moveScale
 
 }
 
+// przygotowanie inputow dla NEATA
 func (g *GameScene) PrepareInputs() []float64 {
 	inputs := []float64{
 		PLAYERHP / 10.0,
@@ -828,6 +922,7 @@ func (g *GameScene) PrepareInputs() []float64 {
 		PLAYERX / float64(constants.GameWidth),
 		PLAYERY / float64(constants.GameHeight),
 	}
+
 	if len(NEARFOODS) > 0 {
 		distance := NEARFOODS[0][0] / 500.0
 		angle := NEARFOODS[0][1] / 180.0
@@ -845,4 +940,47 @@ func (g *GameScene) PrepareInputs() []float64 {
 	}
 	fmt.Printf("INPUTS to NEAT: %+v\n", inputs)
 	return inputs
+}
+
+// funkcja resetujaca gre dla ai
+func (g *GameScene) ResetGameState() {
+	// Reset playera
+	g.player.X = (constants.GameWidth / 2) + 16
+	g.player.Y = (constants.GameHeight / 2) + 16
+	g.player.Calories = 500.0
+	g.player.Speed = 5
+	g.player.Efficiency = 1
+	g.player.SpeedMultiplier = 1
+	g.player.EfficiencyMultiplier = 1
+	g.player.TempHP = 0
+	g.player.Diet = 0
+	g.player.Dmg = 1
+	g.player.MaxHealth = 3
+	g.player.CombatComp = components.NewPlayerCombat(3, 1, 6000)
+
+	// Reset mapy i przeciwników
+	g.enemies = []*entities.Enemy{}
+	g.vitamins = []*entities.Vitamin{}
+	g.foodEaten = 0
+	g.enemyKilled = 0
+	g.timePassed = 0
+	g.vitaminDuration = 0
+	g.caloryCount = true
+	g.gameOver = false
+
+	// Reset kamery
+	g.cam = camera.NewCamera(0.0, 0.0)
+
+	// Reset zmiennych globalnych NEAT-a:
+	SCORE = 0
+	numberOfFood = 0
+	numberOfEnemies = 0
+	PLAYERHP = 0
+	PLAYERDMG = 0
+	PLAYERSPEED = 0
+	PLAYEREFFICIENCY = 0
+	PLAYERX = 0
+	PLAYERY = 0
+	ENEMIES = make([][3]float64, 0)
+	NEARFOODS = make([][]float64, 0)
 }
