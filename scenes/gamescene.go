@@ -31,7 +31,7 @@ var currentGenIndex int
 var generation int = 1
 
 // Limit czasu trwania życia genomu (w sekundach i klatkach)
-const GenomLifetimeInSeconds = 10
+const GenomLifetimeInSeconds = 120
 const FramesPerSecond = 60
 const GenomLifetimeFrames = GenomLifetimeInSeconds * FramesPerSecond
 
@@ -223,7 +223,7 @@ func (g *GameScene) FirstLoad() {
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }
-	tilemapImg, _, err := ebitenutil.NewImageFromFile("assets/images/Water+.png")
+	tilemapImg, _, err := ebitenutil.NewImageFromFile("assets/images/Water.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -624,31 +624,31 @@ func (g *GameScene) Update() SceneId {
 			g.vitaminDuration--
 		}
 
-		// Infinite map illusion
-		if g.player.X >= constants.GameWidth-constants.WindowWidth {
-			g.player.X = 0 + constants.WindowWidth + 1
+		// Teleport map edge
+		if g.player.X >= constants.GameWidth {
+			g.player.X = 1
 		}
-		if g.player.X <= 0+constants.WindowWidth {
-			g.player.X = constants.GameWidth - constants.WindowWidth - 1
+		if g.player.X <= 0 {
+			g.player.X = constants.GameWidth - 1
 		}
-		if g.player.Y >= constants.GameHeight-constants.WindowHeight {
-			g.player.Y = 0 + constants.WindowHeight + 1
+		if g.player.Y >= constants.GameHeight {
+			g.player.Y = 1
 		}
-		if g.player.Y <= 0+constants.WindowHeight {
-			g.player.Y = constants.GameHeight - constants.WindowHeight - 1
+		if g.player.Y <= 0 {
+			g.player.Y = constants.GameHeight - 1
 		}
 		for _, sprite := range g.enemies {
-			if sprite.X >= constants.GameWidth-constants.WindowWidth {
-				sprite.X = 0 + constants.WindowWidth + 1
+			if sprite.X >= constants.GameWidth {
+				sprite.X = 1
 			}
-			if sprite.X <= 0+constants.WindowWidth {
-				sprite.X = constants.GameWidth - constants.WindowWidth - 1
+			if sprite.X <= 0 {
+				sprite.X = constants.GameWidth - 1
 			}
-			if sprite.Y >= constants.GameHeight-constants.WindowHeight {
-				sprite.Y = 0 + constants.WindowHeight + 1
+			if sprite.Y >= constants.GameHeight {
+				sprite.Y = 1
 			}
-			if sprite.Y <= 0+constants.WindowHeight {
-				sprite.Y = constants.GameHeight - constants.WindowHeight - 1
+			if sprite.Y <= 0 {
+				sprite.Y = constants.GameHeight - 1
 			}
 		}
 		g.cam.FollowTarget(g.player.X+(constants.Tilesize/2), g.player.Y+(constants.Tilesize/2), constants.WindowWidth, constants.WindowHeight)
@@ -664,8 +664,8 @@ func (g *GameScene) Update() SceneId {
 				}
 				newFood := &entities.Enemy{Sprite: &entities.Sprite{
 					Img:  enemiesImg,
-					X:    float64(randRange(0+constants.WindowWidth, constants.GameWidth-constants.WindowWidth)),
-					Y:    float64(randRange(0+constants.WindowHeight, constants.GameHeight-constants.WindowHeight)),
+					X:    float64(randRange(0, constants.GameWidth)),
+					Y:    float64(randRange(0, constants.GameHeight)),
 					Size: constants.FoodSize,
 				},
 					Animations: map[entities.EnemyState]*animations.Animation{
@@ -728,8 +728,8 @@ func (g *GameScene) Update() SceneId {
 				newVitamin := &entities.Vitamin{
 					Sprite: &entities.Sprite{
 						Img:  vitaminesImg,
-						X:    float64(randRange(0+constants.WindowWidth, constants.GameWidth-constants.WindowWidth)),
-						Y:    float64(randRange(0+constants.WindowHeight, constants.GameHeight-constants.WindowHeight)),
+						X:    float64(randRange(0, constants.GameWidth)),
+						Y:    float64(randRange(0, constants.GameHeight)),
 						Size: constants.VitaminSize,
 					},
 					Animations: map[entities.VitaminState]*animations.Animation{
@@ -759,8 +759,8 @@ func (g *GameScene) Update() SceneId {
 			newEnemy := &entities.Enemy{
 				Sprite: &entities.Sprite{
 					Img:  enemiesImg,
-					X:    float64(randRange(0+constants.WindowWidth, constants.GameWidth-constants.WindowWidth)),
-					Y:    float64(randRange(0+constants.WindowHeight, constants.GameHeight-constants.WindowHeight)),
+					X:    float64(randRange(0, constants.GameWidth)),
+					Y:    float64(randRange(0, constants.GameHeight)),
 					Size: 1,
 				},
 				Animations: map[entities.EnemyState]*animations.Animation{

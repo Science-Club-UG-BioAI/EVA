@@ -28,8 +28,8 @@ type UniformTileset struct {
 func (u *UniformTileset) Img(id int) *ebiten.Image {
 	id -= u.gid
 
-	srcX := id % 12 // 12 is a number of tiles in a row in tileset
-	srcY := id / 12
+	srcX := id % 4 // 12 is a number of tiles in a row in tileset
+	srcY := id / 4
 
 	srcX *= constants.Tilesize
 	srcY *= constants.Tilesize
