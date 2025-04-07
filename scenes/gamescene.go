@@ -903,7 +903,6 @@ func (g *GameScene) ControlByAI(genom *data.Genom) {
 	outputs := genom.Forward(inputs)
 	fmt.Printf("OUTPUTS z NEAT: %v (len: %d)\n", outputs, len(outputs))
 	if len(outputs) < 2 {
-		fmt.Println("❌ Błąd: Zbyt mało outputów! Zatrzymuję AI sterowanie.")
 		return
 	}
 	moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
