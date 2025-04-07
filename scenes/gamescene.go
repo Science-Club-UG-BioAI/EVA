@@ -255,24 +255,24 @@ func (g *GameScene) FirstLoad() {
 		TempHP:               0,
 		Size:                 1,
 		Animations: map[entities.PlayerState]*animations.Animation{
-			// entities.W:    animations.NewAnimation(0, 29, 1, 5.0),
-			// entities.WD:   animations.NewAnimation(30, 59, 1, 5.0),
-			// entities.D:    animations.NewAnimation(60, 89, 1, 5.0),
-			// entities.DS:   animations.NewAnimation(90, 119, 1, 5.0),
-			// entities.S:    animations.NewAnimation(120, 149, 1, 5.0),
-			// entities.SA:   animations.NewAnimation(150, 179, 1, 5.0),
-			// entities.A:    animations.NewAnimation(180, 209, 1, 5.0),
-			// entities.AW:   animations.NewAnimation(210, 239, 1, 5.0),
-			// entities.Idle: animations.NewAnimation(240, 269, 1, 5.0),
-			entities.W:    animations.NewAnimation(0, 0, 1, 5.0),
-			entities.WD:   animations.NewAnimation(30, 30, 1, 5.0),
-			entities.D:    animations.NewAnimation(60, 60, 1, 5.0),
-			entities.DS:   animations.NewAnimation(90, 90, 1, 5.0),
-			entities.S:    animations.NewAnimation(120, 120, 1, 5.0),
-			entities.SA:   animations.NewAnimation(150, 150, 1, 5.0),
-			entities.A:    animations.NewAnimation(180, 180, 1, 5.0),
-			entities.AW:   animations.NewAnimation(210, 210, 1, 5.0),
-			entities.Idle: animations.NewAnimation(240, 240, 1, 5.0),
+			entities.W:    animations.NewAnimation(0, 29, 1, 5.0),
+			entities.WD:   animations.NewAnimation(30, 59, 1, 5.0),
+			entities.D:    animations.NewAnimation(60, 89, 1, 5.0),
+			entities.DS:   animations.NewAnimation(90, 119, 1, 5.0),
+			entities.S:    animations.NewAnimation(120, 149, 1, 5.0),
+			entities.SA:   animations.NewAnimation(150, 179, 1, 5.0),
+			entities.A:    animations.NewAnimation(180, 209, 1, 5.0),
+			entities.AW:   animations.NewAnimation(210, 239, 1, 5.0),
+			entities.Idle: animations.NewAnimation(240, 269, 1, 5.0),
+			// entities.W:    animations.NewAnimation(0, 0, 1, 5.0),
+			// entities.WD:   animations.NewAnimation(30, 30, 1, 5.0),
+			// entities.D:    animations.NewAnimation(60, 60, 1, 5.0),
+			// entities.DS:   animations.NewAnimation(90, 90, 1, 5.0),
+			// entities.S:    animations.NewAnimation(120, 120, 1, 5.0),
+			// entities.SA:   animations.NewAnimation(150, 150, 1, 5.0),
+			// entities.A:    animations.NewAnimation(180, 180, 1, 5.0),
+			// entities.AW:   animations.NewAnimation(210, 210, 1, 5.0),
+			// entities.Idle: animations.NewAnimation(240, 240, 1, 5.0),
 		},
 		CombatComp: components.NewPlayerCombat(3, 1, 6000),
 		Diet:       0,
@@ -295,7 +295,7 @@ func (g *GameScene) FirstLoad() {
 	g.enemyKilled = 0
 	g.timePassed = 0
 
-	//tworzenie ai do testow
+	//tworzenie ai do testow - START
 	population = []*data.Genom{}
 	sharedHistory := &data.Connectionh{}
 	for i := 0; i < 100; i++ {
@@ -338,6 +338,7 @@ func (g *GameScene) FirstLoad() {
 		}
 		fmt.Println("----------------------------------")
 	}
+	//AI - koniec
 	g.loaded = true
 
 }
@@ -359,10 +360,11 @@ func (g *GameScene) Update() SceneId {
 	}
 	if !g.gamePause && !g.gameOver {
 		// Calories
-		//testowanie do ai
+		//testowanie do ai - start
 		if currentGenom != nil {
 			g.ControlByAI(currentGenom)
 		}
+		//testowanie do ai - koniec
 		if g.caloryCount {
 			g.player.Calories -= 0.1 * g.player.Efficiency * g.player.EfficiencyMultiplier
 			g.timePassed += 1
@@ -816,6 +818,7 @@ func (g *GameScene) Update() SceneId {
 			}
 		}
 		NEARFOODS = newNEARFOODS
+		//zapewnia nie danie pustej tablicy (wypluwa wtedy puste outputy)
 		if len(NEARFOODS) > 0 {
 			if len(NEARFOODS[0]) > 0 {
 				fmt.Println(NEARFOODS[0][0])
@@ -824,7 +827,7 @@ func (g *GameScene) Update() SceneId {
 		// println(ENEMIES[0][0])
 	}
 	// dane do funkcji kosztu
-	//przechodzenie po genomach
+	//przechodzenie po genomach - start
 	if g.gameOver || g.timePassed >= GenomLifetimeFrames {
 		fitness := currentGenom.EvaluateFitness(SCORE, g.foodEaten, g.enemyKilled, g.timePassed, g.player.CombatComp.Health())
 		fmt.Printf("Genom %d fitness: %f\n", currentGenIndex, fitness)
@@ -839,7 +842,7 @@ func (g *GameScene) Update() SceneId {
 			g.gamePause = true
 		}
 	}
-
+	//przchodzenie po genomach - koniec
 	return GameSceneId
 
 }
