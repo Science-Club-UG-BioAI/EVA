@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+// – – – – – – – – – – – – – – DATA TYPES AND STRUCTURES – – – – – – – – – – – – – – – – –
+
 type NodeType int
 
 const (
@@ -13,19 +15,6 @@ const (
 	Hidden                 // Hidden = 1
 	Output                 // Output = 2
 )
-
-func (t NodeType) String() string {
-	// helper funtion
-	// for more readable testing
-	switch t {
-	case Input:
-		return "Input"
-	case Output:
-		return "Output"
-	default:
-		return "Hidden"
-	}
-}
 
 type Node struct {
 	ID            int // unique node ID
@@ -55,69 +44,6 @@ type InnovationHistory struct {
 	Counter int
 }
 
-func (ih *InnovationHistory) getInnovation(inNode, outNode *Node) int {
-	// given nodes, returns innovation nubmer of the connection between them
-	key := InnovationKey{inNodeID: inNode.ID, outNodeID: outNode.ID}
-	if inno, exist := ih.History[key]; exist {
-		return inno
-		// if the connection hadn't existed, function gives it new innovation number
-		// and updates global innovation counter
-	}
-	ih.Counter++
-	ih.History[key] = ih.Counter
-	return ih.History[key]
-}
-
-func (genom *Genom) addConnetion(node1, node2 *Node, weight float64, enabled bool) {
-	// helper function
-	// given nodes, weight and enabled, adds specific connection to the genome
-	inno := genom.IH.getInnovation(node1, node2)
-	newConn := Connection{
-		InNode:     node1,
-		OutNode:    node2,
-		Weight:     weight,
-		Innovation: inno,
-		Enabled:    enabled,
-	}
-	genom.Connections = append(genom.Connections, newConn)
-	// adds connection to the node right away
-	node2.IncomingConns = append(node2.IncomingConns, newConn)
-}
-
-func (genom *Genom) connectionExist(inNode, outNode *Node) bool {
-	// helper function
-	// checks, if the connection already exist in the genome
-	for _, conn := range genom.Connections {
-		if conn.InNode.ID == inNode.ID && conn.OutNode.ID == outNode.ID {
-			return true
-		}
-	}
-	return false
-}
-
-func (genom *Genom) randomNodes() (*Node, *Node) {
-	// helper function
-	// returns two nodes from the genome, which can make connection n1 –> n2
-	rand.Seed(time.Now().UnixNano())
-	n1 := genom.Nodes[rand.Intn(len(genom.Nodes))]
-	n2 := genom.Nodes[rand.Intn(len(genom.Nodes))]
-
-	// makes sure the connection will be made in the valid direction
-	for n1.Type == Hidden && n2.Type == Hidden {
-		n2 = genom.Nodes[rand.Intn(len(genom.Nodes))]
-	}
-
-	for n2.Type == Input {
-		n2 = genom.Nodes[rand.Intn(len(genom.Nodes))]
-	}
-
-	for n1.Type == Output {
-		n1 = genom.Nodes[rand.Intn(len(genom.Nodes))]
-	}
-
-	return n1, n2
-}
-
 type Genom struct {
 	numInputs        int                // number of Input nodes
 	numOutputs       int                // number of Output nodes
@@ -126,8 +52,25 @@ type Genom struct {
 	Connections      []Connection       // list of all connections in the genome
 	ConnCreationRate float64            // chance of adding connection while creating new network
 	IH               *InnovationHistory // global innovation history
-	Fitness          float32            // fitness score
+	Fitness          float64            // fitness score
 }
+
+type Species struct {
+	Genoms         []*Genom // list of genoms within the species
+	AverageFitness float64  // average fitness within the species
+	BreedingRate   int      // how many offsprings this species is allowed to produce
+}
+
+type Population struct {
+	AllSpecies        []*Species // list of all species within the population
+	PopSize           int        // total numer of genomes within the population
+	CurrentGeneration int        // number of current generation
+	C1                float64    // constant which multiplies deltaGenes
+	C2                float64    // constant which multiplies deltaWeights
+	Threshold         float64    // threshold for speciating
+}
+
+// – – – – – – – – – – – – – – MAIN FUNCTIONALITY – – – – – – – – – – – – – – – – – – – – – – –
 
 func (genom *Genom) createNetwork() {
 	// creates new network with only input and output nodes
@@ -154,7 +97,102 @@ func (genom *Genom) createNetwork() {
 			}
 		}
 	}
+	// making sure genom has at least one connection
+	genom.forceConnection()
 }
+
+func (genom *Genom) EvaluateFitness(score int, foodEaten int, enemiesKilled int, timeSurvived int, hp float64) float64 {
+	fitness := float64(score) + float64(foodEaten)*10 + float64(enemiesKilled)*20 + hp*5 - float64(timeSurvived)*0.1
+	genom.Fitness = fitness
+	return fitness
+}
+
+func crossover(parent1, parent2 *Genom) *Genom {
+	// creating offspring genome
+	// networks's structure is inherited from the parent with higher fitness score
+
+	// making sure parent1 has higher fitness score
+	if parent2.Fitness > parent1.Fitness {
+		tmp := parent1
+		parent1 = parent2
+		parent2 = tmp
+	}
+	// mapping parent2 connections by their innovation score
+	parent2Map := make(map[int]Connection)
+	for _, conn := range parent2.Connections {
+		parent2Map[conn.Innovation] = conn
+	}
+
+	// creating offspring genome
+	offspring := &Genom{
+		IH:               parent1.IH,
+		numInputs:        parent1.numInputs,
+		numOutputs:       parent1.numOutputs,
+		totalNodes:       parent1.totalNodes,
+		ConnCreationRate: parent1.ConnCreationRate,
+	}
+
+	// mapping nodes by their IDs to add new connections easier
+	// offspring inherits nodes from fitter parent
+	nodeMap := make(map[int]*Node)
+	for _, node := range parent1.Nodes {
+		newNode := &Node{ID: node.ID, Type: node.Type}
+		offspring.Nodes = append(offspring.Nodes, newNode)
+		nodeMap[node.ID] = newNode
+	}
+
+	// offspring randomly inherits connections from either parent
+	// aligning connections by their innovation numbers
+	for _, conn1 := range parent1.Connections {
+		var chosenConn Connection
+		if conn2, exist := parent2Map[conn1.Innovation]; exist {
+			if rand.Intn(2) == 0 {
+				chosenConn = conn1
+			} else {
+				chosenConn = conn2
+			}
+			// excess (unmatched) connections are inherited from fitter parent
+		} else {
+			chosenConn = conn1
+		}
+		// adding inherited connections to the offspring's genome
+		inNode := nodeMap[chosenConn.InNode.ID]
+		outNode := nodeMap[chosenConn.OutNode.ID]
+		offspring.addConnetion(inNode, outNode, chosenConn.Weight, chosenConn.Enabled)
+	}
+
+	return offspring
+}
+
+func (pop *Population) addToSpecies(genom *Genom) {
+	// adds genome to a compatible species
+	// if no match is found, creates new species and adds the genome to it
+
+	if len(pop.AllSpecies) == 0 {
+		// Create the first species if no species exist
+		newSpecies := Species{}
+		newSpecies.Genoms = append(newSpecies.Genoms, genom)
+		pop.AllSpecies = append(pop.AllSpecies, &newSpecies)
+		return
+	}
+
+	added := false
+	for _, species := range pop.AllSpecies {
+		if pop.sameSpecies(genom, species.Genoms[0]) {
+			species.Genoms = append(species.Genoms, genom)
+			added = true
+			break
+		}
+	}
+
+	if !added {
+		newSpecies := Species{}
+		newSpecies.Genoms = append(newSpecies.Genoms, genom)
+		pop.AllSpecies = append(pop.AllSpecies, &newSpecies)
+	}
+}
+
+// – – – – – – – – – – – – – – – – – MUTATIONS – – – – – – – – – – – – – – – – – – – – – – –
 
 func (genom *Genom) mutateWeight() {
 	// mutates genome by changing weights of genome's connections
@@ -205,61 +243,157 @@ func (genom *Genom) mutateAddNode() {
 	genom.Nodes = append(genom.Nodes, &newNode)
 }
 
-func crossover(parent1, parent2 *Genom) *Genom {
-	// creating offspring genome
-	// networks's structure is inherited from the parent with higher fitness score
+// – – – – – – – – – – – – – – UTILITY FUNCTIONS – – – – – – – – – – – – – – – – – – – – – – –
 
-	// making sure parent1 has higher fitness score
-	if parent2.Fitness > parent1.Fitness {
-		tmp := parent1
-		parent1 = parent2
-		parent2 = tmp
+func (ih *InnovationHistory) getInnovation(inNode, outNode *Node) int {
+	// given nodes, returns innovation nubmer of the connection between them
+	key := InnovationKey{inNodeID: inNode.ID, outNodeID: outNode.ID}
+	if inno, exist := ih.History[key]; exist {
+		return inno
+		// if the connection hadn't existed, function gives it new innovation number
+		// and updates global innovation counter
 	}
-	// mapping parent2 connections by their innovation score
-	parent2Conns := make(map[int]Connection)
-	for _, conn := range parent2.Connections {
-		parent2Conns[conn.Innovation] = conn
-	}
+	ih.Counter++
+	ih.History[key] = ih.Counter
+	return ih.History[key]
+}
 
-	// creating offspring genome
-	offspring := &Genom{
-		IH:               parent1.IH,
-		numInputs:        parent1.numInputs,
-		numOutputs:       parent1.numOutputs,
-		totalNodes:       parent1.totalNodes,
-		ConnCreationRate: parent1.ConnCreationRate,
+func (genom *Genom) addConnetion(node1, node2 *Node, weight float64, enabled bool) {
+	// helper function
+	// given nodes, weight and enabled, adds specific connection to the genome
+	inno := genom.IH.getInnovation(node1, node2)
+	newConn := Connection{
+		InNode:     node1,
+		OutNode:    node2,
+		Weight:     weight,
+		Innovation: inno,
+		Enabled:    enabled,
 	}
-
-	// mapping nodes by their IDs to add new connections easier
-	// offspring inherits nodes from fitter parent
-	nodeMap := make(map[int]*Node)
-	for _, node := range parent1.Nodes {
-		newNode := &Node{ID: node.ID, Type: node.Type}
-		offspring.Nodes = append(offspring.Nodes, newNode)
-		nodeMap[node.ID] = newNode
-	}
-
-	// offspring randomly inherits connections from either parent
-	// aligning connections by their innovation numbers
-	for _, conn1 := range parent1.Connections {
-		var chosenConn Connection
-		if conn2, exist := parent2Conns[conn1.Innovation]; exist {
-			if rand.Intn(2) == 0 {
-				chosenConn = conn1
-			} else {
-				chosenConn = conn2
-			}
-			// excess (unmatched) connections are inherited from fitter parent
-		} else {
-			chosenConn = conn1
+	genom.Connections = append(genom.Connections, newConn)
+	// adds connection to the node right away
+	node2.IncomingConns = append(node2.IncomingConns, newConn)
+}
+func (genom *Genom) connectionExist(inNode, outNode *Node) bool {
+	// helper function
+	// checks, if the connection already exist in the genome
+	for _, conn := range genom.Connections {
+		if conn.InNode.ID == inNode.ID && conn.OutNode.ID == outNode.ID {
+			return true
 		}
-		// adding inherited connections to the offspring's genome
-		inNode := nodeMap[chosenConn.InNode.ID]
-		outNode := nodeMap[chosenConn.OutNode.ID]
-		offspring.addConnetion(inNode, outNode, chosenConn.Weight, chosenConn.Enabled)
+	}
+	return false
+}
+
+func (genom *Genom) forceConnection() {
+	// forces genome to have at least one connection
+	if len(genom.Connections) == 0 {
+		rand.Seed(time.Now().UnixNano())
+		n1, n2 := genom.randomNodes()
+		weight := rand.Float64()
+		genom.addConnetion(n1, n2, weight, true)
+	}
+}
+
+func (genom *Genom) randomNodes() (*Node, *Node) {
+	// helper function
+	// returns two nodes from the genome, which can make connection n1 –> n2
+	rand.Seed(time.Now().UnixNano())
+	n1 := genom.Nodes[rand.Intn(len(genom.Nodes))]
+	n2 := genom.Nodes[rand.Intn(len(genom.Nodes))]
+
+	// makes sure the connection will be made in the valid direction
+	for n1.Type == Hidden && n2.Type == Hidden {
+		n2 = genom.Nodes[rand.Intn(len(genom.Nodes))]
 	}
 
-	return offspring
+	for n2.Type == Input {
+		n2 = genom.Nodes[rand.Intn(len(genom.Nodes))]
+	}
+
+	for n1.Type == Output {
+		n1 = genom.Nodes[rand.Intn(len(genom.Nodes))]
+	}
+
+	return n1, n2
+}
+
+func deltaGenes(genom1, genom2 *Genom) float64 {
+	// returns normalized number of disjoint genes (connections which don't match)
+	disjointGenes := 0.0
+
+	// number of genes in longer genome for normalization
+	var longerGenome int
+	if len(genom1.Connections) > len(genom2.Connections) {
+		longerGenome = len(genom1.Connections)
+	} else {
+		longerGenome = len(genom2.Connections)
+	}
+
+	// creating maps of connections for easier comparison
+	genom1Map := make(map[int]bool)
+	for _, conn := range genom1.Connections {
+		genom1Map[conn.Innovation] = true
+	}
+	genom2Map := make(map[int]bool)
+	for _, conn := range genom2.Connections {
+		genom2Map[conn.Innovation] = true
+	}
+
+	// comparing genomes
+	for _, conn := range genom1.Connections {
+		if _, exists := genom2Map[conn.Innovation]; !exists {
+			disjointGenes++
+		}
+	}
+	for _, conn := range genom2.Connections {
+		if _, exists := genom1Map[conn.Innovation]; !exists {
+			disjointGenes++
+		}
+	}
+	return disjointGenes / float64(longerGenome)
+}
+
+func deltaWeights(genom1, genom2 *Genom) float64 {
+	// calcutates average weight difference between connections of genomes
+	differences := 0.0
+	numMatches := 0.0
+
+	genom2Map := make(map[int]Connection)
+	for _, conn := range genom2.Connections {
+		genom2Map[conn.Innovation] = conn
+	}
+	for _, conn1 := range genom1.Connections {
+		if conn2, exist := genom2Map[conn1.Innovation]; exist {
+			differences += (conn1.Weight - conn2.Weight)
+			numMatches++
+		}
+	}
+	return differences / numMatches
+}
+
+func (pop *Population) sameSpecies(genom1, genom2 *Genom) bool {
+	// checks if two genomes are within same species
+	// C1, C2 and Threshold are constants, which need to be tuned experimentally
+	dg := deltaGenes(genom1, genom2)
+	dw := deltaWeights(genom1, genom2)
+	delta := pop.C1*dg + pop.C2*dw
+
+	return delta < pop.Threshold
+}
+
+// – – – – – – – – – – – – – – – – – TESTING – – – – – – – – – – – – – – – – – – – – – – –
+
+func (t NodeType) String() string {
+	// helper funtion
+	// for more readable testing
+	switch t {
+	case Input:
+		return "Input"
+	case Output:
+		return "Output"
+	default:
+		return "Hidden"
+	}
 }
 
 func (genom *Genom) showConnections() {
@@ -294,36 +428,20 @@ func main() {
 	globalInno := InnovationHistory{
 		History: map[InnovationKey]int{},
 	}
+	pop := Population{
+		PopSize:           2,
+		CurrentGeneration: 0,
+		C1:                1.0,
+		C2:                1.0,
+		Threshold:         200.0,
+	}
 
-	//n0 := Node{ID: 0, Type: Input}
-	//n1 := Node{ID: 1, Type: Output}
-	//n2 := Node{ID: 2, Type: Output}
+	g1 := Genom{numInputs: 1, numOutputs: 1, IH: &globalInno, ConnCreationRate: 1.0}
+	g2 := Genom{numInputs: 1, numOutputs: 1, IH: &globalInno, ConnCreationRate: 0.0}
+	g1.createNetwork()
+	g2.createNetwork()
+	pop.addToSpecies(&g1)
+	pop.addToSpecies(&g2)
 
-	//conn := Connection{
-	//	InNode:  n0,
-	//	OutNode: n1,
-	//	Weight:  1.0,
-	//	Enabled: true,
-	//}
-
-	network1 := Genom{numInputs: 1, numOutputs: 1,
-		IH: &globalInno, ConnCreationRate: 1.0, Fitness: 1.0}
-	network2 := Genom{numInputs: 1, numOutputs: 1,
-		IH: &globalInno, ConnCreationRate: 1.0, Fitness: 2.0}
-	network1.createNetwork()
-	network2.createNetwork()
-	network2.mutateAddNode()
-
-	fmt.Println("\n Network 1")
-	network1.showConnections()
-
-	network1.showNodes()
-	fmt.Println("\n Network 2")
-	network2.showConnections()
-	network2.showNodes()
-
-	fmt.Println("\n Offspring:")
-	offspring := crossover(&network1, &network2)
-	offspring.showConnections()
-	network2.showNodes()
+	fmt.Println("num species:", len(pop.AllSpecies))
 }
