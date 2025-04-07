@@ -300,9 +300,9 @@ func (g *GameScene) FirstLoad() {
 	sharedHistory := &data.InnovationHistory{}
 	for i := 0; i < 100; i++ {
 		g := &data.Genom{
-			NumInputs:        15,
-			NumOutputs:       8,
-			TotalNodes:       23, //uwazac bo createnetwork tutaj dodaje
+			NumInputs:  15,
+			NumOutputs: 8,
+			//			TotalNodes:       23, //uwazac bo createnetwork tutaj dodaje - nie jest to wgl potrzebne tbh
 			Nodes:            []*data.Node{},
 			ConnCreationRate: 1.0,
 			IH:               sharedHistory,
