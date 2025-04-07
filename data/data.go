@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"math/rand"
 	"time"
 )
@@ -70,7 +71,7 @@ type Population struct {
 	Threshold         float64    // threshold for speciating
 }
 
-// – – – – – – – – – – – – – – MAIN FUNCTIONALITY – – – – – – – – – – – – – – – – – – – – – – –
+// – – – – – – – – – – – – – – MAIN FUNCTIONALITY – – – – – – – – – – – – – – – –– – – – – – –
 
 func (genom *Genom) createNetwork() {
 	// creates new network with only input and output nodes
@@ -168,20 +169,12 @@ func (pop *Population) addToSpecies(genom *Genom) {
 	// adds genome to a compatible species
 	// if no match is found, creates new species and adds the genome to it
 
-	if len(pop.AllSpecies) == 0 {
-		// Create the first species if no species exist
-		newSpecies := Species{}
-		newSpecies.Genoms = append(newSpecies.Genoms, genom)
-		pop.AllSpecies = append(pop.AllSpecies, &newSpecies)
-		return
-	}
-
 	added := false
 	for _, species := range pop.AllSpecies {
 		if pop.sameSpecies(genom, species.Genoms[0]) {
 			species.Genoms = append(species.Genoms, genom)
 			added = true
-			break
+			return
 		}
 	}
 
@@ -368,7 +361,7 @@ func deltaWeights(genom1, genom2 *Genom) float64 {
 			numMatches++
 		}
 	}
-	return differences / numMatches
+	return math.Abs(differences / numMatches)
 }
 
 func (pop *Population) sameSpecies(genom1, genom2 *Genom) bool {
@@ -433,7 +426,7 @@ func main() {
 		CurrentGeneration: 0,
 		C1:                1.0,
 		C2:                1.0,
-		Threshold:         200.0,
+		Threshold:         2.0,
 	}
 
 	g1 := Genom{numInputs: 1, numOutputs: 1, IH: &globalInno, ConnCreationRate: 1.0}
