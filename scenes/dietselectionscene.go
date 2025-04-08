@@ -10,6 +10,8 @@ import (
 	"golang.org/x/image/font/basicfont"
 )
 
+var PlayerDiet int
+
 type DietSelectionScene struct {
 	loaded              bool
 	backgroundImage     *ebiten.Image
@@ -50,12 +52,15 @@ func (s *DietSelectionScene) Update() SceneId {
 		if cursorX >= s.carnivoreButtonRect.X && cursorX <= s.carnivoreButtonRect.X+s.carnivoreButtonRect.Width &&
 			cursorY >= s.carnivoreButtonRect.Y && cursorY <= s.carnivoreButtonRect.Y+s.carnivoreButtonRect.Height {
 			s.selectedDiet = "Carnivore"
+			PlayerDiet = 0
 		} else if cursorX >= s.omnivoreButtonRect.X && cursorX <= s.omnivoreButtonRect.X+s.omnivoreButtonRect.Width &&
 			cursorY >= s.omnivoreButtonRect.Y && cursorY <= s.omnivoreButtonRect.Y+s.omnivoreButtonRect.Height {
 			s.selectedDiet = "Omnivore"
+			PlayerDiet = 2
 		} else if cursorX >= s.herbivoreButtonRect.X && cursorX <= s.herbivoreButtonRect.X+s.herbivoreButtonRect.Width &&
 			cursorY >= s.herbivoreButtonRect.Y && cursorY <= s.herbivoreButtonRect.Y+s.herbivoreButtonRect.Height {
 			s.selectedDiet = "Herbivore"
+			PlayerDiet = 1
 		}
 	}
 

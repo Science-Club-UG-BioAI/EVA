@@ -33,7 +33,7 @@ var globalInnovationHistory data.InnovationHistory
 var currentPopulation data.Population
 
 // Limit czasu trwania życia genomu (w sekundach i klatkach)
-const GenomLifetimeInSeconds = 5
+const GenomLifetimeInSeconds = 50
 const FramesPerSecond = 60
 const GenomLifetimeFrames = GenomLifetimeInSeconds * FramesPerSecond
 
@@ -278,7 +278,7 @@ func (g *GameScene) FirstLoad() {
 			// entities.Idle: animations.NewAnimation(240, 240, 1, 5.0),
 		},
 		CombatComp: components.NewPlayerCombat(3, 1, 6000),
-		Diet:       0,
+		Diet:       PlayerDiet,
 		Dmg:        1,
 		MaxHealth:  3,
 	}
@@ -540,6 +540,9 @@ func (g *GameScene) Update() SceneId {
 								if g.player.Diet == 2 {
 									g.player.Calories += 100
 									SCORE += 100
+								} else if g.player.Diet == 1 {
+									g.player.Calories += 0
+									SCORE += 0
 								} else {
 									g.player.Calories += 200
 									SCORE += 200
@@ -1046,7 +1049,7 @@ func (g *GameScene) ResetGameState() {
 	g.player.SpeedMultiplier = 1
 	g.player.EfficiencyMultiplier = 1
 	g.player.TempHP = 0
-	g.player.Diet = 0
+	g.player.Diet = PlayerDiet
 	g.player.Dmg = 1
 	g.player.MaxHealth = 3
 	g.player.CombatComp = components.NewPlayerCombat(3, 1, 6000)
