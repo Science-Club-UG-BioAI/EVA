@@ -285,6 +285,21 @@ func (genom *Genom) mutateAddNode() {
 	genom.Nodes = append(genom.Nodes, &newNode)
 }
 
+func (genom *Genom) mutateToggleConnection() {
+	// randomly toggles the "Enabled" state for connections
+	rand.Seed(time.Now().UnixNano())
+
+	// We randomly select one connection from the Connections list
+	if len(genom.Connections) == 0 {
+		return
+	}
+
+	conn := &genom.Connections[rand.Intn(len(genom.Connections))]
+
+	// We change the "Enabled" state of the connection (if it was enabled, we disable it, and vice versa)
+	conn.Enabled = !conn.Enabled
+}
+
 // – – – – – – – – – – – – – – SELECTION PROCESS – – – – – – – – – – – – – – – – – – – – – – –
 
 func ranked(species *Species, k int) *Genom { // wybor rodzicow - typ turniejowy
@@ -332,11 +347,14 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 
 			// Mutations in offsprings
 			child.mutateWeight()
-			if rand.Float64() < 0.1 {
+			if rand.Float64() < 0.2 {
 				child.mutateAddConnection()
 			}
 			if rand.Float64() < 0.05 {
 				child.mutateAddNode()
+			}
+			if rand.Float64() < 0.02 {
+				child.mutateToggleConnection()
 			}
 
 			newGenomes = append(newGenomes, child)
