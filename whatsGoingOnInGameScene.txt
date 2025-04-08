@@ -1,0 +1,50 @@
+1. zaczynając od definicji struct, tutaj są wszystkie zmienne odnoszące sie do gry które wywoływane są w trakcie gry
+2. następnie jest funkcja NewGameScene, ta funkcja to kreator naszej gry (jak w pythonie __init__)
+3. następnie funkcja IsLoaded() zwraca nam true/false zależnie czy gra ma status załadowanej (zmienia sie to na końcu funkci FirstLoad)
+4. natępnie funcja Draw(), ona w wielkim skrócie rysuje nam to co użytkownik widzi, w niej nie ma logiki żadnej, ona tylko rysuje według ustaleń
+4.1. // loop over layers to jest do tilemapy, mapa może mieć warstwy (nasza nie ma wiec useless ale początkowo chcieliśmy jakieś blokady na mapie które byłyby na osobnej warstwie właśnie)
+4.2. następnie rysowanie enemy, vitamins, coliderów (nie używane, ponownie to miało być do blokad których jednak nie ma), gracz i na koniec printy na ekran
+5. FirstLoad(), to jest funkcja która ładuje wszystkie rzeczy które chcemy mieć przy inicjowaniu gry, czyli np. chcemy mieć na start gracza ale jedzonek nie bo one generuja sie już w trakcje GenerateNewPopulation
+5.1. na podstawie generacji gracza objaśnie zmienne:
+- Sprite.Img, mówi o tym jaki 
+- Sprite.X, Sprite.Y, współrzędna X i Y na mapie
+- Sprite.Dx, Sprite.Dy (nie ma przy generacji gracza ale jest w potem), DeltaX, DetlaY, czyli jak ma sie zmienić pozycja w czasie; potrzebujemy to wiedzieć do kolizji bo, żeby kolizje były cacy to musimy znać 'przyszłość' czyli po porstu następny krok czyli jak w czasie zmieni sie pozycja
+- Sprite.Size, zmienna do skalowania spritów (1=100%, 0.8=80% itd.)
+- player.Calories, licznik obecnych kalorii gracza
+- player.Speed, to jak szybko porusza sie gracz
+- player.Efficiency, to jak szybko 'spalamy' kalorie (1 = 100% tempa spalania, 1.1 = 110% tempa spalania, czyli im więcej tym SZYBCIEJ tracimy kalorie)
+- player.SpeedMultiplier, to zmienna pod witaminki, mnoży nam dodatkowo speed np. niebieska witaminka mnoży nam przez 0.5 a czerwoan przez 1.5
+- player.EfficiencyMyltiplier, analogicznie co speed tylko dla spalania
+- player.TempHP, kolejna zmienna dla witaminki, mechanika w Update()
+- player.Animations, słownik animacji do wykonania przy danych warunkach, dla gracza to kierunek poruszania, dla witaminek to kolor wtaminki, dla przeciwnika to jego typ, to tylko rzecz graficzna nie wpływająca na mechanike
+- player.CombatComp, to jest interface do 'walki' czyli u nas zjadania, przyjmuje wartość kreatora typu walki (gracz ma PlayerCombat) i wartosci hp, dmg, cooldown(co ile zadaje dmg)
+- player.Diet, dieta gracza czyli mięsko/roslinki/wszystko
+- player.Dmg, player.MaxHealth, duplikat zmiennych który jest odwołąniem potem do aktualizowania zmiany; co to znaczy, witaminka daje nam tymczasowe zdrowie więc musimy przechować informacje o tym jakie powinno być zdrowie gracza bez efektu witaminki, tak samo dmg (akurat on sie nie zmiania ale potrzebny do wywołania kreatora CombatComp)
+5.2. następnie mamy definicje tablic przechowujących jedzenia i witaminy jak i przypisanie spritów (rysunków z klatkami animacji)
+5.3. <AI team paplanie>
+6. OnEnter(), co ma sie dziać przy wejściu do scany
+7. OnExit(), co ma sie dzieć przy wyjściu ze sceny (akurat pauzowanie jest automatycznie przy zmianie scen wieć tu jest to zmiana g.gamePause jest zbędna)
+8. Update(), behemot zawierające całe fraki gry, to tutaj wszystko sie dzieje
+8.1. pare ifów na pauzowanie Itp 
+8.2. jeśli gra nie jest zapauzowaa ani skończona to wykonujemy całe wnętrzności gry
+8.3. zaczynamy mumbo jumbo AI i potem zasady ewolucji gracza jeśli przekroczymy 1000 kalorii:
+- jeśli zdobędziemy to w minute to zwiększy nam sie prędkość poruszania i tempo spalania
+- inaczej powyżej minuty to zmniejszy sie prędkość i tempo spalania
+- jeśli zabijemy na tym przedziale więcej niż 2 przeciwkoów to zwiekszą nam się obrażenia
+- inaczej dostaniemy więcej hp
+- jeśli zjemy w tym czasie ponad 10 jedzonek to zmniejszy nam się tempo spalania kalorii i dostaniemy hp
+- inaczej zmniejszy nam się tempo spalania ale dostaniemy speeda
+-- logika za tym moja była taka że grając agresywnie dostaniemy agresywne statystyki, a unikaniem konfliktu idziemy pod tanka/leniwca
+8.4. poruszanie sie gracza, tutaj ustawiamy nasze Dx i Dy na 0 ponieważ nie chcemy by nam sie gracz ruszał jak nic nie klikamy
+8.5. sprawdzamy jakie klawisze są kliknięte i zależnie od tego poruszamy sie w danym kierunku
+8.6. sprawdzanie kolizji(z coliders wiec useless bo nie dodaliśmy finalnie przeszkód an mapie) i akutalizowanie pozycji i aktualizowanie klatki animacji
+8.7. tworzymy zmienną która nam powie gdzie jest hitbox gracza
+8.8. logika zachowania przeciwnika:
+- tworzymy słownik na martcyh przeciwników
+- sprawdzamy dla każdego przeciwnika warunki (tutaj licze ilosć jedzenia i przeciwnikó żeby wrzucic do debug printa dla testów)
+- mieli mieli i dalej sprawdza czy przeciwnik sie pokrywa z graczem, jak tak to zadaja sobie dmg, jak któryś umrze to kaplica i cyk cyk (jedenie to też przeciwnik więc od razu tutaj działą też zjadanie)
+- potem przehcodizmy przez tablice martwych by ich usunąć z tablicy przeciwników 
+8.9. logika vitamin, to samo co dla jedzonka tylko żę dają efektu
+8.10. teleportacja na rogach ekranu
+8.11. tutaj ustawienia kamery, jak kamera działa? można pomyśleć o tym jak o wielokierunkowej bierzni, biegniesz w miejscu świat sie przesów, tak dizała kamera w grach
+8.12. spawnowanie sie jedzenie/vitamin/przeciwników, to to samo co tworzenie gracza w FirstLoad() tylko z warunkiem żeby tworzyli sie stopniowo (prawie od razu) a nie naraz

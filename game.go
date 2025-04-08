@@ -1,6 +1,7 @@
 package main
 
 import (
+	"projectEVA/constants"
 	"projectEVA/scenes"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -50,5 +51,5 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
-	return 960, 540
+	return constants.WindowWidth, constants.WindowHeight
 }
