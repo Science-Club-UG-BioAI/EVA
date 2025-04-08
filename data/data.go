@@ -299,12 +299,12 @@ func ranked(species *Species, k int) *Genom { // wybor rodzicow - typ turniejowy
 }
 
 func GenerateNewPopulation(pop *Population) []*Genom {
-	fmt.Printf("[INFO] Start generowania nowej populacji – liczba gatunków: %d\n", len(pop.AllSpecies))
+	fmt.Printf("[INFO] Generating new population - number of species: %d\n", len(pop.AllSpecies))
 	newGenomes := []*Genom{}
 	rand.Seed(time.Now().UnixNano())
 
 	if len(pop.AllSpecies) == 0 {
-		fmt.Println("Brak gatunków — nie można wygenerować nowej populacji.")
+		//fmt.Println("Brak gatunków — nie można wygenerować nowej populacji.")
 		return []*Genom{}
 	}
 
@@ -314,6 +314,7 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 		speciesTotal := 0.0
 		for _, g := range species.Genoms {
 			speciesTotal += g.Fitness
+
 		}
 		species.AverageFitness = speciesTotal / float64(len(species.Genoms))
 		totalFitness += species.AverageFitness
@@ -353,11 +354,42 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 			continue
 		}
 		parent := bestSpecies.Genoms[rand.Intn(len(bestSpecies.Genoms))]
-		copy := *parent
-		newGenomes = append(newGenomes, &copy)
+
+		//better version of copy - should work
+		newGen := &Genom{
+			NumInputs:        parent.NumInputs,
+			NumOutputs:       parent.NumOutputs,
+			ConnCreationRate: parent.ConnCreationRate,
+			IH:               parent.IH,
+			TotalNodes:       parent.TotalNodes,
+		}
+
+		nodeMap := make(map[int]*Node)
+		for _, node := range parent.Nodes {
+			newNode := &Node{
+				ID:   node.ID,
+				Type: node.Type,
+			}
+			newGen.Nodes = append(newGen.Nodes, newNode)
+			nodeMap[node.ID] = newNode
+		}
+
+		for _, conn := range parent.Connections {
+			newConn := Connection{
+				InNode:     nodeMap[conn.InNode.ID],
+				OutNode:    nodeMap[conn.OutNode.ID],
+				Weight:     conn.Weight,
+				Innovation: conn.Innovation,
+				Enabled:    conn.Enabled,
+			}
+			newGen.Connections = append(newGen.Connections, newConn)
+			nodeMap[conn.OutNode.ID].IncomingConns = append(nodeMap[conn.OutNode.ID].IncomingConns, newConn)
+		}
+
+		newGenomes = append(newGenomes, newGen)
 	}
 
-	fmt.Printf("[INFO] Nowa populacja gotowa – liczba genomów: %d\n", len(newGenomes))
+	fmt.Printf("[INFO] New population – number of genoms: %d\n", len(newGenomes))
 	return newGenomes
 }
 
