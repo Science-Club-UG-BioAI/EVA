@@ -967,7 +967,6 @@ func (g *GameScene) Update() SceneId {
 		g.ShowAIDebug = !g.ShowAIDebug //Przełącz widoczność tabeli AI
 	}
 
-
 	return GameSceneId
 
 }
@@ -1032,7 +1031,7 @@ func (g *GameScene) ControlByAI(genom *data.Genom) {
 	inputs := g.PrepareInputs()
 	fmt.Printf("INPUTS to NEAT: %v\n", inputs)
 
-	outputs := genom.Forward(inputs)
+	outputs, _ := genom.Forward(inputs)
 	fmt.Printf("OUTPUTS z NEAT: %v (len: %d)\n", outputs, len(outputs))
 	if len(outputs) < 8 {
 		return
@@ -1070,7 +1069,6 @@ func (g *GameScene) ControlByAI(genom *data.Genom) {
 		g.player.Dx = (outputs[0]*2 - 1) * moveScale
 		g.player.Dy = (outputs[1]*2 - 1) * moveScale
 	}
-
 
 	length := math.Sqrt(dir[0]*dir[0] + dir[1]*dir[1])
 	if length != 0 {
