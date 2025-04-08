@@ -55,6 +55,9 @@ type GameScene struct {
 	foodEaten          int
 	enemyKilled        int
 	timePassed         int
+	LastAIDecision     data.AIDecision //ostatnie decyzja podjęta przez AI
+	IsPlayerControlled bool            //kontrole nad postacią ma AI czy Player
+	ShowAIDebug        bool            //czy wyświetlać decyzje AI
 }
 
 func NewGameScene() *GameScene {
@@ -78,6 +81,8 @@ func NewGameScene() *GameScene {
 		enemyKilled:        0,
 		foodEaten:          0,
 		timePassed:         0,
+		ShowAIDebug:        true, //wyświetla decyzje AI
+		IsPlayerControlled: false,
 	}
 }
 
@@ -201,12 +206,69 @@ func (g *GameScene) Draw(screen *ebiten.Image) {
 				currentGenIndex+1, len(population), generation, currentGenom.Fitness),
 			10, 500)
 	}
+	if g.ShowAIDebug && g.LastAIDecision.Inputs != nil {
+		const startX, startY = 630, 10 // miejsce tabeli ACTIVE AI
+		y := startY
+
+		// Tło panelu
+		vector.DrawFilledRect(screen, startX-5, startY-5, 320, 500, color.RGBA{0, 0, 0, 180}, false)
+
+		// Nagłówek
+		mode := "AI ACTIVE"
+		if g.IsPlayerControlled {
+			mode = "PLAYER CONTROL (AI watching)"
+		}
+		ebitenutil.DebugPrintAt(screen, "=== "+mode+" ===", startX, y)
+		y += 20
+
+		// Wejścia AI
+		ebitenutil.DebugPrintAt(screen, "Inputs:", startX, y)
+		y += 16
+		for i, input := range g.LastAIDecision.Inputs {
+			ebitenutil.DebugPrintAt(screen, fmt.Sprintf("%2d: %.2f", i+1, input), startX+10, y)
+			y += 16
+			if y > 400 {
+				break // ograniczenie do ~20
+			}
+		}
+
+		// Wyjścia AI
+		y += 10
+		ebitenutil.DebugPrintAt(screen, "Outputs:", startX, y)
+		y += 16
+		for i, output := range g.LastAIDecision.Outputs {
+			ebitenutil.DebugPrintAt(screen, fmt.Sprintf("%2d: %.2f", i+1, output), startX+10, y)
+			y += 16
+			if y > 400 {
+				break
+			}
+		}
+
+		// Połączenia (ograniczenie do 15)
+		y += 10
+		ebitenutil.DebugPrintAt(screen, "Connections:", startX, y)
+		y += 16
+		connectionCount := 0
+		for _, conn := range g.LastAIDecision.Connections {
+			ebitenutil.DebugPrintAt(screen,
+				fmt.Sprintf("%3d → %3d (W:%.2f E:%.2f)", conn.From, conn.To, conn.Weight, conn.Effect),
+				startX+10, y)
+			y += 16
+			connectionCount++
+			if connectionCount > 15 || y > 450 {
+				break
+			}
+		}
+	}
 
 	if g.gameOver {
 		ebitenutil.DebugPrintAt(screen,
 			fmt.Sprintf("GAME OVER\n"), 480, 270)
 	}
-
+	// Komunikat o ukrytym panelu AI
+	if !g.ShowAIDebug {
+		ebitenutil.DebugPrintAt(screen, "Press F4 to show AI panel", 700, 10)
+	}
 }
 
 func (g *GameScene) FirstLoad() {
@@ -843,6 +905,11 @@ func (g *GameScene) Update() SceneId {
 		}
 	}
 	//przchodzenie po genomach - koniec
+
+	if inpututil.IsKeyJustPressed(ebiten.KeyF4) {
+		g.ShowAIDebug = !g.ShowAIDebug //Przełącz widoczność tabeli AI
+	}
+
 	return GameSceneId
 
 }
@@ -903,14 +970,17 @@ func (g *GameScene) ControlByAI(genom *data.Genom) {
 	print("=== AI CONTROL ===")
 	inputs := g.PrepareInputs()
 	fmt.Printf("INPUTS to NEAT: %v\n", inputs)
-	outputs := genom.Forward(inputs)
-	fmt.Printf("OUTPUTS z NEAT: %v (len: %d)\n", outputs, len(outputs))
-	if len(outputs) < 2 {
-		return
+	outputs, decision := genom.Forward(inputs)
+	g.LastAIDecision = decision //zapisauje nawet jak gracz ma kontrolę
+	//fmt.Printf("OUTPUTS z NEAT: %v (len: %d)\n", outputs, len(outputs))
+	//if len(outputs) < 2 {
+	//	return
+	//}
+	if !g.IsPlayerControlled && len(outputs) >= 2 { //gdy AI ma kontrole
+		moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
+		g.player.Dx = (outputs[0]*2 - 1) * moveScale
+		g.player.Dy = (outputs[1]*2 - 1) * moveScale
 	}
-	moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
-	g.player.Dx = (outputs[0]*2 - 1) * moveScale
-	g.player.Dy = (outputs[1]*2 - 1) * moveScale
 
 }
 
