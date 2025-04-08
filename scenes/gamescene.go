@@ -37,10 +37,12 @@ const GenomLifetimeFrames = GenomLifetimeInSeconds * FramesPerSecond
 
 var aiEnabled bool = false // Global variable to track AI mode
 
+// enableAI function sets the global variable `aiEnabled` to enable or disable AI control - if false it will use player control, if true it will use AI control
 func enableAI(enabled bool) {
 	aiEnabled = enabled
 }
 
+// isAIEnabled function returns the current state of the `aiEnabled` variable - true if AI control is enabled, false if player control is enabled
 func isAIEnabled() bool {
 	return aiEnabled
 }
@@ -369,7 +371,7 @@ func (g *GameScene) Update() SceneId {
 		return PauseSceneId
 	}
 	if !g.gamePause && !g.gameOver {
-			// Log whether AI is enabled
+			// Log whether AI is enabled (used for tests)
 		if isAIEnabled() {
 			log.Println("AI is controlling the player.")
 		} else {
@@ -378,8 +380,10 @@ func (g *GameScene) Update() SceneId {
 
 		// Calories
 		//testowanie do ai - start
+		// isAiEnabled will be true if AI is enabled, false if player is controlling the game
 		if isAIEnabled() && currentGenom != nil {
 			g.ControlByAI(currentGenom)
+			// if enableAI is true then we will use AI control
 			enableAI(true)
 		}
 		//testowanie do ai - koniec

@@ -64,7 +64,8 @@ func (s *StartScene) Update() SceneId {
 			// Handle AI player logic here
 			log.Println("AI PLAYER button clicked")
 
-			s.aiControlled = true // Set AI control
+			// logic to enable AI player
+			s.aiControlled = true 
 			enableAI(true)       
 			return DietSelectionSceneId // Transition to DietSelectionScene
 		}
