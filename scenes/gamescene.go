@@ -29,9 +29,13 @@ var population []*data.Genom
 var currentGenom *data.Genom
 var currentGenIndex int
 var generation int = 1
+var globalInnovationHistory data.InnovationHistory
+var currentPopulation data.Population
 
 // Limit czasu trwania życia genomu (w sekundach i klatkach)
-const GenomLifetimeInSeconds = 10
+
+const GenomLifetimeInSeconds = 2
+
 const FramesPerSecond = 60
 const GenomLifetimeFrames = GenomLifetimeInSeconds * FramesPerSecond
 
@@ -67,6 +71,9 @@ type GameScene struct {
 	foodEaten          int
 	enemyKilled        int
 	timePassed         int
+	LastAIDecision     data.AIDecision //ostatnie decyzja podjęta przez AI
+	IsPlayerControlled bool            //kontrole nad postacią ma AI czy Player
+	ShowAIDebug        bool            //czy wyświetlać decyzje AI
 }
 
 func NewGameScene() *GameScene {
@@ -90,6 +97,8 @@ func NewGameScene() *GameScene {
 		enemyKilled:        0,
 		foodEaten:          0,
 		timePassed:         0,
+		ShowAIDebug:        true, //wyświetla decyzje AI
+		IsPlayerControlled: false,
 	}
 }
 
@@ -208,17 +217,75 @@ func (g *GameScene) Draw(screen *ebiten.Image) {
 	ebitenutil.DebugPrintAt(screen,
 		fmt.Sprintf("Game State: \n Game Pause: %v\n Game Over: %v\n Score: %v\n Enemies on map: %v\n Food on map: %v\n Vitamins on map: %v", g.gamePause, g.gameOver, SCORE, numberOfEnemies, numberOfFood, len(g.vitamins)), 0, 300)
 	if currentGenom != nil {
+		remaining := (GenomLifetimeFrames - g.timePassed) / FramesPerSecond
 		ebitenutil.DebugPrintAt(screen,
 			fmt.Sprintf("Genom: %d/%d\nGeneracja: %d\nFitness: %.2f",
-				currentGenIndex+1, len(population), generation, currentGenom.Fitness),
-			10, 500)
+				currentGenIndex+1, len(population), generation, currentGenom.Fitness, remaining),
+			10, 450)
+	}
+	if g.ShowAIDebug && g.LastAIDecision.Inputs != nil {
+		const startX, startY = 630, 10 // miejsce tabeli ACTIVE AI
+		y := startY
+
+		// Tło panelu
+		vector.DrawFilledRect(screen, startX-5, startY-5, 320, 500, color.RGBA{0, 0, 0, 180}, false)
+
+		// Nagłówek
+		mode := "AI ACTIVE"
+		if g.IsPlayerControlled {
+			mode = "PLAYER CONTROL (AI watching)"
+		}
+		ebitenutil.DebugPrintAt(screen, "=== "+mode+" ===", startX, y)
+		y += 20
+
+		// Wejścia AI
+		ebitenutil.DebugPrintAt(screen, "Inputs:", startX, y)
+		y += 16
+		for i, input := range g.LastAIDecision.Inputs {
+			ebitenutil.DebugPrintAt(screen, fmt.Sprintf("%2d: %.2f", i+1, input), startX+10, y)
+			y += 16
+			if y > 400 {
+				break // ograniczenie do ~20
+			}
+		}
+
+		// Wyjścia AI
+		y += 10
+		ebitenutil.DebugPrintAt(screen, "Outputs:", startX, y)
+		y += 16
+		for i, output := range g.LastAIDecision.Outputs {
+			ebitenutil.DebugPrintAt(screen, fmt.Sprintf("%2d: %.2f", i+1, output), startX+10, y)
+			y += 16
+			if y > 400 {
+				break
+			}
+		}
+
+		// Połączenia (ograniczenie do 15)
+		y += 10
+		ebitenutil.DebugPrintAt(screen, "Connections:", startX, y)
+		y += 16
+		connectionCount := 0
+		for _, conn := range g.LastAIDecision.Connections {
+			ebitenutil.DebugPrintAt(screen,
+				fmt.Sprintf("%3d → %3d (W:%.2f E:%.2f)", conn.From, conn.To, conn.Weight, conn.Effect),
+				startX+10, y)
+			y += 16
+			connectionCount++
+			if connectionCount > 15 || y > 450 {
+				break
+			}
+		}
 	}
 
 	if g.gameOver {
 		ebitenutil.DebugPrintAt(screen,
 			fmt.Sprintf("GAME OVER\n"), 480, 270)
 	}
-
+	// Komunikat o ukrytym panelu AI
+	if !g.ShowAIDebug {
+		ebitenutil.DebugPrintAt(screen, "Press F4 to show AI panel", 700, 10)
+	}
 }
 
 func (g *GameScene) FirstLoad() {
@@ -235,7 +302,7 @@ func (g *GameScene) FirstLoad() {
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }
-	tilemapImg, _, err := ebitenutil.NewImageFromFile("assets/images/Water+.png")
+	tilemapImg, _, err := ebitenutil.NewImageFromFile("assets/images/Water.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -287,7 +354,7 @@ func (g *GameScene) FirstLoad() {
 			// entities.Idle: animations.NewAnimation(240, 240, 1, 5.0),
 		},
 		CombatComp: components.NewPlayerCombat(3, 1, 6000),
-		Diet:       0,
+		Diet:       PlayerDiet,
 		Dmg:        1,
 		MaxHealth:  3,
 	}
@@ -308,28 +375,34 @@ func (g *GameScene) FirstLoad() {
 	g.timePassed = 0
 
 	//tworzenie ai do testow - START
+	currentPopulation = data.Population{
+		PopSize:   20,
+		C1:        1.0,
+		C2:        0.5,
+		Threshold: 3.0,
+	}
 	population = []*data.Genom{}
-	sharedHistory := &data.Connectionh{}
-	for i := 0; i < 100; i++ {
+	//sharedHistory := &data.InnovationHistory{}
+	for i := 0; i < currentPopulation.PopSize; i++ {
 		g := &data.Genom{
-			Inputs:        6,
-			Outputs:       8,
-			Creation_Rate: 1.0,
-			Input_Layer:   0,
-			Output_Layer:  1,
-			Ch:            *sharedHistory,
-			Create:        true,
+			NumInputs:  15,
+			NumOutputs: 8,
+			//			TotalNodes:       23, //uwazac bo createnetwork tutaj dodaje - nie jest to wgl potrzebne tbh
+			Nodes:            []*data.Node{},
+			ConnCreationRate: 1.0,
+			IH:               &globalInnovationHistory, //sharedHistory,
 		}
 		g.CreateNetwork()
-		fmt.Printf("\nGENOM #%d\n", i)
-		for _, c := range g.Connections {
-			fmt.Printf("Połączenie: In=%d (Layer %d) → Out=%d (Layer %d), Waga=%.2f\n",
-				c.In_node.Number, c.In_node.Layer,
-				c.Out_node.Number, c.Out_node.Layer,
-				c.Weight,
-			)
-		}
+		// fmt.Printf("\nGENOM #%d\n", i)
+		// for _, c := range g.Connections {
+		// 	fmt.Printf("Połączenie: In=%d (Type %d) → Out=%d (Type %d), Waga=%.2f\n",
+		// 		c.InNode.ID, c.InNode.Type,
+		// 		c.OutNode.ID, c.OutNode.Type,
+		// 		c.Weight,
+		// 	)
+		// }
 		population = append(population, g)
+		currentPopulation.AddToSpecies(g)
 	}
 	currentGenIndex = 0
 	currentGenom = population[currentGenIndex]
@@ -341,12 +414,12 @@ func (g *GameScene) FirstLoad() {
 		fmt.Printf("GENOM %d:\n", i)
 		fmt.Printf("  NODES:\n")
 		for _, node := range genom.Nodes {
-			fmt.Printf("    Node %d (Layer: %d)\n", node.Number, node.Layer)
+			fmt.Printf("    Node %d (Type: %d)\n", node.ID, node.Type)
 		}
 		fmt.Printf("  CONNECTIONS:\n")
 		for _, conn := range genom.Connections {
 			fmt.Printf("    [%d] %d -> %d | Weight: %.2f | Enabled: %v\n",
-				conn.Inno, conn.In_node.Number, conn.Out_node.Number, conn.Weight, conn.Enabled)
+				conn.Innovation, conn.InNode.ID, conn.OutNode.ID, conn.Weight, conn.Enabled)
 		}
 		fmt.Println("----------------------------------")
 	}
@@ -553,6 +626,9 @@ func (g *GameScene) Update() SceneId {
 								if g.player.Diet == 2 {
 									g.player.Calories += 100
 									SCORE += 100
+								} else if g.player.Diet == 1 {
+									g.player.Calories += 0
+									SCORE += 0
 								} else {
 									g.player.Calories += 200
 									SCORE += 200
@@ -648,31 +724,31 @@ func (g *GameScene) Update() SceneId {
 			g.vitaminDuration--
 		}
 
-		// Infinite map illusion
-		if g.player.X >= constants.GameWidth-constants.WindowWidth {
-			g.player.X = 0 + constants.WindowWidth + 1
+		// Teleport map edge
+		if g.player.X >= constants.GameWidth {
+			g.player.X = 1
 		}
-		if g.player.X <= 0+constants.WindowWidth {
-			g.player.X = constants.GameWidth - constants.WindowWidth - 1
+		if g.player.X <= 0 {
+			g.player.X = constants.GameWidth - 1
 		}
-		if g.player.Y >= constants.GameHeight-constants.WindowHeight {
-			g.player.Y = 0 + constants.WindowHeight + 1
+		if g.player.Y >= constants.GameHeight {
+			g.player.Y = 1
 		}
-		if g.player.Y <= 0+constants.WindowHeight {
-			g.player.Y = constants.GameHeight - constants.WindowHeight - 1
+		if g.player.Y <= 0 {
+			g.player.Y = constants.GameHeight - 1
 		}
 		for _, sprite := range g.enemies {
-			if sprite.X >= constants.GameWidth-constants.WindowWidth {
-				sprite.X = 0 + constants.WindowWidth + 1
+			if sprite.X >= constants.GameWidth {
+				sprite.X = 1
 			}
-			if sprite.X <= 0+constants.WindowWidth {
-				sprite.X = constants.GameWidth - constants.WindowWidth - 1
+			if sprite.X <= 0 {
+				sprite.X = constants.GameWidth - 1
 			}
-			if sprite.Y >= constants.GameHeight-constants.WindowHeight {
-				sprite.Y = 0 + constants.WindowHeight + 1
+			if sprite.Y >= constants.GameHeight {
+				sprite.Y = 1
 			}
-			if sprite.Y <= 0+constants.WindowHeight {
-				sprite.Y = constants.GameHeight - constants.WindowHeight - 1
+			if sprite.Y <= 0 {
+				sprite.Y = constants.GameHeight - 1
 			}
 		}
 		g.cam.FollowTarget(g.player.X+(constants.Tilesize/2), g.player.Y+(constants.Tilesize/2), constants.WindowWidth, constants.WindowHeight)
@@ -688,8 +764,8 @@ func (g *GameScene) Update() SceneId {
 				}
 				newFood := &entities.Enemy{Sprite: &entities.Sprite{
 					Img:  enemiesImg,
-					X:    float64(randRange(0+constants.WindowWidth, constants.GameWidth-constants.WindowWidth)),
-					Y:    float64(randRange(0+constants.WindowHeight, constants.GameHeight-constants.WindowHeight)),
+					X:    float64(randRange(0, constants.GameWidth)),
+					Y:    float64(randRange(0, constants.GameHeight)),
 					Size: constants.FoodSize,
 				},
 					Animations: map[entities.EnemyState]*animations.Animation{
@@ -752,8 +828,8 @@ func (g *GameScene) Update() SceneId {
 				newVitamin := &entities.Vitamin{
 					Sprite: &entities.Sprite{
 						Img:  vitaminesImg,
-						X:    float64(randRange(0+constants.WindowWidth, constants.GameWidth-constants.WindowWidth)),
-						Y:    float64(randRange(0+constants.WindowHeight, constants.GameHeight-constants.WindowHeight)),
+						X:    float64(randRange(0, constants.GameWidth)),
+						Y:    float64(randRange(0, constants.GameHeight)),
 						Size: constants.VitaminSize,
 					},
 					Animations: map[entities.VitaminState]*animations.Animation{
@@ -783,8 +859,8 @@ func (g *GameScene) Update() SceneId {
 			newEnemy := &entities.Enemy{
 				Sprite: &entities.Sprite{
 					Img:  enemiesImg,
-					X:    float64(randRange(0+constants.WindowWidth, constants.GameWidth-constants.WindowWidth)),
-					Y:    float64(randRange(0+constants.WindowHeight, constants.GameHeight-constants.WindowHeight)),
+					X:    float64(randRange(0, constants.GameWidth)),
+					Y:    float64(randRange(0, constants.GameHeight)),
 					Size: 1,
 				},
 				Animations: map[entities.EnemyState]*animations.Animation{
@@ -801,6 +877,7 @@ func (g *GameScene) Update() SceneId {
 		}
 
 		// AI VARS ?
+		PLAYERCALORIES = g.player.Calories
 		PLAYERHP = g.player.CombatComp.Health()
 		PLAYERDMG = g.player.Dmg
 		PLAYERSPEED = g.player.Speed
@@ -809,6 +886,7 @@ func (g *GameScene) Update() SceneId {
 		PLAYERY = g.player.Y
 		ENEMIES = make([][3]float64, 0)
 		NEARFOODS = make([][]float64, 0)
+		NEARVITAMINS = make([][]float64, 0)
 		for _, enemy := range g.enemies {
 			if enemy.Type == 2 {
 				dystans := math.Sqrt(math.Pow(g.player.X-enemy.X, 2) + math.Pow(g.player.Y-enemy.Y, 2))
@@ -839,6 +917,15 @@ func (g *GameScene) Update() SceneId {
 				break
 			}
 		}
+		deepsort.DeepSort(&NEARVITAMINS, []float64{0})
+		newNEARVITAMINS := make([][]float64, 0)
+		for index, _ := range NEARVITAMINS {
+			if index < 10 {
+				newNEARVITAMINS = append(newNEARVITAMINS, NEARVITAMINS[index])
+			} else {
+				break
+			}
+		}
 		NEARFOODS = newNEARFOODS
 		//zapewnia nie danie pustej tablicy (wypluwa wtedy puste outputy)
 		if len(NEARFOODS) > 0 {
@@ -846,25 +933,63 @@ func (g *GameScene) Update() SceneId {
 				fmt.Println(NEARFOODS[0][0])
 			}
 		}
+		NEARVITAMINS = newNEARVITAMINS
+		//zapewnia nie danie pustej tablicy (wypluwa wtedy puste outputy)
+		if len(NEARVITAMINS) > 0 {
+			if len(NEARVITAMINS[0]) > 0 {
+				fmt.Println(NEARVITAMINS[0][0])
+			}
+		}
 		// println(ENEMIES[0][0])
 	}
 	// dane do funkcji kosztu
 	//przechodzenie po genomach - start
+	//zapisywanie informacji o populacji do pliku textowego
 	if g.gameOver || g.timePassed >= GenomLifetimeFrames {
 		fitness := currentGenom.EvaluateFitness(SCORE, g.foodEaten, g.enemyKilled, g.timePassed, g.player.CombatComp.Health())
 		fmt.Printf("Genom %d fitness: %f\n", currentGenIndex, fitness)
 
 		currentGenIndex++
+		g.timePassed = 0
 		if currentGenIndex < len(population) {
 			currentGenom = population[currentGenIndex]
 			g.ResetGameState()
 		} else {
-			fmt.Println("Koniec pokolenia")
-			// TODO: tu dodamy selekcję, krzyżowanie, mutację
-			g.gamePause = true
+			fmt.Println("=== CREATING NEW GENERATION ===")
+			generation++
+			// Specjacja — resetujemy i przypisujemy genomy do gatunków
+			currentPopulation.AllSpecies = []*data.Species{}
+			for _, genom := range population {
+				currentPopulation.AddToSpecies(genom)
+			}
+
+			// Zapis aktualnej populacji do pliku (opcjonalnie, ale pomocne)
+			err := data.SavePopulationToFile(&currentPopulation, currentPopulation.CurrentGeneration)
+			if err != nil {
+				fmt.Println("Błąd zapisu populacji:", err)
+			}
+
+			// Tworzenie nowej generacji
+			currentPopulation.CurrentGeneration++
+			newPop := data.GenerateNewPopulation(&currentPopulation)
+			population = newPop
+
+			// Reset do pierwszego genomu i zatrzymanie gry
+			currentGenIndex = 0
+			currentGenom = population[currentGenIndex]
+			g.ResetGameState()
+			//g.gamePause = true
 		}
+		//przchodzenie po genomach - koniec
 	}
+
 	//przchodzenie po genomach - koniec
+
+	if inpututil.IsKeyJustPressed(ebiten.KeyF4) {
+		g.ShowAIDebug = !g.ShowAIDebug //Przełącz widoczność tabeli AI
+	}
+
+
 	return GameSceneId
 
 }
@@ -907,7 +1032,9 @@ func randRange(min, max int) int {
 
 var numberOfFood int = 0
 var numberOfEnemies int = 0
+var numberOfVitamins int = 0
 
+var PLAYERCALORIES float64 = 0
 var SCORE int = 0
 var PLAYERHP float64 = 0
 var PLAYERDMG float64 = 0
@@ -918,6 +1045,7 @@ var PLAYERY float64 = 0
 
 var ENEMIES []([3]float64) = make([][3]float64, 0)
 var NEARFOODS []([]float64) = make([][]float64, 0)
+var NEARVITAMINS []([]float64) = make([][]float64, 0)
 
 //laczenie AI z gra
 
@@ -925,26 +1053,67 @@ func (g *GameScene) ControlByAI(genom *data.Genom) {
 	print("=== AI CONTROL ===")
 	inputs := g.PrepareInputs()
 	fmt.Printf("INPUTS to NEAT: %v\n", inputs)
+
 	outputs := genom.Forward(inputs)
 	fmt.Printf("OUTPUTS z NEAT: %v (len: %d)\n", outputs, len(outputs))
-	if len(outputs) < 2 {
+	if len(outputs) < 8 {
 		return
 	}
-	moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
-	g.player.Dx = (outputs[0]*2 - 1) * moveScale
-	g.player.Dy = (outputs[1]*2 - 1) * moveScale
+	directions := [8][2]float64{
+		{0, -1},  // ↑
+		{0, 1},   // ↓
+		{-1, 0},  // ←
+		{1, 0},   // →
+		{-1, -1}, // ↖
+		{1, -1},  // ↗
+		{1, 1},   // ↘
+		{-1, 1},  // ↙
+	}
+	// szukamy kierunku o najwyższym output
+	bestIndex := 0
+	bestValue := outputs[0]
+	for i, val := range outputs {
+		if val > bestValue {
+			bestValue = val
+			bestIndex = i
+		}
+	}
 
+	moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
+	dir := directions[bestIndex]
+	outputs, decision := genom.Forward(inputs)
+	g.LastAIDecision = decision //zapisauje nawet jak gracz ma kontrolę
+	//fmt.Printf("OUTPUTS z NEAT: %v (len: %d)\n", outputs, len(outputs))
+	//if len(outputs) < 2 {
+	//	return
+	//}
+	if !g.IsPlayerControlled && len(outputs) >= 2 { //gdy AI ma kontrole
+		moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
+		g.player.Dx = (outputs[0]*2 - 1) * moveScale
+		g.player.Dy = (outputs[1]*2 - 1) * moveScale
+	}
+
+
+	length := math.Sqrt(dir[0]*dir[0] + dir[1]*dir[1])
+	if length != 0 {
+		dir[0] /= length
+		dir[1] /= length
+	}
+	g.player.Dx = (dir[0]*2 - 1) * moveScale
+	g.player.Dy = (dir[1]*2 - 1) * moveScale
 }
 
 // przygotowanie inputow dla NEATA
 func (g *GameScene) PrepareInputs() []float64 {
 	inputs := []float64{
+		float64(SCORE) / 10.0,
 		PLAYERHP / 10.0,
 		PLAYERDMG / 10.0,
 		PLAYERSPEED / 10.0,
 		PLAYEREFFICIENCY / 10.0,
 		PLAYERX / float64(constants.GameWidth),
 		PLAYERY / float64(constants.GameHeight),
+		PLAYERCALORIES / 10.0,
 	}
 
 	if len(NEARFOODS) > 0 {
@@ -953,7 +1122,17 @@ func (g *GameScene) PrepareInputs() []float64 {
 		inputs = append(inputs, distance, angle)
 	} else {
 		inputs = append(inputs, 0.0, 0.0)
+
 	}
+
+	if len(NEARVITAMINS) > 0 {
+		distance := NEARVITAMINS[0][0] / 500.0
+		angle := NEARFOODS[0][1] / 180.0
+		inputs = append(inputs, distance, angle)
+	} else {
+		inputs = append(inputs, 0.0, 0.0)
+	}
+
 	if len(ENEMIES) > 0 {
 		distance := ENEMIES[0][0] / 500.0
 		angle := ENEMIES[0][1] / 180.0
@@ -977,7 +1156,7 @@ func (g *GameScene) ResetGameState() {
 	g.player.SpeedMultiplier = 1
 	g.player.EfficiencyMultiplier = 1
 	g.player.TempHP = 0
-	g.player.Diet = 0
+	g.player.Diet = PlayerDiet
 	g.player.Dmg = 1
 	g.player.MaxHealth = 3
 	g.player.CombatComp = components.NewPlayerCombat(3, 1, 6000)
