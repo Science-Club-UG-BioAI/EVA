@@ -29,9 +29,11 @@ var population []*data.Genom
 var currentGenom *data.Genom
 var currentGenIndex int
 var generation int = 1
+var globalInnovationHistory data.InnovationHistory
+var currentPopulation data.Population
 
 // Limit czasu trwania życia genomu (w sekundach i klatkach)
-const GenomLifetimeInSeconds = 120
+const GenomLifetimeInSeconds = 5
 const FramesPerSecond = 60
 const GenomLifetimeFrames = GenomLifetimeInSeconds * FramesPerSecond
 
@@ -196,10 +198,11 @@ func (g *GameScene) Draw(screen *ebiten.Image) {
 	ebitenutil.DebugPrintAt(screen,
 		fmt.Sprintf("Game State: \n Game Pause: %v\n Game Over: %v\n Score: %v\n Enemies on map: %v\n Food on map: %v\n Vitamins on map: %v", g.gamePause, g.gameOver, SCORE, numberOfEnemies, numberOfFood, len(g.vitamins)), 0, 300)
 	if currentGenom != nil {
+		remaining := (GenomLifetimeFrames - g.timePassed) / FramesPerSecond
 		ebitenutil.DebugPrintAt(screen,
 			fmt.Sprintf("Genom: %d/%d\nGeneracja: %d\nFitness: %.2f",
-				currentGenIndex+1, len(population), generation, currentGenom.Fitness),
-			10, 500)
+				currentGenIndex+1, len(population), generation, currentGenom.Fitness, remaining),
+			10, 450)
 	}
 
 	if g.gameOver {
@@ -296,28 +299,34 @@ func (g *GameScene) FirstLoad() {
 	g.timePassed = 0
 
 	//tworzenie ai do testow - START
+	currentPopulation = data.Population{
+		PopSize:   20,
+		C1:        1.0,
+		C2:        0.5,
+		Threshold: 3.0,
+	}
 	population = []*data.Genom{}
-	sharedHistory := &data.InnovationHistory{}
-	for i := 0; i < 100; i++ {
+	//sharedHistory := &data.InnovationHistory{}
+	for i := 0; i < currentPopulation.PopSize; i++ {
 		g := &data.Genom{
 			NumInputs:  15,
 			NumOutputs: 8,
 			//			TotalNodes:       23, //uwazac bo createnetwork tutaj dodaje - nie jest to wgl potrzebne tbh
 			Nodes:            []*data.Node{},
 			ConnCreationRate: 1.0,
-			IH:               sharedHistory,
-			Fitness:          0,
+			IH:               &globalInnovationHistory, //sharedHistory,
 		}
 		g.CreateNetwork()
-		fmt.Printf("\nGENOM #%d\n", i)
-		for _, c := range g.Connections {
-			fmt.Printf("Połączenie: In=%d (Type %d) → Out=%d (Type %d), Waga=%.2f\n",
-				c.InNode.ID, c.InNode.Type,
-				c.OutNode.ID, c.OutNode.Type,
-				c.Weight,
-			)
-		}
+		// fmt.Printf("\nGENOM #%d\n", i)
+		// for _, c := range g.Connections {
+		// 	fmt.Printf("Połączenie: In=%d (Type %d) → Out=%d (Type %d), Waga=%.2f\n",
+		// 		c.InNode.ID, c.InNode.Type,
+		// 		c.OutNode.ID, c.OutNode.Type,
+		// 		c.Weight,
+		// 	)
+		// }
 		population = append(population, g)
+		currentPopulation.AddToSpecies(g)
 	}
 	currentGenIndex = 0
 	currentGenom = population[currentGenIndex]
@@ -846,21 +855,44 @@ func (g *GameScene) Update() SceneId {
 	}
 	// dane do funkcji kosztu
 	//przechodzenie po genomach - start
+	//zapisywanie informacji o populacji do pliku textowego
 	if g.gameOver || g.timePassed >= GenomLifetimeFrames {
 		fitness := currentGenom.EvaluateFitness(SCORE, g.foodEaten, g.enemyKilled, g.timePassed, g.player.CombatComp.Health())
 		fmt.Printf("Genom %d fitness: %f\n", currentGenIndex, fitness)
 
 		currentGenIndex++
+		g.timePassed = 0
 		if currentGenIndex < len(population) {
 			currentGenom = population[currentGenIndex]
 			g.ResetGameState()
 		} else {
-			fmt.Println("Koniec pokolenia")
-			// TODO: tu dodamy selekcję, krzyżowanie, mutację
-			g.gamePause = true
+			fmt.Println("=== CREATING NEW GENERATION ===")
+			generation++
+			// Specjacja — resetujemy i przypisujemy genomy do gatunków
+			currentPopulation.AllSpecies = []*data.Species{}
+			for _, genom := range population {
+				currentPopulation.AddToSpecies(genom)
+			}
+
+			// Zapis aktualnej populacji do pliku (opcjonalnie, ale pomocne)
+			err := data.SavePopulationToFile(&currentPopulation, currentPopulation.CurrentGeneration)
+			if err != nil {
+				fmt.Println("Błąd zapisu populacji:", err)
+			}
+
+			// Tworzenie nowej generacji
+			currentPopulation.CurrentGeneration++
+			newPop := data.GenerateNewPopulation(&currentPopulation)
+			population = newPop
+
+			// Reset do pierwszego genomu i zatrzymanie gry
+			currentGenIndex = 0
+			currentGenom = population[currentGenIndex]
+			g.ResetGameState()
+			//g.gamePause = true
 		}
+		//przchodzenie po genomach - koniec
 	}
-	//przchodzenie po genomach - koniec
 	return GameSceneId
 
 }

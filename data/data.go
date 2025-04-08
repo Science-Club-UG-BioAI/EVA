@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
+	"os"
 	"time"
 )
 
@@ -165,7 +166,7 @@ func crossover(parent1, parent2 *Genom) *Genom {
 	return offspring
 }
 
-func (pop *Population) addToSpecies(genom *Genom) {
+func (pop *Population) AddToSpecies(genom *Genom) {
 	// adds genome to a compatible species
 	// if no match is found, creates new species and adds the genome to it
 
@@ -282,6 +283,82 @@ func (genom *Genom) mutateAddNode() {
 	genom.addConnetion(n1, &newNode, 1.0, true)
 	genom.addConnetion(&newNode, n2, conn.Weight, true)
 	genom.Nodes = append(genom.Nodes, &newNode)
+}
+
+// – – – – – – – – – – – – – – SELECTION PROCESS – – – – – – – – – – – – – – – – – – – – – – –
+
+func ranked(species *Species, k int) *Genom { // wybor rodzicow - typ turniejowy
+	best := species.Genoms[rand.Intn(len(species.Genoms))]
+	for i := 1; i < k; i++ {
+		syzyf := species.Genoms[rand.Intn(len(species.Genoms))]
+		if syzyf.Fitness > best.Fitness {
+			best = syzyf
+		}
+	}
+	return best
+}
+
+func GenerateNewPopulation(pop *Population) []*Genom {
+	fmt.Printf("[INFO] Start generowania nowej populacji – liczba gatunków: %d\n", len(pop.AllSpecies))
+	newGenomes := []*Genom{}
+	rand.Seed(time.Now().UnixNano())
+
+	if len(pop.AllSpecies) == 0 {
+		fmt.Println("Brak gatunków — nie można wygenerować nowej populacji.")
+		return []*Genom{}
+	}
+
+	//here we calculate the average fitness for species n how many offsprings a species can have
+	totalFitness := 0.0
+	for _, species := range pop.AllSpecies {
+		speciesTotal := 0.0
+		for _, g := range species.Genoms {
+			speciesTotal += g.Fitness
+		}
+		species.AverageFitness = speciesTotal / float64(len(species.Genoms))
+		totalFitness += species.AverageFitness
+	}
+
+	for _, species := range pop.AllSpecies {
+		offspringCount := int((species.AverageFitness / totalFitness) * float64(pop.PopSize))
+		for i := 0; i < offspringCount && len(newGenomes) < pop.PopSize; i++ {
+			if len(species.Genoms) == 0 {
+				continue
+			}
+			parent1 := ranked(species, 3) // 3 means we choosin 3 candidates
+			parent2 := ranked(species, 3)
+			child := crossover(parent1, parent2)
+
+			// Mutations in offsprings
+			child.mutateWeight()
+			if rand.Float64() < 0.1 {
+				child.mutateAddConnection()
+			}
+			if rand.Float64() < 0.05 {
+				child.mutateAddNode()
+			}
+
+			newGenomes = append(newGenomes, child)
+		}
+	}
+
+	// if somehow well end up with less offsprings we will add randoms from the best pokemons
+	for len(newGenomes) < pop.PopSize {
+		if len(pop.AllSpecies) == 0 {
+			fmt.Println("Brak dostępnych gatunków przy tworzeniu nowej generacji.")
+			break
+		}
+		bestSpecies := pop.AllSpecies[rand.Intn(len(pop.AllSpecies))]
+		if len(bestSpecies.Genoms) == 0 {
+			continue
+		}
+		parent := bestSpecies.Genoms[rand.Intn(len(bestSpecies.Genoms))]
+		copy := *parent
+		newGenomes = append(newGenomes, &copy)
+	}
+
+	fmt.Printf("[INFO] Nowa populacja gotowa – liczba genomów: %d\n", len(newGenomes))
+	return newGenomes
 }
 
 // – – – – – – – – – – – – – – UTILITY FUNCTIONS – – – – – – – – – – – – – – – – – – – – – – –
@@ -430,6 +507,52 @@ func relu(x float64) float64 { //funkcja aktywacji relu - wywolywana w funkcji f
 		return x
 	}
 	return 0
+}
+
+func SavePopulationToFile(pop *Population, generation int) error { //funkcja testowa sprawdzajaca dzialanie NEAT
+	os.MkdirAll("generations", os.ModePerm)
+	filename := fmt.Sprintf("generations/generation_%d.txt", generation)
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	for speciesIdx, species := range pop.AllSpecies {
+		fmt.Fprintf(file, "=== SPECIES %d ===\n", speciesIdx)
+		fmt.Fprintf(file, "Average Fitness: %.2f\n", species.AverageFitness)
+		for genomIdx, genom := range species.Genoms {
+			fmt.Fprintf(file, "\n--- Genom %d (Fitness: %.2f) ---\n", genomIdx, genom.Fitness)
+
+			fmt.Fprintln(file, "Nodes:")
+			for _, node := range genom.Nodes {
+				fmt.Fprintf(file, "  Node ID: %d, Type: %s\n", node.ID, node.Type.String())
+			}
+
+			fmt.Fprintln(file, "Connections:")
+			for _, conn := range genom.Connections {
+				mutationNote := ""
+				if conn.InNode.Type == Hidden || conn.OutNode.Type == Hidden {
+					mutationNote = " [mutation]"
+				}
+				fmt.Fprintf(file,
+					"  %d -> %d | Weight: %.4f | Enabled: %v%s\n",
+					conn.InNode.ID, conn.OutNode.ID, conn.Weight, conn.Enabled, mutationNote)
+			}
+		}
+		fmt.Fprintln(file)
+	}
+
+	fmt.Fprintf(file, "\n--- TOTAL GENOMES: %d ---\n", len(AllGenomesFromPopulation(pop)))
+	return nil
+}
+
+func AllGenomesFromPopulation(pop *Population) []*Genom {
+	var all []*Genom
+	for _, species := range pop.AllSpecies {
+		all = append(all, species.Genoms...)
+	}
+	return all
 }
 
 // – – – – – – – – – – – – – – – – – TESTING – – – – – – – – – – – – – – – – – – – – – – –
