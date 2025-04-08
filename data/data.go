@@ -202,17 +202,25 @@ func (genom *Genom) Forward(inputs []float64) []float64 {
 			}
 		}
 	}
-
+	// accumulating weighted sums per node
+	incomingSums := make(map[int]float64)
 	for _, conn := range genom.Connections {
 		if !conn.Enabled {
 			continue
 		}
 		inVal := nodeValues[conn.InNode.ID]
-		weightedVal := inVal * conn.Weight
-		nodeValues[conn.OutNode.ID] += relu(weightedVal)
-		fmt.Printf("Połączenie: %+v => Przekazuje: %.3f * %.3f = %.3f\n",
-			conn, inVal, conn.Weight, inVal*conn.Weight)
+		incomingSums[conn.OutNode.ID] += inVal * conn.Weight
 	}
+	// applying activation functions
+	for _, node := range genom.Nodes {
+		if node.Type == Hidden {
+			nodeValues[node.ID] = relu(incomingSums[node.ID])
+		}
+		if node.Type == Output {
+			nodeValues[node.ID] = sigmoid(incomingSums[node.ID])
+		}
+	}
+
 	outputs := []float64{}
 	fmt.Println("Zawartość nodeValues:")
 	for k, v := range nodeValues {
@@ -285,6 +293,21 @@ func (genom *Genom) mutateAddNode() {
 	genom.Nodes = append(genom.Nodes, &newNode)
 }
 
+func (genom *Genom) mutateToggleConnection() {
+	// randomly toggles the "Enabled" state for connections
+	rand.Seed(time.Now().UnixNano())
+
+	// We randomly select one connection from the Connections list
+	if len(genom.Connections) == 0 {
+		return
+	}
+
+	conn := &genom.Connections[rand.Intn(len(genom.Connections))]
+
+	// We change the "Enabled" state of the connection (if it was enabled, we disable it, and vice versa)
+	conn.Enabled = !conn.Enabled
+}
+
 // – – – – – – – – – – – – – – SELECTION PROCESS – – – – – – – – – – – – – – – – – – – – – – –
 
 func ranked(species *Species, k int) *Genom { // wybor rodzicow - typ turniejowy
@@ -332,11 +355,14 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 
 			// Mutations in offsprings
 			child.mutateWeight()
-			if rand.Float64() < 0.1 {
+			if rand.Float64() < 0.2 {
 				child.mutateAddConnection()
 			}
 			if rand.Float64() < 0.05 {
 				child.mutateAddNode()
+			}
+			if rand.Float64() < 0.02 {
+				child.mutateToggleConnection()
 			}
 
 			newGenomes = append(newGenomes, child)
@@ -539,6 +565,11 @@ func relu(x float64) float64 { //funkcja aktywacji relu - wywolywana w funkcji f
 		return x
 	}
 	return 0
+}
+
+func sigmoid(x float64) float64 {
+	// scaled sigmoid activating function, range [-1,1]
+	return 2.0/(1.0+math.Exp(-4.9*x)) - 1.0
 }
 
 func SavePopulationToFile(pop *Population, generation int) error { //funkcja testowa sprawdzajaca dzialanie NEAT
