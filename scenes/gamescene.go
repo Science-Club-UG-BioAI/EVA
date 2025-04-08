@@ -33,7 +33,7 @@ var globalInnovationHistory data.InnovationHistory
 var currentPopulation data.Population
 
 // Limit czasu trwania życia genomu (w sekundach i klatkach)
-const GenomLifetimeInSeconds = 5
+const GenomLifetimeInSeconds = 2
 const FramesPerSecond = 60
 const GenomLifetimeFrames = GenomLifetimeInSeconds * FramesPerSecond
 
