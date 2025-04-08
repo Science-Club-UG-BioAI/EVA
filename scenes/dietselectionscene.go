@@ -80,22 +80,71 @@ func (s *DietSelectionScene) Draw(screen *ebiten.Image) {
 		screen.DrawImage(s.backgroundImage, op)
 	}
 
-	// Draw buttons which allow user to choose a diet
-	s.drawButton(screen, s.carnivoreButtonRect, "Carnivore", color.RGBA{R: 249, G: 209, B: 66, A: 100}, "assets/images/meat.png")
-	s.drawButton(screen, s.omnivoreButtonRect, "Omnivore", color.RGBA{R: 249, G: 209, B: 66, A: 100}, "assets/images/all-foods.png")
-	s.drawButton(screen, s.herbivoreButtonRect, "Herbivore", color.RGBA{R: 249, G: 209, B: 66, A: 100}, "assets/images/plant.png")
+	// Draw "CHOOSE YOUR DIET" text
+	chooseDietText := "CHOOSE YOUR DIET"
+	textColor := color.White
+	bounds := text.BoundString(basicfont.Face7x13, chooseDietText)
+	textWidth := bounds.Dx()
+	textHeight := bounds.Dy()
+
+	textImage := ebiten.NewImage(textWidth, textHeight)
+	text.Draw(textImage, chooseDietText, basicfont.Face7x13, 0, textHeight, textColor)
+
+	op := &ebiten.DrawImageOptions{}
+	scaleFactor := 4.0
+	op.GeoM.Scale(scaleFactor, scaleFactor)
+
+	// Adjust "CHOOSE YOUR DIET" position 
+	screenWidth, _ := screen.Size()
+	x := (float64(screenWidth) - float64(textWidth)*scaleFactor) / 2
+	y := float64(s.carnivoreButtonRect.Y) - float64(textHeight)*scaleFactor - 60 
+	op.GeoM.Translate(x, y)
+
+	screen.DrawImage(textImage, op)
+
+	// Center diet buttons in a row and vertically in the middle of the screen
+	totalButtonWidth := s.carnivoreButtonRect.Width + s.omnivoreButtonRect.Width + s.herbivoreButtonRect.Width + 40 
+	startX := (screenWidth - totalButtonWidth) / 2
+	_, screenHeight := screen.Size()
+	buttonY := (screenHeight - s.carnivoreButtonRect.Height) / 2
+
+	// Update button positions
+	s.carnivoreButtonRect.X = startX
+	s.carnivoreButtonRect.Y = buttonY
+
+	s.omnivoreButtonRect.X = startX + s.carnivoreButtonRect.Width + 20
+	s.omnivoreButtonRect.Y = buttonY
+
+	s.herbivoreButtonRect.X = s.omnivoreButtonRect.X + s.omnivoreButtonRect.Width + 20
+	s.herbivoreButtonRect.Y = buttonY
+
+	// Draw DIET buttons
+	s.drawButton(screen, s.carnivoreButtonRect, "Carnivore", color.RGBA{R: 249, G: 209, B: 66, A: 100}, "assets/images/meat.png", color.RGBA{R: 189, G: 77, B: 39, A: 255})
+	s.drawButton(screen, s.omnivoreButtonRect, "Omnivore", color.RGBA{R: 249, G: 209, B: 66, A: 100}, "assets/images/all-foods.png", color.RGBA{R: 189, G: 77, B: 39, A: 255})
+	s.drawButton(screen, s.herbivoreButtonRect, "Herbivore", color.RGBA{R: 249, G: 209, B: 66, A: 100}, "assets/images/plant.png", color.RGBA{R: 189, G: 77, B: 39, A: 255})
 
 	// Draw "START" button
-	buttonColor := color.RGBA{R: 66, G: 135, B: 245, A: 255}
-	s.drawButton(screen, s.startButtonRect, "START", buttonColor, "")
+	buttonColor := color.RGBA{R: 249, G: 209, B: 66, A: 100}
+	s.drawButton(screen, s.startButtonRect, "START", buttonColor, "", color.RGBA{R: 189, G: 77, B: 39, A: 255})
 
-	// Display selected diet
+
+	// Display selected diet below the buttons + position it
 	if s.selectedDiet != "" {
-		text.Draw(screen, "Selected Diet: "+s.selectedDiet, basicfont.Face7x13, 50, 400, color.RGBA{R: 189, G: 77, B: 39, A: 255})
+		selectedDietText := "Selected Diet: " + s.selectedDiet
+		textColor := color.White
+		bounds := text.BoundString(basicfont.Face7x13, selectedDietText)
+		textWidth := bounds.Dx()
+		textHeight := bounds.Dy()
+
+		screenWidth, _ := screen.Size()
+		textX := (screenWidth - textWidth) / 2
+		textY := s.carnivoreButtonRect.Y + s.carnivoreButtonRect.Height + 40 // Position below buttons
+
+		text.Draw(screen, selectedDietText, basicfont.Face7x13, textX, textY+textHeight, textColor)
 	}
 }
 
-func (s *DietSelectionScene) drawButton(screen *ebiten.Image, rect Rect, label string, buttonColor color.Color, imagePath string) {
+func (s *DietSelectionScene) drawButton(screen *ebiten.Image, rect Rect, label string, buttonColor color.Color, imagePath string, textColor color.Color) {
 	radius := 4 // Radius for rounded corners
 
 	// Draw button background (excluding corners)
@@ -152,12 +201,12 @@ func (s *DietSelectionScene) drawButton(screen *ebiten.Image, rect Rect, label s
 	contentY := rect.Y + (rect.Height-labelHeight)/2
 
 	// Draw the text
-	text.Draw(screen, label, basicfont.Face7x13, contentX, contentY+labelHeight, color.Black)
+	text.Draw(screen, label, basicfont.Face7x13, contentX, contentY+labelHeight, textColor)
 
 	// Draw the image to the right of the text
 	if img != nil {
 		op := &ebiten.DrawImageOptions{}
-		imageX := contentX + labelWidth + 10 // Position image to the right of the text
+		imageX := contentX + labelWidth + 10 
 		imageY := rect.Y + (rect.Height-imgHeight)/2
 		op.GeoM.Translate(float64(imageX), float64(imageY))
 		screen.DrawImage(img, op)
