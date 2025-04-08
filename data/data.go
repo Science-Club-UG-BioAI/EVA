@@ -1,9 +1,10 @@
-package main
+package data
 
 import (
 	"fmt"
 	"math"
 	"math/rand"
+	"os"
 	"time"
 )
 
@@ -46,9 +47,9 @@ type InnovationHistory struct {
 }
 
 type Genom struct {
-	numInputs        int                // number of Input nodes
-	numOutputs       int                // number of Output nodes
-	totalNodes       int                // total number of nodes
+	NumInputs        int                // number of Input nodes
+	NumOutputs       int                // number of Output nodes
+	TotalNodes       int                // total number of nodes
 	Nodes            []*Node            // list of all nodes in the genome
 	Connections      []Connection       // list of all connections in the genome
 	ConnCreationRate float64            // chance of adding connection while creating new network
@@ -73,23 +74,23 @@ type Population struct {
 
 // – – – – – – – – – – – – – – MAIN FUNCTIONALITY – – – – – – – – – – – – – – – –– – – – – – –
 
-func (genom *Genom) createNetwork() {
+func (genom *Genom) CreateNetwork() {
 	// creates new network with only input and output nodes
 	// adds connections randomly
 
 	// adding inputs nodes
-	for i := 0; i < genom.numInputs; i++ {
-		genom.Nodes = append(genom.Nodes, &Node{ID: genom.totalNodes, Type: Input})
-		genom.totalNodes++
+	for i := 0; i < genom.NumInputs; i++ {
+		genom.Nodes = append(genom.Nodes, &Node{ID: genom.TotalNodes, Type: Input})
+		genom.TotalNodes++ //sprawdzic bo podwaja nodey
 	}
 	// adding output nodes
-	for i := 0; i < genom.numOutputs; i++ {
-		genom.Nodes = append(genom.Nodes, &Node{ID: genom.totalNodes, Type: Output})
-		genom.totalNodes++
+	for i := 0; i < genom.NumOutputs; i++ {
+		genom.Nodes = append(genom.Nodes, &Node{ID: genom.TotalNodes, Type: Output})
+		genom.TotalNodes++
 	}
 	// adding random connections between nodes
 	rand.Seed(time.Now().UnixNano())
-	for i := 0; i < genom.numInputs*genom.numOutputs; i++ {
+	for i := 0; i < genom.NumInputs*genom.NumOutputs; i++ {
 		if rand.Float64() < genom.ConnCreationRate {
 			node1, node2 := genom.randomNodes()
 			if !genom.connectionExist(node1, node2) {
@@ -127,9 +128,9 @@ func crossover(parent1, parent2 *Genom) *Genom {
 	// creating offspring genome
 	offspring := &Genom{
 		IH:               parent1.IH,
-		numInputs:        parent1.numInputs,
-		numOutputs:       parent1.numOutputs,
-		totalNodes:       parent1.totalNodes,
+		NumInputs:        parent1.NumInputs,
+		NumOutputs:       parent1.NumOutputs,
+		TotalNodes:       parent1.TotalNodes,
 		ConnCreationRate: parent1.ConnCreationRate,
 	}
 
@@ -165,7 +166,7 @@ func crossover(parent1, parent2 *Genom) *Genom {
 	return offspring
 }
 
-func (pop *Population) addToSpecies(genom *Genom) {
+func (pop *Population) AddToSpecies(genom *Genom) {
 	// adds genome to a compatible species
 	// if no match is found, creates new species and adds the genome to it
 
@@ -183,6 +184,54 @@ func (pop *Population) addToSpecies(genom *Genom) {
 		newSpecies.Genoms = append(newSpecies.Genoms, genom)
 		pop.AllSpecies = append(pop.AllSpecies, &newSpecies)
 	}
+}
+
+func (genom *Genom) Forward(inputs []float64) []float64 {
+	fmt.Println("=== START FORWARD ===")
+	fmt.Printf("Wejścia: %v\n", inputs)
+	nodeValues := make(map[int]float64)
+	inputIndex := 0
+
+	for _, node := range genom.Nodes {
+		if node.Type == 0 {
+			if inputIndex < len(inputs) {
+				nodeValues[node.ID] = inputs[inputIndex]
+				inputIndex++
+			} else {
+				nodeValues[node.ID] = 0
+			}
+		}
+	}
+
+	for _, conn := range genom.Connections {
+		if !conn.Enabled {
+			continue
+		}
+		inVal := nodeValues[conn.InNode.ID]
+		weightedVal := inVal * conn.Weight
+		nodeValues[conn.OutNode.ID] += relu(weightedVal)
+		fmt.Printf("Połączenie: %+v => Przekazuje: %.3f * %.3f = %.3f\n",
+			conn, inVal, conn.Weight, inVal*conn.Weight)
+	}
+	outputs := []float64{}
+	fmt.Println("Zawartość nodeValues:")
+	for k, v := range nodeValues {
+		fmt.Printf("Node %d = %.4f\n", k, v)
+	}
+	for _, node := range genom.Nodes {
+		if node.Type == 2 {
+			val, exists := nodeValues[node.ID]
+			if exists {
+				outputs = append(outputs, val)
+			} else {
+				outputs = append(outputs, 0)
+				fmt.Printf("Output node %d nie ma wartości — ustawiamy 0\n", node.ID)
+			}
+		}
+	}
+	fmt.Println("=== KONIEC FORWARD ===")
+	fmt.Printf("Outputs: %v\n", outputs)
+	return outputs
 }
 
 // – – – – – – – – – – – – – – – – – MUTATIONS – – – – – – – – – – – – – – – – – – – – – – –
@@ -226,8 +275,8 @@ func (genom *Genom) mutateAddNode() {
 	conn.Enabled = false
 
 	// creates new hidden node
-	genom.totalNodes++
-	newNode := Node{ID: genom.totalNodes - 1, Type: Hidden}
+	genom.TotalNodes++
+	newNode := Node{ID: genom.TotalNodes - 1, Type: Hidden}
 	// creates two new connections
 	// weighs are chosen in such way, two new connections behave in the same way as old one
 	// this way mutation is not too drastic
@@ -236,10 +285,121 @@ func (genom *Genom) mutateAddNode() {
 	genom.Nodes = append(genom.Nodes, &newNode)
 }
 
+// – – – – – – – – – – – – – – SELECTION PROCESS – – – – – – – – – – – – – – – – – – – – – – –
+
+func ranked(species *Species, k int) *Genom { // wybor rodzicow - typ turniejowy
+	best := species.Genoms[rand.Intn(len(species.Genoms))]
+	for i := 1; i < k; i++ {
+		syzyf := species.Genoms[rand.Intn(len(species.Genoms))]
+		if syzyf.Fitness > best.Fitness {
+			best = syzyf
+		}
+	}
+	return best
+}
+
+func GenerateNewPopulation(pop *Population) []*Genom {
+	fmt.Printf("[INFO] Generating new population - number of species: %d\n", len(pop.AllSpecies))
+	newGenomes := []*Genom{}
+	rand.Seed(time.Now().UnixNano())
+
+	if len(pop.AllSpecies) == 0 {
+		//fmt.Println("Brak gatunków — nie można wygenerować nowej populacji.")
+		return []*Genom{}
+	}
+
+	//here we calculate the average fitness for species n how many offsprings a species can have
+	totalFitness := 0.0
+	for _, species := range pop.AllSpecies {
+		speciesTotal := 0.0
+		for _, g := range species.Genoms {
+			speciesTotal += g.Fitness
+
+		}
+		species.AverageFitness = speciesTotal / float64(len(species.Genoms))
+		totalFitness += species.AverageFitness
+	}
+
+	for _, species := range pop.AllSpecies {
+		offspringCount := int((species.AverageFitness / totalFitness) * float64(pop.PopSize))
+		for i := 0; i < offspringCount && len(newGenomes) < pop.PopSize; i++ {
+			if len(species.Genoms) == 0 {
+				continue
+			}
+			parent1 := ranked(species, 3) // 3 means we choosin 3 candidates
+			parent2 := ranked(species, 3)
+			child := crossover(parent1, parent2)
+
+			// Mutations in offsprings
+			child.mutateWeight()
+			if rand.Float64() < 0.1 {
+				child.mutateAddConnection()
+			}
+			if rand.Float64() < 0.05 {
+				child.mutateAddNode()
+			}
+
+			newGenomes = append(newGenomes, child)
+		}
+	}
+
+	// if somehow well end up with less offsprings we will add randoms from the best pokemons
+	for len(newGenomes) < pop.PopSize {
+		if len(pop.AllSpecies) == 0 {
+			fmt.Println("Brak dostępnych gatunków przy tworzeniu nowej generacji.")
+			break
+		}
+		bestSpecies := pop.AllSpecies[rand.Intn(len(pop.AllSpecies))]
+		if len(bestSpecies.Genoms) == 0 {
+			continue
+		}
+		parent := bestSpecies.Genoms[rand.Intn(len(bestSpecies.Genoms))]
+
+		//better version of copy - should work
+		newGen := &Genom{
+			NumInputs:        parent.NumInputs,
+			NumOutputs:       parent.NumOutputs,
+			ConnCreationRate: parent.ConnCreationRate,
+			IH:               parent.IH,
+			TotalNodes:       parent.TotalNodes,
+		}
+
+		nodeMap := make(map[int]*Node)
+		for _, node := range parent.Nodes {
+			newNode := &Node{
+				ID:   node.ID,
+				Type: node.Type,
+			}
+			newGen.Nodes = append(newGen.Nodes, newNode)
+			nodeMap[node.ID] = newNode
+		}
+
+		for _, conn := range parent.Connections {
+			newConn := Connection{
+				InNode:     nodeMap[conn.InNode.ID],
+				OutNode:    nodeMap[conn.OutNode.ID],
+				Weight:     conn.Weight,
+				Innovation: conn.Innovation,
+				Enabled:    conn.Enabled,
+			}
+			newGen.Connections = append(newGen.Connections, newConn)
+			nodeMap[conn.OutNode.ID].IncomingConns = append(nodeMap[conn.OutNode.ID].IncomingConns, newConn)
+		}
+
+		newGenomes = append(newGenomes, newGen)
+	}
+
+	fmt.Printf("[INFO] New population – number of genoms: %d\n", len(newGenomes))
+	return newGenomes
+}
+
 // – – – – – – – – – – – – – – UTILITY FUNCTIONS – – – – – – – – – – – – – – – – – – – – – – –
 
 func (ih *InnovationHistory) getInnovation(inNode, outNode *Node) int {
 	// given nodes, returns innovation nubmer of the connection between them
+	if ih.History == nil {
+		ih.History = make(map[InnovationKey]int)
+	}
 	key := InnovationKey{inNodeID: inNode.ID, outNodeID: outNode.ID}
 	if inno, exist := ih.History[key]; exist {
 		return inno
@@ -374,6 +534,59 @@ func (pop *Population) sameSpecies(genom1, genom2 *Genom) bool {
 	return delta < pop.Threshold
 }
 
+func relu(x float64) float64 { //funkcja aktywacji relu - wywolywana w funkcji forward
+	if x > 0 {
+		return x
+	}
+	return 0
+}
+
+func SavePopulationToFile(pop *Population, generation int) error { //funkcja testowa sprawdzajaca dzialanie NEAT
+	os.MkdirAll("generations", os.ModePerm)
+	filename := fmt.Sprintf("generations/generation_%d.txt", generation)
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	for speciesIdx, species := range pop.AllSpecies {
+		fmt.Fprintf(file, "=== SPECIES %d ===\n", speciesIdx)
+		fmt.Fprintf(file, "Average Fitness: %.2f\n", species.AverageFitness)
+		for genomIdx, genom := range species.Genoms {
+			fmt.Fprintf(file, "\n--- Genom %d (Fitness: %.2f) ---\n", genomIdx, genom.Fitness)
+
+			fmt.Fprintln(file, "Nodes:")
+			for _, node := range genom.Nodes {
+				fmt.Fprintf(file, "  Node ID: %d, Type: %s\n", node.ID, node.Type.String())
+			}
+
+			fmt.Fprintln(file, "Connections:")
+			for _, conn := range genom.Connections {
+				mutationNote := ""
+				if conn.InNode.Type == Hidden || conn.OutNode.Type == Hidden {
+					mutationNote = " [mutation]"
+				}
+				fmt.Fprintf(file,
+					"  %d -> %d | Weight: %.4f | Enabled: %v%s\n",
+					conn.InNode.ID, conn.OutNode.ID, conn.Weight, conn.Enabled, mutationNote)
+			}
+		}
+		fmt.Fprintln(file)
+	}
+
+	fmt.Fprintf(file, "\n--- TOTAL GENOMES: %d ---\n", len(AllGenomesFromPopulation(pop)))
+	return nil
+}
+
+func AllGenomesFromPopulation(pop *Population) []*Genom {
+	var all []*Genom
+	for _, species := range pop.AllSpecies {
+		all = append(all, species.Genoms...)
+	}
+	return all
+}
+
 // – – – – – – – – – – – – – – – – – TESTING – – – – – – – – – – – – – – – – – – – – – – –
 
 func (t NodeType) String() string {
@@ -415,26 +628,26 @@ func (genom *Genom) showNodes() {
 	}
 }
 
-func main() {
-	// testing
+// func main() {
+// 	// testing
 
-	globalInno := InnovationHistory{
-		History: map[InnovationKey]int{},
-	}
-	pop := Population{
-		PopSize:           2,
-		CurrentGeneration: 0,
-		C1:                1.0,
-		C2:                1.0,
-		Threshold:         2.0,
-	}
+// 	globalInno := InnovationHistory{
+// 		History: map[InnovationKey]int{},
+// 	}
+// 	pop := Population{
+// 		PopSize:           2,
+// 		CurrentGeneration: 0,
+// 		C1:                1.0,
+// 		C2:                1.0,
+// 		Threshold:         2.0,
+// 	}
 
-	g1 := Genom{numInputs: 1, numOutputs: 1, IH: &globalInno, ConnCreationRate: 1.0}
-	g2 := Genom{numInputs: 1, numOutputs: 1, IH: &globalInno, ConnCreationRate: 0.0}
-	g1.createNetwork()
-	g2.createNetwork()
-	pop.addToSpecies(&g1)
-	pop.addToSpecies(&g2)
+// 	g1 := Genom{NumInputs: 1, NumOutputs: 1, IH: &globalInno, ConnCreationRate: 1.0}
+// 	g2 := Genom{NumInputs: 1, NumOutputs: 1, IH: &globalInno, ConnCreationRate: 0.0}
+// 	g1.CreateNetwork()
+// 	g2.CreateNetwork()
+// 	pop.addToSpecies(&g1)
+// 	pop.addToSpecies(&g2)
 
-	fmt.Println("num species:", len(pop.AllSpecies))
-}
+// 	fmt.Println("num species:", len(pop.AllSpecies))
+// }
