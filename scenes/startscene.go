@@ -21,6 +21,8 @@ type StartScene struct {
 	loaded          bool
 	backgroundImage *ebiten.Image
 	startButtonRect Rect
+	aiPlayerButton  Rect
+	aiControlled    bool
 }
 
 type Rect struct {
@@ -30,6 +32,7 @@ type Rect struct {
 func NewStartScene() *StartScene {
 	return &StartScene{
 		startButtonRect: Rect{X: 100, Y: 150, Width: 100, Height: 30},
+		aiPlayerButton:  Rect{X: 100, Y: 200, Width: 100, Height: 30},
 	}
 }
 
@@ -52,6 +55,18 @@ func (s *StartScene) Update() SceneId {
 		cursorX, cursorY := ebiten.CursorPosition()
 		if cursorX >= s.startButtonRect.X && cursorX <= s.startButtonRect.X+s.startButtonRect.Width &&
 			cursorY >= s.startButtonRect.Y && cursorY <= s.startButtonRect.Y+s.startButtonRect.Height {
+			return DietSelectionSceneId // Transition to DietSelectionScene
+		}
+
+		// Handle "AI PLAYER" button click
+		if cursorX >= s.aiPlayerButton.X && cursorX <= s.aiPlayerButton.X+s.aiPlayerButton.Width &&
+			cursorY >= s.aiPlayerButton.Y && cursorY <= s.aiPlayerButton.Y+s.aiPlayerButton.Height {
+			// Handle AI player logic here
+			log.Println("AI PLAYER button clicked")
+
+			// logic to enable AI player
+			s.aiControlled = true 
+			enableAI(true)       
 			return DietSelectionSceneId // Transition to DietSelectionScene
 		}
 	}
@@ -132,7 +147,58 @@ func (s *StartScene) Draw(screen *ebiten.Image) {
 	startTextY := s.startButtonRect.Y + (s.startButtonRect.Height+startTextHeight)/2
 
 	text.Draw(screen, startText, basicfont.Face7x13, startTextX, startTextY, color.RGBA{R: 189, G: 77, B: 39, A: 255})
+
+	// Draw "AI PLAYER" button
+	s.aiPlayerButton.X = (screenWidth - s.aiPlayerButton.Width) / 2
+	s.aiPlayerButton.Y = s.startButtonRect.Y + s.startButtonRect.Height + 20
+
+	// Drawing rectangle with rounded edges for "AI PLAYER" button
+	buttonColor = color.RGBA{R: 249, G: 209, B: 66, A: 100} // Same as "PLAY" button
+	radius = 4 // used to round the edges
+
+	// Filling of "AI PLAYER" button
+	for dx := radius; dx < s.aiPlayerButton.Width-radius; dx++ {
+		for dy := 0; dy < s.aiPlayerButton.Height; dy++ {
+			screen.Set(s.aiPlayerButton.X+dx, s.aiPlayerButton.Y+dy, buttonColor)
+		}
+	}
+	for dx := 0; dx < s.aiPlayerButton.Width; dx++ {
+		for dy := radius; dy < s.aiPlayerButton.Height-radius; dy++ {
+			screen.Set(s.aiPlayerButton.X+dx, s.aiPlayerButton.Y+dy, buttonColor)
+		}
+	}
+
+	// Rounding the edges of the "AI PLAYER" button
+	for dx := -radius; dx <= radius; dx++ {
+		for dy := -radius; dy <= radius; dy++ {
+			if dx*dx+dy*dy <= radius*radius {
+
+				screen.Set(s.aiPlayerButton.X+radius+dx, s.aiPlayerButton.Y+radius+dy, buttonColor)
+
+				screen.Set(s.aiPlayerButton.X+s.aiPlayerButton.Width-radius+dx, s.aiPlayerButton.Y+radius+dy, buttonColor)
+
+				screen.Set(s.aiPlayerButton.X+radius+dx, s.aiPlayerButton.Y+s.aiPlayerButton.Height-radius+dy, buttonColor)
+
+				screen.Set(s.aiPlayerButton.X+s.aiPlayerButton.Width-radius+dx, s.aiPlayerButton.Y+s.aiPlayerButton.Height-radius+dy, buttonColor)
+			}
+		}
+	}
+
+	// Centering text on the "AI PLAYER" button
+	aiText := "AI PLAYER"
+	aiBounds := text.BoundString(basicfont.Face7x13, aiText)
+	aiTextWidth := aiBounds.Dx()
+	aiTextHeight := aiBounds.Dy()
+	aiTextX := s.aiPlayerButton.X + (s.aiPlayerButton.Width-aiTextWidth)/2
+	aiTextY := s.aiPlayerButton.Y + (s.aiPlayerButton.Height+aiTextHeight)/2
+
+	textColor := color.RGBA{R: 189, G: 77, B: 39, A: 255} // Same as "PLAY" button text color
+	text.Draw(screen, aiText, basicfont.Face7x13, aiTextX, aiTextY, textColor)
 }
 
 func (s *StartScene) OnEnter() {}
 func (s *StartScene) OnExit()  {}
+
+func (s *StartScene) IsAIControlled() bool {
+	return s.aiControlled
+}
