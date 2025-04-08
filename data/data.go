@@ -72,6 +72,19 @@ type Population struct {
 	Threshold         float64    // threshold for speciating
 }
 
+type AIDecision struct { //przechowuje informacje o pojedyńczej decyzji podjętej przez AI (np. decyzja żeby iść w prawo)
+	Inputs      []float64        //wartości wejściowe (np. jak daleko jest enemy)
+	Outputs     []float64        //wartości wyjściowe (decyzja idź w prawo)
+	Connections []ConnectionInfo //lista wszystkich aktywnych połączeń i ich wpływu - jak do tego doszło
+}
+
+type ConnectionInfo struct { //szczegół jednego połączenia z podjętej decyzji
+	From   int     //ID neuronu źródłowego - informacja
+	To     int     // ID neuronu docelowego - decyzja
+	Weight float64 //waga
+	Effect float64 //input * weight
+}
+
 // – – – – – – – – – – – – – – MAIN FUNCTIONALITY – – – – – – – – – – – – – – – –– – – – – – –
 
 func (genom *Genom) CreateNetwork() {
@@ -186,7 +199,7 @@ func (pop *Population) AddToSpecies(genom *Genom) {
 	}
 }
 
-func (genom *Genom) Forward(inputs []float64) []float64 {
+func (genom *Genom) Forward(inputs []float64) ([]float64, AIDecision) {
 	fmt.Println("=== START FORWARD ===")
 	fmt.Printf("Wejścia: %v\n", inputs)
 	nodeValues := make(map[int]float64)
@@ -239,7 +252,24 @@ func (genom *Genom) Forward(inputs []float64) []float64 {
 	}
 	fmt.Println("=== KONIEC FORWARD ===")
 	fmt.Printf("Outputs: %v\n", outputs)
-	return outputs
+	// zbiera informacje o wszystkich połączeniach
+	connectionInfo := make([]ConnectionInfo, 0) //pusta lista obiektow typu ConnectionInfo
+	for _, conn := range genom.Connections {    //przetwarzanie tylko aktywnych połączeń
+		if conn.Enabled {
+			effect := nodeValues[conn.InNode.ID] * conn.Weight      //rzeczywisty wpływ na decyzje
+			connectionInfo = append(connectionInfo, ConnectionInfo{ //zapisywanie danych połączenia
+				From:   conn.InNode.ID,
+				To:     conn.OutNode.ID,
+				Weight: conn.Weight,
+				Effect: effect,
+			})
+		}
+	}
+	return outputs, AIDecision{
+		Inputs:      inputs,
+		Outputs:     outputs,
+		Connections: connectionInfo,
+	}
 }
 
 // – – – – – – – – – – – – – – – – – MUTATIONS – – – – – – – – – – – – – – – – – – – – – – –
