@@ -394,13 +394,13 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 
 			// Mutations in offsprings
 			child.mutateWeight()
-			if rand.Float64() < 0.2 {
+			if rand.Float64() < 0.7 {
 				child.mutateAddConnection()
 			}
-			if rand.Float64() < 0.05 {
+			if rand.Float64() < 0.2 {
 				child.mutateAddNode()
 			}
-			if rand.Float64() < 0.02 {
+			if rand.Float64() < 0.1 {
 				child.mutateToggleConnection()
 			}
 
