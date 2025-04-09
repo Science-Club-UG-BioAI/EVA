@@ -12,4 +12,5 @@ const (
 	EnemyPlayerVision = 300
 	VitaminSize       = 0.8
 	FoodSize          = 0.8
+	StartingCalories = 100
 )
