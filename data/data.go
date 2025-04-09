@@ -378,7 +378,7 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 	fmt.Printf("[INFO] Generating new population - number of species: %d\n", len(pop.AllSpecies))
 	newGenomes := []*Genom{}
 	eliteList := []*Genom{}
-	// 🥇 Zachowaj 2 najlepsze genomy jako elity
+	// Zachowaj 2 najlepsze genomy jako elity
 	allGenomes := AllGenomesFromPopulation(pop)
 	sort.SliceStable(allGenomes, func(i, j int) bool {
 		return allGenomes[i].Fitness > allGenomes[j].Fitness
@@ -423,7 +423,7 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 			nodeMap[conn.OutNode.ID].IncomingConns = append(nodeMap[conn.OutNode.ID].IncomingConns, newConn)
 		}
 
-		newGenomes = append(newGenomes, newElite)
+		//newGenomes = append(newGenomes, newElite)
 		eliteList = append(eliteList, newElite)
 	}
 
@@ -521,7 +521,8 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 	fmt.Printf("[INFO] New population – number of genoms: %d\n", len(newGenomes))
 
 	SaveElitesToFile(eliteList, pop.CurrentGeneration)
-	return newGenomes
+	eliteList = append(eliteList, newGenomes...)
+	return eliteList
 }
 
 // – – – – – – – – – – – – – – UTILITY FUNCTIONS – – – – – – – – – – – – – – – – – – – – – – –
@@ -804,44 +805,6 @@ func (genom *Genom) showNodes() {
 }
 
 // ELITE FUNCTIONS
-
-func copyGenom(original *Genom) *Genom {
-	// Głęboka kopia wszystkich elementów
-	nodeMap := make(map[int]*Node)
-	copiedNodes := make([]*Node, len(original.Nodes))
-
-	for i, node := range original.Nodes {
-		copiedNodes[i] = &Node{
-			ID:   node.ID,
-			Type: node.Type,
-		}
-		nodeMap[node.ID] = copiedNodes[i]
-	}
-
-	copiedConns := make([]Connection, len(original.Connections))
-	for i, conn := range original.Connections {
-		copiedConns[i] = Connection{
-			InNode:     nodeMap[conn.InNode.ID],
-			OutNode:    nodeMap[conn.OutNode.ID],
-			Weight:     conn.Weight,
-			Innovation: conn.Innovation,
-			Enabled:    conn.Enabled,
-		}
-	}
-
-	return &Genom{
-		NumInputs:        original.NumInputs,
-		NumOutputs:       original.NumOutputs,
-		TotalNodes:       original.TotalNodes,
-		Nodes:            copiedNodes,
-		Connections:      copiedConns,
-		ConnCreationRate: original.ConnCreationRate,
-		IH:               original.IH,
-		Fitness:          original.Fitness,
-		IsElite:          original.IsElite,
-	}
-}
-
 func SaveElitesToFile(elites []*Genom, generation int) error {
 	os.MkdirAll("elites", os.ModePerm)
 	filename := fmt.Sprintf("elites/elites_gen%d.txt", generation)
