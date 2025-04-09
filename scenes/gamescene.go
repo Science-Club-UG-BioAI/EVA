@@ -219,8 +219,8 @@ func (g *GameScene) Draw(screen *ebiten.Image) {
 	if currentGenom != nil {
 		remaining := (GenomLifetimeFrames - g.timePassed) / FramesPerSecond
 		ebitenutil.DebugPrintAt(screen,
-			fmt.Sprintf("Genom: %d/%d\nGeneracja: %d\nFitness: %.2f",
-				currentGenIndex+1, len(population), generation, currentGenom.Fitness, remaining),
+			fmt.Sprintf("Genom: %d/%d\nGeneracja: %d\nTime remaining: %d",
+				currentGenIndex+1, len(population), generation, remaining),
 			10, 450)
 	}
 	if g.ShowAIDebug && g.LastAIDecision.Inputs != nil {
@@ -406,54 +406,32 @@ func (g *GameScene) FirstLoad() {
 	g.timePassed = 0
 
 	//tworzenie ai do testow - START
-	currentPopulation = data.Population{
-		PopSize:   30,
-		C1:        1.0,
-		C2:        0.5,
-		Threshold: 3.0,
+	pop, err := data.LoadPopulationFromFile("generation.txt", &globalInnovationHistory)
+	if err != nil {
+		log.Fatal("Nie udało się wczytać populacji:", err)
 	}
-	population = []*data.Genom{}
-	//sharedHistory := &data.InnovationHistory{}
-	for i := 0; i < currentPopulation.PopSize; i++ {
-		g := &data.Genom{
-			NumInputs:  15,
-			NumOutputs: 2,
-			//			TotalNodes:       23, //uwazac bo createnetwork tutaj dodaje - nie jest to wgl potrzebne tbh
-			Nodes:            []*data.Node{},
-			ConnCreationRate: 1.0,
-			IH:               &globalInnovationHistory, //sharedHistory,
-		}
-		g.CreateNetwork()
-		// fmt.Printf("\nGENOM #%d\n", i)
-		// for _, c := range g.Connections {
-		// 	fmt.Printf("Połączenie: In=%d (Type %d) → Out=%d (Type %d), Waga=%.2f\n",
-		// 		c.InNode.ID, c.InNode.Type,
-		// 		c.OutNode.ID, c.OutNode.Type,
-		// 		c.Weight,
-		// 	)
-		// }
-		population = append(population, g)
-		currentPopulation.AddToSpecies(g)
-	}
+	data.PrintPopulation(pop)
+	population = data.AllGenomesFromPopulation(pop)
+	currentPopulation = *pop
 	currentGenIndex = 0
 	currentGenom = population[currentGenIndex]
 	// fmt.Println("Test fitness:", testGenom.EvaluateFitness(120, 3, 56, 32, 2)) //sprawdzanie dzialania funkcji fitness
 	// fmt.Printf("Utworzono populację z %d genomów\n", len(population)) //sprawdzanie czy populacja zostala stworzona
 	//print sprawdzajacy polaczenia w kazdym genomie
-	fmt.Println("=== PODGLĄD POPULACJI ===")
-	for i, genom := range population {
-		fmt.Printf("GENOM %d:\n", i)
-		fmt.Printf("  NODES:\n")
-		for _, node := range genom.Nodes {
-			fmt.Printf("    Node %d (Type: %d)\n", node.ID, node.Type)
-		}
-		fmt.Printf("  CONNECTIONS:\n")
-		for _, conn := range genom.Connections {
-			fmt.Printf("    [%d] %d -> %d | Weight: %.2f | Enabled: %v\n",
-				conn.Innovation, conn.InNode.ID, conn.OutNode.ID, conn.Weight, conn.Enabled)
-		}
-		fmt.Println("----------------------------------")
-	}
+	// fmt.Println("=== PODGLĄD POPULACJI ===")
+	// for i, genom := range population {
+	// 	fmt.Printf("GENOM %d:\n", i)
+	// 	fmt.Printf("  NODES:\n")
+	// 	for _, node := range genom.Nodes {
+	// 		fmt.Printf("    Node %d (Type: %d)\n", node.ID, node.Type)
+	// 	}
+	// 	fmt.Printf("  CONNECTIONS:\n")
+	// 	for _, conn := range genom.Connections {
+	// 		fmt.Printf("    [%d] %d -> %d | Weight: %.2f | Enabled: %v\n",
+	// 			conn.Innovation, conn.InNode.ID, conn.OutNode.ID, conn.Weight, conn.Enabled)
+	// 	}
+	// 	fmt.Println("----------------------------------")
+	// }
 	//AI - koniec
 	g.loaded = true
 

@@ -1,12 +1,14 @@
 package data
 
 import (
+	"bufio"
 	"encoding/csv"
 	"fmt"
 	"math"
 	"math/rand"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -394,13 +396,13 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 
 			// Mutations in offsprings
 			child.mutateWeight()
-			if rand.Float64() < 0.2 {
+			if rand.Float64() < 0.7 {
 				child.mutateAddConnection()
 			}
-			if rand.Float64() < 0.05 {
+			if rand.Float64() < 0.2 {
 				child.mutateAddNode()
 			}
-			if rand.Float64() < 0.02 {
+			if rand.Float64() < 0.1 {
 				child.mutateToggleConnection()
 			}
 
@@ -460,7 +462,7 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 
 // – – – – – – – – – – – – – – UTILITY FUNCTIONS – – – – – – – – – – – – – – – – – – – – – – –
 
-func (ih *InnovationHistory) getInnovation(inNode, outNode *Node) int {
+func (ih *InnovationHistory) GetInnovation(inNode, outNode *Node) int {
 	// given nodes, returns innovation nubmer of the connection between them
 	if ih.History == nil {
 		ih.History = make(map[InnovationKey]int)
@@ -479,7 +481,7 @@ func (ih *InnovationHistory) getInnovation(inNode, outNode *Node) int {
 func (genom *Genom) addConnetion(node1, node2 *Node, weight float64, enabled bool) {
 	// helper function
 	// given nodes, weight and enabled, adds specific connection to the genome
-	inno := genom.IH.getInnovation(node1, node2)
+	inno := genom.IH.GetInnovation(node1, node2)
 	newConn := Connection{
 		InNode:     node1,
 		OutNode:    node2,
@@ -735,6 +737,162 @@ func (genom *Genom) showNodes() {
 				"Node ID:", node.ID, "type:", node.Type)
 		}
 	}
+}
+
+func LoadPopulationFromFile(filename string, ih *InnovationHistory) (*Population, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	pop := &Population{
+		AllSpecies: []*Species{},
+		C1:         1.0,
+		C2:         0.5,
+		Threshold:  3.0,
+	}
+	speciesMap := map[int]*Species{}
+	var currentGenom *Genom
+	var nodeMap map[int]*Node
+	var currentSpeciesID int
+	parsingNodes := false
+	parsingConns := false
+
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+
+		// Zakończenie poprzedniego genomu i rozpoczęcie nowego
+		if strings.HasPrefix(line, "--- Genom") {
+			if currentGenom != nil {
+				if speciesMap[currentSpeciesID] == nil {
+					speciesMap[currentSpeciesID] = &Species{}
+				}
+				speciesMap[currentSpeciesID].Genoms = append(speciesMap[currentSpeciesID].Genoms, currentGenom)
+				pop.PopSize++
+			}
+
+			currentGenom = &Genom{
+				Nodes:            []*Node{},
+				Connections:      []Connection{},
+				IH:               ih,
+				ConnCreationRate: 1.0,
+			}
+			nodeMap = make(map[int]*Node)
+			parsingNodes = false
+			parsingConns = false
+
+			// Parsowanie fitness
+			if parts := strings.Split(line, "Fitness:"); len(parts) > 1 {
+				fitnessStr := strings.TrimSuffix(strings.TrimSpace(parts[1]), ") ---")
+				if f, err := strconv.ParseFloat(fitnessStr, 64); err == nil {
+					currentGenom.Fitness = f
+				}
+			}
+			continue
+		}
+
+		// Przypisanie do gatunku
+		if strings.HasPrefix(line, "Belongs to Species:") {
+			idStr := strings.TrimPrefix(line, "Belongs to Species:")
+			currentSpeciesID, _ = strconv.Atoi(strings.TrimSpace(idStr))
+			continue
+		}
+
+		// Sekcje
+		if line == "Nodes:" {
+			parsingNodes = true
+			parsingConns = false
+			continue
+		}
+		if line == "Connections:" {
+			parsingNodes = false
+			parsingConns = true
+			continue
+		}
+
+		// Parsowanie węzłów
+		if parsingNodes && strings.HasPrefix(line, "Node ID:") {
+			parts := strings.Split(line, ",")
+			idStr := strings.TrimSpace(strings.TrimPrefix(parts[0], "Node ID:"))
+			typeStr := strings.TrimSpace(strings.TrimPrefix(parts[1], "Type:"))
+			id, _ := strconv.Atoi(idStr)
+
+			var t NodeType
+			switch typeStr {
+			case "Type: Input":
+				t = Input
+				currentGenom.NumInputs++
+			case "Type: Output":
+				t = Output
+				currentGenom.NumOutputs++
+			default:
+				fmt.Printf("%s", typeStr)
+				t = Hidden
+			}
+
+			node := &Node{ID: id, Type: t}
+			currentGenom.Nodes = append(currentGenom.Nodes, node)
+			nodeMap[id] = node
+			currentGenom.TotalNodes++
+			continue
+		}
+
+		// Parsowanie połączeń
+		if parsingConns && strings.Contains(line, "->") {
+			var inID, outID int
+			var weight float64
+			var enabled bool
+			fmt.Sscanf(line, "%d -> %d | Weight: %f | Enabled: %t", &inID, &outID, &weight, &enabled)
+
+			in := nodeMap[inID]
+			out := nodeMap[outID]
+			conn := Connection{
+				InNode:  in,
+				OutNode: out,
+				Weight:  weight,
+				Enabled: enabled,
+			}
+			conn.Innovation = ih.GetInnovation(in, out)
+			currentGenom.Connections = append(currentGenom.Connections, conn)
+			out.IncomingConns = append(out.IncomingConns, conn)
+		}
+	}
+
+	// Dodanie ostatniego genomu
+	if currentGenom != nil {
+		if speciesMap[currentSpeciesID] == nil {
+			speciesMap[currentSpeciesID] = &Species{}
+		}
+		speciesMap[currentSpeciesID].Genoms = append(speciesMap[currentSpeciesID].Genoms, currentGenom)
+		pop.PopSize++
+	}
+
+	// Przepisanie mapy do listy
+	for _, species := range speciesMap {
+		pop.AllSpecies = append(pop.AllSpecies, species)
+	}
+
+	return pop, scanner.Err()
+}
+
+
+func PrintPopulation(pop *Population) {
+	fmt.Printf("=== POPULATION ===\n")
+	fmt.Printf("Total Genomes: %d\n", pop.PopSize)
+	fmt.Printf("Species Count: %d\n", len(pop.AllSpecies))
+
+	for i, species := range pop.AllSpecies {
+		fmt.Printf("\n— Species %d —\n", i)
+		fmt.Printf("  Genomes in species: %d\n", len(species.Genoms))
+		for j, g := range species.Genoms {
+			fmt.Printf("  [Genom %d] Fitness: %.2f | Inputs: %d | Outputs: %d | Total Nodes: %d | Connections: %d\n",
+				j, g.Fitness, g.NumInputs, g.NumOutputs, g.TotalNodes, len(g.Connections))
+		}
+	}
+	fmt.Println("=== END POPULATION ===")
 }
 
 // func main() {
