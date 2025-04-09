@@ -1,0 +1,104 @@
+func GenerateNewPopulation(pop *Population) []*Genom {
+	fmt.Printf("[INFO] Generating new population - number of species: %d\n", len(pop.AllSpecies))
+
+	// Stałe
+	const numElites = 2 // Liczba elit do zachowania
+	newGenomes := make([]*Genom, 0, pop.PopSize)
+
+	// 1. Wybór i głębokie kopiowanie elit
+	allGenomes := AllGenomesFromPopulation(pop)
+	sort.SliceStable(allGenomes, func(i, j int) bool {
+		return allGenomes[i].Fitness > allGenomes[j].Fitness
+	})
+
+	// Kopiuj najlepsze genomy (pomiń już istniejące elity)
+	eliteCandidates := make([]*Genom, 0)
+	for _, g := range allGenomes {
+		if !g.IsElite && len(eliteCandidates) < numElites {
+			eliteCandidates = append(eliteCandidates, g)
+		}
+	}
+
+	// Głębokie kopiowanie elit
+	for _, elite := range eliteCandidates {
+		newElite := copyGenom(elite)
+		newElite.IsElite = true
+		newGenomes = append(newGenomes, newElite)
+	}
+
+	// 2. Generowanie potomstwa
+	remainingSlots := pop.PopSize - len(newGenomes)
+	if remainingSlots < 0 {
+		remainingSlots = 0
+	}
+
+	// Obliczanie przydziału potomstwa dla gatunków
+	totalFitness := 0.0
+	for _, species := range pop.AllSpecies {
+		speciesTotal := 0.0
+		for _, g := range species.Genoms {
+			speciesTotal += g.Fitness
+		}
+		species.AverageFitness = speciesTotal / float64(len(species.Genoms))
+		totalFitness += species.AverageFitness
+	}
+
+	// Generowanie potomstwa
+	for _, species := range pop.AllSpecies {
+		offspringCount := int((species.AverageFitness / totalFitness) * float64(remainingSlots))
+		for i := 0; i < offspringCount && len(newGenomes) < pop.PopSize; i++ {
+			if len(species.Genoms) == 0 {
+				continue
+			}
+
+			// Selekcja turniejowa
+			parent1 := ranked(species, 3)
+			parent2 := ranked(species, 3)
+			child := crossover(parent1, parent2)
+
+			// Mutacje (pomiń dla elit)
+			if !child.IsElite {
+				child.mutateWeight()
+				if rand.Float64() < 0.7 {
+					child.mutateAddConnection()
+				}
+				if rand.Float64() < 0.2 {
+					child.mutateAddNode()
+				}
+				if rand.Float64() < 0.1 {
+					child.mutateToggleConnection()
+				}
+			}
+
+			newGenomes = append(newGenomes, child)
+		}
+	}
+
+	// 3. Uzupełnianie populacji losowymi genomami jeśli potrzeba
+	for len(newGenomes) < pop.PopSize {
+		if len(pop.AllSpecies) == 0 {
+			break
+		}
+
+		species := pop.AllSpecies[rand.Intn(len(pop.AllSpecies))]
+		if len(species.Genoms) == 0 {
+			continue
+		}
+
+		parent := ranked(species, 1)
+		child := copyGenom(parent)
+		newGenomes = append(newGenomes, child)
+	}
+
+	// 4. Zabezpieczenie przed przekroczeniem rozmiaru
+	if len(newGenomes) > pop.PopSize {
+		newGenomes = newGenomes[:pop.PopSize]
+	}
+
+	// Aktualizacja logów
+	SaveElitesToFile(eliteCandidates, pop.CurrentGeneration)
+	pop.CurrentGeneration++
+
+	fmt.Printf("[INFO] New population - genoms: %d (elites: %d)\n", len(newGenomes), len(eliteCandidates))
+	return newGenomes
+}
