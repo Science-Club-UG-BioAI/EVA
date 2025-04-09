@@ -406,6 +406,7 @@ func (g *GameScene) FirstLoad() {
 	g.timePassed = 0
 
 	//tworzenie ai do testow - START
+	// GENEROWANIE NOWE - START
 	// currentPopulation = data.Population{
 	// 	PopSize:   30,
 	// 	C1:        1.0,
@@ -434,7 +435,16 @@ func (g *GameScene) FirstLoad() {
 	// 	// }
 	// 	population = append(population, g)
 	// 	currentPopulation.AddToSpecies(g)
-	// }
+	// } // GENEROWANIE NOWE - KONIEC
+	pop, err := data.LoadPopulationFromFile("generation.txt", &globalInnovationHistory)
+	if err != nil {
+		log.Fatal("Nie udało się wczytać populacji:", err)
+	}
+	data.PrintPopulation(pop)
+	population = data.AllGenomesFromPopulation(pop)
+	currentPopulation = *pop
+	currentGenIndex = 0
+	currentGenom = population[currentGenIndex]
 	currentGenIndex = 0
 	currentGenom = population[currentGenIndex]
 	// fmt.Println("Test fitness:", testGenom.EvaluateFitness(120, 3, 56, 32, 2)) //sprawdzanie dzialania funkcji fitness
