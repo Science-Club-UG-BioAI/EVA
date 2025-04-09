@@ -1,0 +1,1231 @@
+=== SPECIES 0 ===
+Average Fitness: 0.00
+
+--- Genom 0 (Fitness: 25.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  11 -> 15 | Weight: -0.9344 | Enabled: true
+  0 -> 16 | Weight: -0.2373 | Enabled: true
+  4 -> 15 | Weight: 0.6587 | Enabled: true
+  8 -> 15 | Weight: -0.9913 | Enabled: true
+  10 -> 16 | Weight: 0.8076 | Enabled: true
+  3 -> 15 | Weight: -0.3029 | Enabled: true
+  6 -> 16 | Weight: -0.7390 | Enabled: true
+  2 -> 16 | Weight: -0.6916 | Enabled: true
+  9 -> 16 | Weight: 0.4041 | Enabled: true
+  2 -> 15 | Weight: -0.1283 | Enabled: true
+  1 -> 15 | Weight: -0.9321 | Enabled: true
+  1 -> 16 | Weight: -0.7860 | Enabled: true
+  10 -> 15 | Weight: -0.5398 | Enabled: true
+  5 -> 15 | Weight: -0.2654 | Enabled: true
+  5 -> 16 | Weight: -0.2834 | Enabled: true
+  13 -> 15 | Weight: 0.3903 | Enabled: true
+
+--- Genom 1 (Fitness: 14.00) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  8 -> 16 | Weight: -0.7166 | Enabled: true
+  0 -> 16 | Weight: 0.6591 | Enabled: true
+  5 -> 16 | Weight: 0.0338 | Enabled: true
+  6 -> 16 | Weight: 0.4013 | Enabled: true
+  10 -> 15 | Weight: 0.7696 | Enabled: true
+  11 -> 16 | Weight: -0.8440 | Enabled: true
+  13 -> 15 | Weight: 0.0896 | Enabled: true
+  14 -> 15 | Weight: -0.8704 | Enabled: true
+  6 -> 15 | Weight: -0.5317 | Enabled: true
+  8 -> 15 | Weight: -0.5014 | Enabled: true
+  7 -> 16 | Weight: -0.1509 | Enabled: true
+  0 -> 15 | Weight: -0.0285 | Enabled: true
+  9 -> 16 | Weight: 0.0994 | Enabled: true
+  13 -> 16 | Weight: -0.8064 | Enabled: true
+  9 -> 15 | Weight: -0.7720 | Enabled: true
+  12 -> 16 | Weight: -0.3767 | Enabled: true
+  1 -> 15 | Weight: -0.9437 | Enabled: true
+  12 -> 15 | Weight: -0.3226 | Enabled: true
+
+--- Genom 2 (Fitness: 14.67) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  7 -> 15 | Weight: -0.0246 | Enabled: true
+  3 -> 15 | Weight: 0.0341 | Enabled: true
+  4 -> 16 | Weight: 0.7033 | Enabled: true
+  14 -> 15 | Weight: -0.1943 | Enabled: true
+  5 -> 16 | Weight: 0.9436 | Enabled: true
+  2 -> 15 | Weight: -0.6909 | Enabled: true
+  10 -> 16 | Weight: -0.1443 | Enabled: true
+  12 -> 15 | Weight: 0.0460 | Enabled: true
+  12 -> 16 | Weight: -0.4463 | Enabled: true
+  2 -> 16 | Weight: 0.7920 | Enabled: true
+  6 -> 16 | Weight: 0.2796 | Enabled: true
+  7 -> 16 | Weight: 1.0901 | Enabled: true
+  11 -> 16 | Weight: -0.8949 | Enabled: true
+  3 -> 16 | Weight: 0.3579 | Enabled: true
+  8 -> 15 | Weight: 0.6153 | Enabled: true
+  0 -> 16 | Weight: -0.0167 | Enabled: true
+  5 -> 15 | Weight: -0.1795 | Enabled: true
+  9 -> 15 | Weight: 0.8126 | Enabled: true
+
+--- Genom 3 (Fitness: 14.67) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  9 -> 16 | Weight: -0.7613 | Enabled: true
+  11 -> 16 | Weight: 0.4119 | Enabled: true
+  8 -> 16 | Weight: -0.0398 | Enabled: true
+  11 -> 15 | Weight: 0.4166 | Enabled: true
+  12 -> 16 | Weight: -0.4478 | Enabled: true
+  1 -> 16 | Weight: 0.5621 | Enabled: true
+  0 -> 15 | Weight: 0.1568 | Enabled: true
+  12 -> 15 | Weight: 0.1891 | Enabled: true
+  6 -> 16 | Weight: 0.2199 | Enabled: true
+  3 -> 16 | Weight: 0.1320 | Enabled: true
+  1 -> 15 | Weight: 0.4499 | Enabled: true
+  4 -> 15 | Weight: 0.0585 | Enabled: true
+  4 -> 16 | Weight: 0.2182 | Enabled: true
+  5 -> 16 | Weight: -0.3576 | Enabled: true
+  7 -> 16 | Weight: -0.0511 | Enabled: true
+  3 -> 15 | Weight: -0.6136 | Enabled: true
+  14 -> 16 | Weight: -0.2979 | Enabled: true
+  6 -> 15 | Weight: 0.6521 | Enabled: true
+  2 -> 16 | Weight: 0.6358 | Enabled: true
+
+--- Genom 4 (Fitness: 44.00) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  1 -> 15 | Weight: 0.9177 | Enabled: true
+  3 -> 16 | Weight: 1.0258 | Enabled: true
+  10 -> 16 | Weight: 0.1323 | Enabled: true
+  13 -> 15 | Weight: -0.0668 | Enabled: true
+  10 -> 15 | Weight: 0.1836 | Enabled: true
+  11 -> 15 | Weight: -0.4674 | Enabled: true
+  9 -> 16 | Weight: 0.4222 | Enabled: true
+  6 -> 16 | Weight: -0.8676 | Enabled: true
+  8 -> 15 | Weight: -0.3137 | Enabled: true
+  7 -> 15 | Weight: -0.4824 | Enabled: true
+  5 -> 16 | Weight: -0.0809 | Enabled: true
+  3 -> 15 | Weight: -0.9969 | Enabled: true
+  9 -> 15 | Weight: 0.1753 | Enabled: true
+  14 -> 15 | Weight: 0.2920 | Enabled: true
+  6 -> 15 | Weight: -0.8250 | Enabled: true
+  2 -> 15 | Weight: 0.0767 | Enabled: true
+  8 -> 16 | Weight: -0.6839 | Enabled: true
+  12 -> 16 | Weight: -0.3953 | Enabled: true
+  14 -> 16 | Weight: 0.9810 | Enabled: true
+  7 -> 16 | Weight: 0.7817 | Enabled: true
+
+--- Genom 5 (Fitness: 25.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  11 -> 16 | Weight: 0.6810 | Enabled: true
+  10 -> 16 | Weight: -0.1915 | Enabled: true
+  0 -> 16 | Weight: -0.0319 | Enabled: true
+  7 -> 15 | Weight: 0.3158 | Enabled: true
+  4 -> 15 | Weight: 0.3839 | Enabled: true
+  12 -> 15 | Weight: 0.3260 | Enabled: true
+  2 -> 16 | Weight: -0.6760 | Enabled: true
+  11 -> 15 | Weight: -0.2126 | Enabled: true
+  0 -> 15 | Weight: 0.4275 | Enabled: true
+  5 -> 15 | Weight: -0.8023 | Enabled: true
+  8 -> 15 | Weight: 0.3791 | Enabled: true
+  8 -> 16 | Weight: -0.7563 | Enabled: true
+  3 -> 15 | Weight: -0.7025 | Enabled: true
+  4 -> 16 | Weight: -0.9039 | Enabled: true
+  9 -> 15 | Weight: -0.9019 | Enabled: true
+  12 -> 16 | Weight: 0.2990 | Enabled: true
+  1 -> 16 | Weight: -0.8494 | Enabled: true
+  14 -> 15 | Weight: 0.9657 | Enabled: true
+  14 -> 16 | Weight: -0.5470 | Enabled: true
+  1 -> 15 | Weight: -0.5488 | Enabled: true
+  9 -> 16 | Weight: 0.9846 | Enabled: true
+
+--- Genom 6 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  7 -> 15 | Weight: -0.0475 | Enabled: true
+  3 -> 15 | Weight: 0.1553 | Enabled: true
+  4 -> 16 | Weight: -0.3473 | Enabled: true
+  14 -> 15 | Weight: -0.0489 | Enabled: true
+  5 -> 16 | Weight: -0.1371 | Enabled: true
+  2 -> 15 | Weight: -0.5506 | Enabled: true
+  10 -> 16 | Weight: 0.7993 | Enabled: true
+  12 -> 15 | Weight: 0.1395 | Enabled: true
+  12 -> 16 | Weight: 0.0708 | Enabled: true
+  2 -> 16 | Weight: 1.0544 | Enabled: true
+  6 -> 16 | Weight: -0.3892 | Enabled: true
+  7 -> 16 | Weight: 0.8562 | Enabled: true
+  11 -> 16 | Weight: 0.1825 | Enabled: true
+  3 -> 16 | Weight: 0.1361 | Enabled: true
+  8 -> 15 | Weight: 0.2988 | Enabled: true
+  0 -> 16 | Weight: 0.3617 | Enabled: true
+  5 -> 15 | Weight: -0.4618 | Enabled: true
+  9 -> 15 | Weight: 0.0570 | Enabled: true
+
+--- Genom 7 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  14 -> 15 | Weight: 0.6646 | Enabled: true
+  3 -> 16 | Weight: 0.4908 | Enabled: true
+  5 -> 16 | Weight: -0.9067 | Enabled: true
+  11 -> 16 | Weight: 0.4227 | Enabled: true
+  12 -> 16 | Weight: -1.1213 | Enabled: true
+  13 -> 16 | Weight: -0.8845 | Enabled: true
+  8 -> 16 | Weight: -0.7956 | Enabled: true
+  4 -> 16 | Weight: -0.2235 | Enabled: true
+  10 -> 15 | Weight: 0.0367 | Enabled: true
+  4 -> 15 | Weight: 0.5711 | Enabled: true
+  5 -> 15 | Weight: 0.1682 | Enabled: true
+  2 -> 15 | Weight: -0.3998 | Enabled: true
+  12 -> 15 | Weight: -0.5567 | Enabled: true
+  14 -> 16 | Weight: -0.3792 | Enabled: true
+  2 -> 16 | Weight: 0.9028 | Enabled: true
+  6 -> 16 | Weight: 0.8052 | Enabled: true
+  3 -> 15 | Weight: -0.4133 | Enabled: true
+  11 -> 15 | Weight: 0.0101 | Enabled: true
+  6 -> 15 | Weight: 1.0658 | Enabled: true
+
+--- Genom 8 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  0 -> 15 | Weight: 0.0503 | Enabled: true
+  7 -> 16 | Weight: 0.7016 | Enabled: false
+  1 -> 16 | Weight: -0.8763 | Enabled: true
+  14 -> 15 | Weight: -0.3370 | Enabled: true
+  4 -> 16 | Weight: 0.2940 | Enabled: true
+  9 -> 16 | Weight: 0.8019 | Enabled: true
+  2 -> 15 | Weight: 0.1227 | Enabled: true
+  10 -> 16 | Weight: 1.1354 | Enabled: true
+  5 -> 15 | Weight: -0.8255 | Enabled: true
+  6 -> 15 | Weight: -0.1782 | Enabled: true
+  10 -> 15 | Weight: 0.8107 | Enabled: true
+  13 -> 15 | Weight: -0.3799 | Enabled: true
+  3 -> 16 | Weight: 0.6288 | Enabled: true
+  1 -> 15 | Weight: -0.5459 | Enabled: true
+  8 -> 15 | Weight: -0.1761 | Enabled: true
+  4 -> 15 | Weight: -0.9219 | Enabled: true
+  0 -> 16 | Weight: 0.3811 | Enabled: true
+  6 -> 16 | Weight: 0.8285 | Enabled: true
+  12 -> 16 | Weight: -0.3618 | Enabled: true
+  11 -> 16 | Weight: 0.2203 | Enabled: true
+  8 -> 16 | Weight: -0.7261 | Enabled: true
+
+--- Genom 9 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  8 -> 16 | Weight: 0.0698 | Enabled: true
+  0 -> 16 | Weight: 0.5689 | Enabled: true
+  5 -> 16 | Weight: -0.0518 | Enabled: true
+  6 -> 16 | Weight: -0.7486 | Enabled: true
+  10 -> 15 | Weight: 0.8154 | Enabled: true
+  11 -> 16 | Weight: -0.8805 | Enabled: true
+  13 -> 15 | Weight: -0.8219 | Enabled: true
+  14 -> 15 | Weight: 0.0565 | Enabled: true
+  6 -> 15 | Weight: -0.5343 | Enabled: true
+  8 -> 15 | Weight: -0.2282 | Enabled: true
+  7 -> 16 | Weight: -0.7998 | Enabled: true
+  0 -> 15 | Weight: 0.1475 | Enabled: true
+  9 -> 16 | Weight: 0.1956 | Enabled: true
+  13 -> 16 | Weight: -0.8697 | Enabled: true
+  9 -> 15 | Weight: -0.8029 | Enabled: true
+  12 -> 16 | Weight: -0.4122 | Enabled: true
+  1 -> 15 | Weight: -0.4643 | Enabled: true
+  12 -> 15 | Weight: -0.3370 | Enabled: true
+  14 -> 16 | Weight: 0.8178 | Enabled: true
+
+--- Genom 10 (Fitness: 22.00) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  11 -> 16 | Weight: -0.2182 | Enabled: true
+  6 -> 16 | Weight: 0.8070 | Enabled: true
+  14 -> 16 | Weight: 0.8335 | Enabled: true
+  7 -> 16 | Weight: -0.5542 | Enabled: true
+  3 -> 16 | Weight: -0.8994 | Enabled: true
+  6 -> 15 | Weight: -0.8074 | Enabled: true
+  8 -> 15 | Weight: -0.3018 | Enabled: true
+  13 -> 16 | Weight: 0.8821 | Enabled: true
+  12 -> 16 | Weight: -0.2061 | Enabled: true
+  8 -> 16 | Weight: -0.9009 | Enabled: true
+  1 -> 15 | Weight: -0.9238 | Enabled: true
+  0 -> 16 | Weight: -0.0107 | Enabled: true
+  4 -> 16 | Weight: -0.9272 | Enabled: true
+  2 -> 16 | Weight: -0.7591 | Enabled: true
+  9 -> 15 | Weight: -0.6750 | Enabled: true
+  10 -> 15 | Weight: 0.0115 | Enabled: true
+
+--- Genom 11 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  8 -> 16 | Weight: -0.7878 | Enabled: true
+  0 -> 16 | Weight: 0.7096 | Enabled: true
+  5 -> 16 | Weight: 0.1177 | Enabled: true
+  6 -> 16 | Weight: -0.4616 | Enabled: true
+  10 -> 15 | Weight: 0.6546 | Enabled: true
+  11 -> 16 | Weight: -0.5474 | Enabled: true
+  13 -> 15 | Weight: -0.6344 | Enabled: true
+  14 -> 15 | Weight: 0.6811 | Enabled: true
+  6 -> 15 | Weight: -0.5162 | Enabled: true
+  8 -> 15 | Weight: -0.0080 | Enabled: true
+  7 -> 16 | Weight: -0.9436 | Enabled: true
+  0 -> 15 | Weight: -0.9253 | Enabled: true
+  9 -> 16 | Weight: -0.0581 | Enabled: true
+  13 -> 16 | Weight: -0.8669 | Enabled: true
+  9 -> 15 | Weight: -0.2117 | Enabled: true
+  12 -> 16 | Weight: 0.7424 | Enabled: true
+  1 -> 15 | Weight: 0.1704 | Enabled: true
+  12 -> 15 | Weight: -0.3159 | Enabled: true
+
+--- Genom 12 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  0 -> 15 | Weight: -1.0125 | Enabled: true
+  7 -> 16 | Weight: 0.6873 | Enabled: true
+  1 -> 16 | Weight: -0.8794 | Enabled: true
+  14 -> 15 | Weight: 1.0675 | Enabled: true
+  4 -> 16 | Weight: 0.3724 | Enabled: true
+  9 -> 16 | Weight: 0.9071 | Enabled: true
+  2 -> 15 | Weight: 0.8609 | Enabled: true
+  10 -> 16 | Weight: -0.3043 | Enabled: true
+  5 -> 15 | Weight: -0.7482 | Enabled: true
+  6 -> 15 | Weight: 0.4366 | Enabled: true
+  10 -> 15 | Weight: 0.7604 | Enabled: false
+  13 -> 15 | Weight: -0.5378 | Enabled: true
+  3 -> 16 | Weight: 0.6730 | Enabled: true
+  1 -> 15 | Weight: -0.4307 | Enabled: true
+  8 -> 15 | Weight: -0.6659 | Enabled: true
+  4 -> 15 | Weight: -0.9365 | Enabled: true
+  0 -> 16 | Weight: 0.2806 | Enabled: true
+  6 -> 16 | Weight: 0.4080 | Enabled: true
+  12 -> 16 | Weight: -0.7487 | Enabled: true
+  11 -> 16 | Weight: -0.5172 | Enabled: true
+  8 -> 16 | Weight: -0.1607 | Enabled: true
+  12 -> 15 | Weight: 0.2180 | Enabled: true
+
+--- Genom 13 (Fitness: 25.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  11 -> 15 | Weight: 0.3284 | Enabled: false
+  0 -> 16 | Weight: -0.3501 | Enabled: true
+  4 -> 15 | Weight: 0.2691 | Enabled: true
+  8 -> 15 | Weight: 0.9136 | Enabled: true
+  10 -> 16 | Weight: 0.9911 | Enabled: true
+  3 -> 15 | Weight: 0.3395 | Enabled: true
+  6 -> 16 | Weight: -0.5417 | Enabled: true
+  2 -> 16 | Weight: -0.8195 | Enabled: true
+  9 -> 16 | Weight: 0.1570 | Enabled: true
+  2 -> 15 | Weight: 0.4115 | Enabled: true
+  1 -> 15 | Weight: -0.8445 | Enabled: true
+  1 -> 16 | Weight: 0.5888 | Enabled: true
+  10 -> 15 | Weight: -0.8218 | Enabled: true
+  5 -> 15 | Weight: -0.9553 | Enabled: true
+  5 -> 16 | Weight: 0.2727 | Enabled: true
+  13 -> 15 | Weight: 0.4024 | Enabled: true
+
+--- Genom 14 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  8 -> 15 | Weight: -0.2841 | Enabled: true
+  4 -> 16 | Weight: -0.7769 | Enabled: true
+  12 -> 16 | Weight: -0.7000 | Enabled: true
+  7 -> 16 | Weight: 0.8291 | Enabled: true
+  2 -> 16 | Weight: 0.0051 | Enabled: true
+  3 -> 16 | Weight: 0.1248 | Enabled: true
+  0 -> 16 | Weight: 0.3591 | Enabled: true
+  6 -> 16 | Weight: 0.5845 | Enabled: true
+  14 -> 15 | Weight: 0.9418 | Enabled: true
+  5 -> 16 | Weight: 0.9730 | Enabled: true
+  11 -> 15 | Weight: 0.6863 | Enabled: true
+  9 -> 16 | Weight: -0.7156 | Enabled: true
+  13 -> 16 | Weight: 0.3114 | Enabled: true
+  8 -> 16 | Weight: 0.5101 | Enabled: true
+  14 -> 16 | Weight: -0.7760 | Enabled: true
+  10 -> 16 | Weight: -0.3319 | Enabled: true
+  10 -> 15 | Weight: -0.2446 | Enabled: true
+  7 -> 15 | Weight: -0.8146 | Enabled: true
+  0 -> 15 | Weight: -0.2571 | Enabled: true
+  12 -> 15 | Weight: -0.7082 | Enabled: true
+
+--- Genom 15 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  11 -> 15 | Weight: -1.1130 | Enabled: true
+  0 -> 16 | Weight: 0.6901 | Enabled: true
+  4 -> 15 | Weight: 0.6847 | Enabled: true
+  8 -> 15 | Weight: -0.8517 | Enabled: true
+  10 -> 16 | Weight: 0.9526 | Enabled: true
+  3 -> 15 | Weight: -0.1591 | Enabled: true
+  6 -> 16 | Weight: -0.8421 | Enabled: true
+  2 -> 16 | Weight: -0.8529 | Enabled: true
+  9 -> 16 | Weight: 0.2047 | Enabled: true
+  2 -> 15 | Weight: -0.2908 | Enabled: true
+  1 -> 15 | Weight: -0.8204 | Enabled: true
+  1 -> 16 | Weight: -0.6066 | Enabled: true
+  10 -> 15 | Weight: 0.2740 | Enabled: true
+  5 -> 15 | Weight: -0.3557 | Enabled: true
+  5 -> 16 | Weight: -0.2990 | Enabled: true
+  13 -> 15 | Weight: 0.5109 | Enabled: true
+
+--- Genom 16 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  7 -> 15 | Weight: -0.2062 | Enabled: true
+  3 -> 15 | Weight: 0.5524 | Enabled: true
+  4 -> 16 | Weight: -0.3517 | Enabled: true
+  14 -> 15 | Weight: 0.1934 | Enabled: true
+  5 -> 16 | Weight: -0.4051 | Enabled: true
+  2 -> 15 | Weight: -0.1962 | Enabled: true
+  10 -> 16 | Weight: 0.1776 | Enabled: true
+  12 -> 15 | Weight: -0.1380 | Enabled: true
+  12 -> 16 | Weight: 0.9001 | Enabled: true
+  2 -> 16 | Weight: 0.7303 | Enabled: true
+  6 -> 16 | Weight: -0.7865 | Enabled: true
+  7 -> 16 | Weight: 0.5913 | Enabled: true
+  11 -> 16 | Weight: -0.0321 | Enabled: true
+  3 -> 16 | Weight: 0.4851 | Enabled: true
+  8 -> 15 | Weight: -0.6767 | Enabled: true
+  0 -> 16 | Weight: 0.2266 | Enabled: true
+  5 -> 15 | Weight: -0.2916 | Enabled: true
+  9 -> 15 | Weight: 0.8731 | Enabled: true
+  11 -> 15 | Weight: 0.0224 | Enabled: true
+
+--- Genom 17 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+Connections:
+  11 -> 15 | Weight: -0.8086 | Enabled: false
+  0 -> 16 | Weight: -0.6338 | Enabled: true
+  4 -> 15 | Weight: 0.5339 | Enabled: true
+  8 -> 15 | Weight: -0.9281 | Enabled: true
+  10 -> 16 | Weight: -0.7980 | Enabled: true
+  3 -> 15 | Weight: -0.3777 | Enabled: true
+  6 -> 16 | Weight: -0.6575 | Enabled: true
+  2 -> 16 | Weight: -0.7683 | Enabled: true
+  9 -> 16 | Weight: 0.5380 | Enabled: true
+  2 -> 15 | Weight: -0.0198 | Enabled: true
+  1 -> 15 | Weight: -0.0695 | Enabled: true
+  1 -> 16 | Weight: -1.0918 | Enabled: true
+  10 -> 15 | Weight: -0.3520 | Enabled: true
+  5 -> 15 | Weight: 0.3081 | Enabled: true
+  5 -> 16 | Weight: 0.3735 | Enabled: true
+  13 -> 15 | Weight: 0.2956 | Enabled: true
+  11 -> 17 | Weight: 1.0000 | Enabled: true [mutation]
+  17 -> 15 | Weight: -0.8086 | Enabled: true [mutation]
+
+--- Genom 18 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+Connections:
+  5 -> 15 | Weight: 0.3648 | Enabled: true
+  8 -> 16 | Weight: 0.5004 | Enabled: true
+  9 -> 16 | Weight: -0.4594 | Enabled: true
+  8 -> 15 | Weight: -0.3153 | Enabled: true
+  1 -> 16 | Weight: 0.3745 | Enabled: true
+  6 -> 15 | Weight: -0.5251 | Enabled: true
+  12 -> 16 | Weight: 0.2988 | Enabled: false
+  10 -> 15 | Weight: -0.3774 | Enabled: true
+  3 -> 15 | Weight: 0.4057 | Enabled: true
+  7 -> 15 | Weight: -0.5635 | Enabled: true
+  4 -> 15 | Weight: 0.1853 | Enabled: true
+  13 -> 16 | Weight: 0.0140 | Enabled: true
+  11 -> 16 | Weight: -0.5321 | Enabled: true
+  9 -> 15 | Weight: -0.8145 | Enabled: true
+  11 -> 15 | Weight: 0.9356 | Enabled: true
+  14 -> 15 | Weight: 0.0372 | Enabled: true
+  2 -> 15 | Weight: -0.0394 | Enabled: true
+  12 -> 15 | Weight: -0.4140 | Enabled: true
+  4 -> 16 | Weight: -0.8222 | Enabled: true
+  5 -> 16 | Weight: 0.1343 | Enabled: true
+  13 -> 15 | Weight: 0.7705 | Enabled: true
+  12 -> 17 | Weight: 1.0000 | Enabled: true [mutation]
+  17 -> 16 | Weight: 0.2988 | Enabled: true [mutation]
+
+--- Genom 19 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  8 -> 16 | Weight: -0.6358 | Enabled: true
+  0 -> 16 | Weight: 0.2208 | Enabled: true
+  5 -> 16 | Weight: 0.1561 | Enabled: true
+  6 -> 16 | Weight: 0.3180 | Enabled: true
+  10 -> 15 | Weight: 0.8991 | Enabled: true
+  11 -> 16 | Weight: 0.9788 | Enabled: true
+  13 -> 15 | Weight: 0.0428 | Enabled: true
+  14 -> 15 | Weight: 0.3516 | Enabled: true
+  6 -> 15 | Weight: -0.6992 | Enabled: true
+  8 -> 15 | Weight: -0.1672 | Enabled: true
+  7 -> 16 | Weight: -0.8281 | Enabled: true
+  0 -> 15 | Weight: -0.1048 | Enabled: true
+  9 -> 16 | Weight: 0.6354 | Enabled: true
+  13 -> 16 | Weight: 0.5966 | Enabled: true
+  9 -> 15 | Weight: 0.5313 | Enabled: true
+  12 -> 16 | Weight: 0.0961 | Enabled: true
+  1 -> 15 | Weight: -1.0515 | Enabled: true
+  12 -> 15 | Weight: -0.3175 | Enabled: true
+
+--- Genom 20 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  5 -> 16 | Weight: 0.8857 | Enabled: true
+  14 -> 15 | Weight: 0.9322 | Enabled: true
+  2 -> 16 | Weight: -0.6120 | Enabled: true
+  6 -> 15 | Weight: -0.5469 | Enabled: true
+  13 -> 16 | Weight: -0.5480 | Enabled: true
+  9 -> 16 | Weight: -0.8773 | Enabled: true
+  3 -> 15 | Weight: -0.8155 | Enabled: true
+  9 -> 15 | Weight: -0.4128 | Enabled: true
+  14 -> 16 | Weight: 0.0875 | Enabled: true
+  8 -> 16 | Weight: -0.1529 | Enabled: true
+  7 -> 15 | Weight: 0.5587 | Enabled: true
+  0 -> 15 | Weight: 0.9515 | Enabled: true
+  12 -> 16 | Weight: -0.7481 | Enabled: true
+  11 -> 15 | Weight: -0.2994 | Enabled: true
+  7 -> 16 | Weight: 0.7667 | Enabled: true
+  13 -> 15 | Weight: -0.5724 | Enabled: true
+  8 -> 15 | Weight: 0.1554 | Enabled: true
+  6 -> 16 | Weight: 0.8598 | Enabled: true
+
+--- Genom 21 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  1 -> 15 | Weight: -0.3667 | Enabled: true
+  2 -> 16 | Weight: 0.1368 | Enabled: true
+  0 -> 16 | Weight: 0.1796 | Enabled: true
+  13 -> 16 | Weight: 0.7115 | Enabled: true
+  7 -> 16 | Weight: -0.4390 | Enabled: true
+  0 -> 15 | Weight: -0.6188 | Enabled: true
+  11 -> 15 | Weight: 0.4406 | Enabled: true
+  5 -> 16 | Weight: -0.0038 | Enabled: true
+  12 -> 15 | Weight: -0.3784 | Enabled: true
+  6 -> 16 | Weight: 0.6252 | Enabled: true
+  10 -> 16 | Weight: 0.1894 | Enabled: true
+  7 -> 15 | Weight: 0.6096 | Enabled: true
+  2 -> 15 | Weight: -0.5893 | Enabled: true
+  9 -> 15 | Weight: 0.5041 | Enabled: true
+  9 -> 16 | Weight: 0.6978 | Enabled: true
+  8 -> 15 | Weight: 0.3494 | Enabled: true
+  14 -> 15 | Weight: -0.1204 | Enabled: true
+  14 -> 16 | Weight: 0.2981 | Enabled: true
+  11 -> 16 | Weight: -0.3475 | Enabled: true
+  6 -> 15 | Weight: 0.1417 | Enabled: true
+
+--- Genom 22 (Fitness: 25.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+Connections:
+  7 -> 15 | Weight: -0.0327 | Enabled: true
+  3 -> 15 | Weight: 0.2242 | Enabled: false
+  4 -> 16 | Weight: 0.3287 | Enabled: true
+  14 -> 15 | Weight: 0.0624 | Enabled: true
+  5 -> 16 | Weight: 0.1798 | Enabled: true
+  2 -> 15 | Weight: 0.3317 | Enabled: true
+  10 -> 16 | Weight: 0.6471 | Enabled: true
+  12 -> 15 | Weight: 0.0201 | Enabled: true
+  12 -> 16 | Weight: 0.6433 | Enabled: true
+  2 -> 16 | Weight: 0.8125 | Enabled: true
+  6 -> 16 | Weight: 0.4030 | Enabled: true
+  7 -> 16 | Weight: 0.5856 | Enabled: true
+  11 -> 16 | Weight: -0.1486 | Enabled: true
+  3 -> 16 | Weight: 0.5157 | Enabled: true
+  8 -> 15 | Weight: 0.5544 | Enabled: true
+  0 -> 16 | Weight: 0.6148 | Enabled: true
+  5 -> 15 | Weight: -0.3906 | Enabled: true
+  9 -> 15 | Weight: 1.0345 | Enabled: true
+  3 -> 17 | Weight: 1.0000 | Enabled: true [mutation]
+  17 -> 15 | Weight: 0.2242 | Enabled: true [mutation]
+
+--- Genom 23 (Fitness: 14.67) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  8 -> 16 | Weight: -0.8328 | Enabled: true
+  0 -> 16 | Weight: 0.0252 | Enabled: true
+  5 -> 16 | Weight: 0.0186 | Enabled: true
+  6 -> 16 | Weight: 0.5077 | Enabled: true
+  10 -> 15 | Weight: 0.8522 | Enabled: true
+  11 -> 16 | Weight: -0.1616 | Enabled: true
+  13 -> 15 | Weight: -0.0669 | Enabled: true
+  14 -> 15 | Weight: -1.0197 | Enabled: true
+  6 -> 15 | Weight: -0.4573 | Enabled: true
+  8 -> 15 | Weight: 0.1008 | Enabled: true
+  7 -> 16 | Weight: 0.3112 | Enabled: true
+  0 -> 15 | Weight: -0.0392 | Enabled: true
+  9 -> 16 | Weight: 0.2963 | Enabled: true
+  13 -> 16 | Weight: -0.8594 | Enabled: true
+  9 -> 15 | Weight: -0.6846 | Enabled: true
+  12 -> 16 | Weight: -0.1130 | Enabled: true
+  1 -> 15 | Weight: -1.0951 | Enabled: true
+  12 -> 15 | Weight: 0.1560 | Enabled: true
+
+--- Genom 24 (Fitness: 25.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  11 -> 15 | Weight: -0.9283 | Enabled: true
+  0 -> 16 | Weight: 0.4160 | Enabled: true
+  4 -> 15 | Weight: 0.8180 | Enabled: false
+  8 -> 15 | Weight: 0.7327 | Enabled: true
+  10 -> 16 | Weight: -0.7805 | Enabled: true
+  3 -> 15 | Weight: -0.1169 | Enabled: true
+  6 -> 16 | Weight: -0.6871 | Enabled: true
+  2 -> 16 | Weight: -0.7419 | Enabled: true
+  9 -> 16 | Weight: -0.5678 | Enabled: true
+  2 -> 15 | Weight: -0.1701 | Enabled: true
+  1 -> 15 | Weight: -0.8713 | Enabled: true
+  1 -> 16 | Weight: -0.6330 | Enabled: true
+  10 -> 15 | Weight: -0.5704 | Enabled: true
+  5 -> 15 | Weight: -0.0877 | Enabled: true
+  5 -> 16 | Weight: -0.2323 | Enabled: true
+  13 -> 15 | Weight: -0.6089 | Enabled: true
+
+--- Genom 25 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  8 -> 16 | Weight: -0.1702 | Enabled: true
+  0 -> 16 | Weight: 0.3357 | Enabled: true
+  5 -> 16 | Weight: -0.1638 | Enabled: true
+  6 -> 16 | Weight: 0.4549 | Enabled: true
+  10 -> 15 | Weight: 0.7268 | Enabled: true
+  11 -> 16 | Weight: -0.8917 | Enabled: true
+  13 -> 15 | Weight: 0.6838 | Enabled: true
+  14 -> 15 | Weight: -0.8144 | Enabled: true
+  6 -> 15 | Weight: -0.4518 | Enabled: true
+  8 -> 15 | Weight: -0.2232 | Enabled: true
+  7 -> 16 | Weight: -0.1259 | Enabled: true
+  0 -> 15 | Weight: 0.0367 | Enabled: true
+  9 -> 16 | Weight: 0.9938 | Enabled: true
+  13 -> 16 | Weight: -0.6838 | Enabled: true
+  9 -> 15 | Weight: -0.8019 | Enabled: true
+  12 -> 16 | Weight: -0.4877 | Enabled: true
+  1 -> 15 | Weight: -0.9614 | Enabled: true
+  12 -> 15 | Weight: -0.4027 | Enabled: false
+
+--- Genom 26 (Fitness: 45.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  1 -> 15 | Weight: -0.1338 | Enabled: true
+  2 -> 16 | Weight: -0.6495 | Enabled: true
+  0 -> 16 | Weight: 0.1979 | Enabled: true
+  13 -> 16 | Weight: -0.0795 | Enabled: true
+  7 -> 16 | Weight: -0.4858 | Enabled: true
+  0 -> 15 | Weight: 0.6122 | Enabled: true
+  11 -> 15 | Weight: 0.1808 | Enabled: true
+  5 -> 16 | Weight: -0.5474 | Enabled: true
+  12 -> 15 | Weight: -0.5696 | Enabled: true
+  6 -> 16 | Weight: -0.3859 | Enabled: true
+  10 -> 16 | Weight: 0.0809 | Enabled: true
+  7 -> 15 | Weight: -0.9438 | Enabled: true
+  2 -> 15 | Weight: -0.7150 | Enabled: true
+  9 -> 15 | Weight: -0.3033 | Enabled: true
+  9 -> 16 | Weight: 0.5953 | Enabled: true
+  8 -> 15 | Weight: 0.0507 | Enabled: true
+  14 -> 15 | Weight: -0.8134 | Enabled: true
+  14 -> 16 | Weight: 0.0988 | Enabled: true
+  11 -> 16 | Weight: 0.5000 | Enabled: true
+
+--- Genom 27 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  9 -> 16 | Weight: -0.9107 | Enabled: true
+  11 -> 16 | Weight: -0.6592 | Enabled: true
+  8 -> 16 | Weight: -0.2242 | Enabled: true
+  11 -> 15 | Weight: 0.4825 | Enabled: true
+  12 -> 16 | Weight: -0.2207 | Enabled: true
+  1 -> 16 | Weight: -0.2860 | Enabled: true
+  0 -> 15 | Weight: 0.7858 | Enabled: true
+  12 -> 15 | Weight: -0.9869 | Enabled: true
+  6 -> 16 | Weight: 0.4035 | Enabled: true
+  3 -> 16 | Weight: -0.3183 | Enabled: true
+  1 -> 15 | Weight: -0.6244 | Enabled: true
+  4 -> 15 | Weight: -0.2016 | Enabled: true
+  4 -> 16 | Weight: 0.4524 | Enabled: true
+  5 -> 16 | Weight: -0.1944 | Enabled: true
+  7 -> 16 | Weight: 0.3145 | Enabled: true
+  3 -> 15 | Weight: 0.6704 | Enabled: true
+  14 -> 16 | Weight: 0.9815 | Enabled: false
+  6 -> 15 | Weight: 0.6317 | Enabled: true
+  2 -> 16 | Weight: 1.0017 | Enabled: true
+
+--- Genom 28 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  0 -> 15 | Weight: 0.5703 | Enabled: true
+  7 -> 16 | Weight: -0.9564 | Enabled: true
+  1 -> 16 | Weight: -0.6814 | Enabled: true
+  14 -> 15 | Weight: 0.2927 | Enabled: true
+  4 -> 16 | Weight: -0.1508 | Enabled: true
+  9 -> 16 | Weight: 1.0509 | Enabled: true
+  2 -> 15 | Weight: 0.5687 | Enabled: true
+  10 -> 16 | Weight: -0.5226 | Enabled: true
+  5 -> 15 | Weight: 0.0266 | Enabled: true
+  6 -> 15 | Weight: -0.4731 | Enabled: true
+  10 -> 15 | Weight: -0.5295 | Enabled: true
+  13 -> 15 | Weight: 0.6754 | Enabled: true
+  3 -> 16 | Weight: 0.9277 | Enabled: true
+  1 -> 15 | Weight: -0.6398 | Enabled: true
+  8 -> 15 | Weight: -0.6316 | Enabled: true
+  4 -> 15 | Weight: -0.8912 | Enabled: true
+  0 -> 16 | Weight: -0.3969 | Enabled: true
+  6 -> 16 | Weight: -0.2190 | Enabled: true
+  12 -> 16 | Weight: 0.6897 | Enabled: false
+  11 -> 16 | Weight: -0.8374 | Enabled: true
+  8 -> 16 | Weight: -0.2128 | Enabled: true
+
+--- Genom 29 (Fitness: 15.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+Connections:
+  1 -> 15 | Weight: -0.4269 | Enabled: true
+  2 -> 16 | Weight: 0.1663 | Enabled: true
+  0 -> 16 | Weight: 0.3568 | Enabled: true
+  13 -> 16 | Weight: -0.2923 | Enabled: true
+  7 -> 16 | Weight: 0.4497 | Enabled: true
+  0 -> 15 | Weight: 0.7683 | Enabled: true
+  11 -> 15 | Weight: 0.3941 | Enabled: true
+  5 -> 16 | Weight: -0.3525 | Enabled: true
+  12 -> 15 | Weight: -0.3617 | Enabled: true
+  6 -> 16 | Weight: 0.4981 | Enabled: true
+  10 -> 16 | Weight: 0.0225 | Enabled: true
+  7 -> 15 | Weight: -1.1261 | Enabled: true
+  2 -> 15 | Weight: -0.5505 | Enabled: true
+  9 -> 15 | Weight: 0.2360 | Enabled: true
+  9 -> 16 | Weight: 0.5497 | Enabled: true
+  8 -> 15 | Weight: 0.0016 | Enabled: true
+  14 -> 15 | Weight: 0.3590 | Enabled: true
+  14 -> 16 | Weight: 0.3246 | Enabled: true
+  11 -> 16 | Weight: 0.9482 | Enabled: true
+
+
+--- TOTAL GENOMES: 30 ---

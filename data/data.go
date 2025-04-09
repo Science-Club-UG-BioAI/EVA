@@ -6,6 +6,7 @@ import (
 	"math"
 	"math/rand"
 	"os"
+	"sort"
 	"strconv"
 	"time"
 )
@@ -57,6 +58,7 @@ type Genom struct {
 	ConnCreationRate float64            // chance of adding connection while creating new network
 	IH               *InnovationHistory // global innovation history
 	Fitness          float64            // fitness score
+	IsElite          bool
 }
 
 type Species struct {
@@ -284,6 +286,9 @@ func (genom *Genom) Forward(inputs []float64) ([]float64, AIDecision) {
 // – – – – – – – – – – – – – – – – – MUTATIONS – – – – – – – – – – – – – – – – – – – – – – –
 
 func (genom *Genom) mutateWeight() {
+	if genom.IsElite {
+		return // Elity nie mutujemy
+	}
 	// mutates genome by changing weights of genome's connections
 	rand.Seed(time.Now().UnixNano())
 	for i, conn := range genom.Connections {
@@ -298,6 +303,9 @@ func (genom *Genom) mutateWeight() {
 }
 
 func (genom *Genom) mutateAddConnection() {
+	if genom.IsElite {
+		return // Elity nie mutujemy
+	}
 	// mutates genome by adding new connection with random weight
 	rand.Seed(time.Now().UnixNano())
 	n1, n2 := genom.randomNodes()
@@ -308,6 +316,9 @@ func (genom *Genom) mutateAddConnection() {
 }
 
 func (genom *Genom) mutateAddNode() {
+	if genom.IsElite {
+		return // Elity nie mutujemy
+	}
 	// mutates genome by adding new hidden node
 	// splits old connection by adding new hidden node and two new connections
 	if len(genom.Connections) == 0 {
@@ -333,6 +344,9 @@ func (genom *Genom) mutateAddNode() {
 }
 
 func (genom *Genom) mutateToggleConnection() {
+	if genom.IsElite {
+		return // Elity nie mutujemy
+	}
 	// randomly toggles the "Enabled" state for connections
 	rand.Seed(time.Now().UnixNano())
 
@@ -363,6 +377,52 @@ func ranked(species *Species, k int) *Genom { // wybor rodzicow - typ turniejowy
 func GenerateNewPopulation(pop *Population) []*Genom {
 	fmt.Printf("[INFO] Generating new population - number of species: %d\n", len(pop.AllSpecies))
 	newGenomes := []*Genom{}
+	eliteList := []*Genom{}
+	// 🥇 Zachowaj 2 najlepsze genomy jako elity
+	allGenomes := AllGenomesFromPopulation(pop)
+	sort.SliceStable(allGenomes, func(i, j int) bool {
+		return allGenomes[i].Fitness > allGenomes[j].Fitness
+	})
+	numElites := 3
+	for i := 0; i < numElites && i < len(allGenomes); i++ {
+		elite := allGenomes[i]
+
+		// Głęboka kopia elity, żeby nie zepsuć oryginału
+		newElite := &Genom{
+			NumInputs:        elite.NumInputs,
+			NumOutputs:       elite.NumOutputs,
+			ConnCreationRate: elite.ConnCreationRate,
+			IH:               elite.IH,
+			TotalNodes:       elite.TotalNodes,
+			Fitness:          elite.Fitness,
+		}
+
+		nodeMap := make(map[int]*Node)
+		for _, node := range elite.Nodes {
+			newNode := &Node{
+				ID:   node.ID,
+				Type: node.Type,
+			}
+			newElite.Nodes = append(newElite.Nodes, newNode)
+			nodeMap[node.ID] = newNode
+		}
+
+		for _, conn := range elite.Connections {
+			newConn := Connection{
+				InNode:     nodeMap[conn.InNode.ID],
+				OutNode:    nodeMap[conn.OutNode.ID],
+				Weight:     conn.Weight,
+				Innovation: conn.Innovation,
+				Enabled:    conn.Enabled,
+			}
+			newElite.Connections = append(newElite.Connections, newConn)
+			nodeMap[conn.OutNode.ID].IncomingConns = append(nodeMap[conn.OutNode.ID].IncomingConns, newConn)
+		}
+
+		newGenomes = append(newGenomes, newElite)
+		eliteList = append(eliteList, newElite)
+	}
+
 	rand.Seed(time.Now().UnixNano())
 
 	if len(pop.AllSpecies) == 0 {
@@ -394,13 +454,13 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 
 			// Mutations in offsprings
 			child.mutateWeight()
-			if rand.Float64() < 0.2 {
+			if rand.Float64() < 0.7 {
 				child.mutateAddConnection()
 			}
-			if rand.Float64() < 0.05 {
+			if rand.Float64() < 0.2 {
 				child.mutateAddNode()
 			}
-			if rand.Float64() < 0.02 {
+			if rand.Float64() < 0.1 {
 				child.mutateToggleConnection()
 			}
 
@@ -455,6 +515,8 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 	}
 
 	fmt.Printf("[INFO] New population – number of genoms: %d\n", len(newGenomes))
+
+	SaveElitesToFile(eliteList, pop.CurrentGeneration)
 	return newGenomes
 }
 
@@ -699,15 +761,15 @@ func AppendBestFitnessLog(generation int, population []*Genom) error {
 // – – – – – – – – – – – – – – – – – TESTING – – – – – – – – – – – – – – – – – – – – – – –
 
 func (t NodeType) String() string {
-	// helper funtion
-	// for more readable testing
 	switch t {
 	case Input:
 		return "Input"
+	case Hidden:
+		return "Hidden"
 	case Output:
 		return "Output"
 	default:
-		return "Hidden"
+		return "Unknown"
 	}
 }
 
@@ -735,6 +797,72 @@ func (genom *Genom) showNodes() {
 				"Node ID:", node.ID, "type:", node.Type)
 		}
 	}
+}
+
+// ELITE FUNCTIONS
+
+func copyGenom(original *Genom) *Genom {
+	// Głęboka kopia wszystkich elementów
+	nodeMap := make(map[int]*Node)
+	copiedNodes := make([]*Node, len(original.Nodes))
+
+	for i, node := range original.Nodes {
+		copiedNodes[i] = &Node{
+			ID:   node.ID,
+			Type: node.Type,
+		}
+		nodeMap[node.ID] = copiedNodes[i]
+	}
+
+	copiedConns := make([]Connection, len(original.Connections))
+	for i, conn := range original.Connections {
+		copiedConns[i] = Connection{
+			InNode:     nodeMap[conn.InNode.ID],
+			OutNode:    nodeMap[conn.OutNode.ID],
+			Weight:     conn.Weight,
+			Innovation: conn.Innovation,
+			Enabled:    conn.Enabled,
+		}
+	}
+
+	return &Genom{
+		NumInputs:        original.NumInputs,
+		NumOutputs:       original.NumOutputs,
+		TotalNodes:       original.TotalNodes,
+		Nodes:            copiedNodes,
+		Connections:      copiedConns,
+		ConnCreationRate: original.ConnCreationRate,
+		IH:               original.IH,
+		Fitness:          original.Fitness,
+		IsElite:          original.IsElite,
+	}
+}
+
+func SaveElitesToFile(elites []*Genom, generation int) error {
+	os.MkdirAll("elites", os.ModePerm)
+	filename := fmt.Sprintf("elites/elites_gen%d.txt", generation)
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	for i, g := range elites {
+		fmt.Fprintf(file, "--- Elite Genom %d (Fitness: %.2f) ---\n", i+1, g.Fitness)
+		fmt.Fprintln(file, "Nodes:")
+		for _, node := range g.Nodes {
+			fmt.Fprintf(file, "  Node ID: %d, Type: %s\n", node.ID, node.Type.String())
+		}
+		fmt.Fprintln(file, "Connections:")
+		for _, conn := range g.Connections {
+			fmt.Fprintf(file, "  %d -> %d | Weight: %.4f | Enabled: %v\n",
+				conn.InNode.ID, conn.OutNode.ID, conn.Weight, conn.Enabled)
+		}
+		fmt.Fprintln(file, "")
+	}
+
+	fmt.Fprintf(file, "--- TOTAL ELITES: %d ---\n", len(elites))
+	return nil
 }
 
 // func main() {
