@@ -1020,7 +1020,6 @@ func (g *GameScene) Update() SceneId {
 			avgFitness := totalFitness / float64(len(population))
 
 			data.AppendFitnessLog(generation, currentGenIndex, fitness, avgFitness, maxFitness)
-			data.SaveBestGenomToFile(bestGenom, generation)
 			fmt.Println("=== CREATING NEW GENERATION ===")
 			generation++
 			// Specjacja — resetujemy i przypisujemy genomy do gatunków
