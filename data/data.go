@@ -521,8 +521,8 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 	fmt.Printf("[INFO] New population – number of genoms: %d\n", len(newGenomes))
 
 	SaveElitesToFile(eliteList, pop.CurrentGeneration)
-	eliteList = append(eliteList, newGenomes...)
-	return eliteList
+	newGenomes = append(newGenomes, eliteList...)
+	return newGenomes
 }
 
 // – – – – – – – – – – – – – – UTILITY FUNCTIONS – – – – – – – – – – – – – – – – – – – – – – –
