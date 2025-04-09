@@ -657,8 +657,28 @@ func AllGenomesFromPopulation(pop *Population) []*Genom {
 	return all
 }
 
-func AppendFitnessLog(generation, genomeIndex int, fitness, avgFitness, maxFitness float64) error {
-	file, err := os.OpenFile("fitness_log.csv", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+func AppendBestFitnessLog(generation int, population []*Genom) error {
+	if len(population) == 0 {
+		return nil
+	}
+
+	// Znalezienie najlepszego genomu
+	bestGenom := population[0]
+	for _, g := range population[1:] {
+		if g.Fitness > bestGenom.Fitness {
+			bestGenom = g
+		}
+	}
+
+	// Obliczenie średniego fitnessu
+	totalFitness := 0.0
+	for _, g := range population {
+		totalFitness += g.Fitness
+	}
+	avgFitness := totalFitness / float64(len(population))
+
+	// Zapis do pliku CSV
+	file, err := os.OpenFile("best_fitness_log.csv", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
@@ -669,11 +689,10 @@ func AppendFitnessLog(generation, genomeIndex int, fitness, avgFitness, maxFitne
 
 	record := []string{
 		strconv.Itoa(generation),
-		strconv.Itoa(genomeIndex),
-		strconv.FormatFloat(fitness, 'f', 4, 64),
+		strconv.FormatFloat(bestGenom.Fitness, 'f', 4, 64),
 		strconv.FormatFloat(avgFitness, 'f', 4, 64),
-		strconv.FormatFloat(maxFitness, 'f', 4, 64),
 	}
+
 	return writer.Write(record)
 }
 

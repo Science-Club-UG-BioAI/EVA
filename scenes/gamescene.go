@@ -34,7 +34,7 @@ var currentPopulation data.Population
 
 // Limit czasu trwania życia genomu (w sekundach i klatkach)
 
-const GenomLifetimeInSeconds = 15
+const GenomLifetimeInSeconds = 5
 
 const FramesPerSecond = 60
 const GenomLifetimeFrames = GenomLifetimeInSeconds * FramesPerSecond
@@ -417,7 +417,7 @@ func (g *GameScene) FirstLoad() {
 	for i := 0; i < currentPopulation.PopSize; i++ {
 		g := &data.Genom{
 			NumInputs:  15,
-			NumOutputs: 8,
+			NumOutputs: 2,
 			//			TotalNodes:       23, //uwazac bo createnetwork tutaj dodaje - nie jest to wgl potrzebne tbh
 			Nodes:            []*data.Node{},
 			ConnCreationRate: 1.0,
@@ -485,10 +485,11 @@ func (g *GameScene) Update() SceneId {
 		// Calories
 		//testowanie do ai - start
 		// isAiEnabled will be true if AI is enabled, false if player is controlling the game
+		enableAI(true)
 		if isAIEnabled() && currentGenom != nil {
 			g.ControlByAI(currentGenom)
 			// if enableAI is true then we will use AI control
-			enableAI(true)
+
 		}
 		//testowanie do ai - koniec
 		if g.caloryCount {
@@ -527,38 +528,40 @@ func (g *GameScene) Update() SceneId {
 		}
 
 		// Player movement
-		g.player.Dx = 0.0
-		g.player.Dy = 0.0
-
-		if ebiten.IsKeyPressed(ebiten.KeyD) && (!ebiten.IsKeyPressed(ebiten.KeyW) && !ebiten.IsKeyPressed(ebiten.KeyS)) {
-			g.player.Dx = (0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier
+		//g.player.Dx = 0.0
+		//g.player.Dy = 0.0
+		if !isAIEnabled() {
+			g.player.Dx = 0.0
+			g.player.Dy = 0.0
+			if ebiten.IsKeyPressed(ebiten.KeyD) && (!ebiten.IsKeyPressed(ebiten.KeyW) && !ebiten.IsKeyPressed(ebiten.KeyS)) {
+				g.player.Dx = (0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier
+			}
+			if ebiten.IsKeyPressed(ebiten.KeyA) && (!ebiten.IsKeyPressed(ebiten.KeyW) && !ebiten.IsKeyPressed(ebiten.KeyS)) {
+				g.player.Dx = -(0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier
+			}
+			if ebiten.IsKeyPressed(ebiten.KeyW) && (!ebiten.IsKeyPressed(ebiten.KeyD) && !ebiten.IsKeyPressed(ebiten.KeyA)) {
+				g.player.Dy = -(0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier
+			}
+			if ebiten.IsKeyPressed(ebiten.KeyS) && (!ebiten.IsKeyPressed(ebiten.KeyA) && !ebiten.IsKeyPressed(ebiten.KeyD)) {
+				g.player.Dy = (0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier
+			}
+			if ebiten.IsKeyPressed(ebiten.KeyW) && ebiten.IsKeyPressed(ebiten.KeyD) {
+				g.player.Dx = ((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
+				g.player.Dy = -((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
+			}
+			if ebiten.IsKeyPressed(ebiten.KeyW) && ebiten.IsKeyPressed(ebiten.KeyA) {
+				g.player.Dx = -((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
+				g.player.Dy = -((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
+			}
+			if ebiten.IsKeyPressed(ebiten.KeyS) && ebiten.IsKeyPressed(ebiten.KeyD) {
+				g.player.Dx = ((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
+				g.player.Dy = ((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
+			}
+			if ebiten.IsKeyPressed(ebiten.KeyS) && ebiten.IsKeyPressed(ebiten.KeyA) {
+				g.player.Dx = -((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
+				g.player.Dy = ((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
+			}
 		}
-		if ebiten.IsKeyPressed(ebiten.KeyA) && (!ebiten.IsKeyPressed(ebiten.KeyW) && !ebiten.IsKeyPressed(ebiten.KeyS)) {
-			g.player.Dx = -(0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier
-		}
-		if ebiten.IsKeyPressed(ebiten.KeyW) && (!ebiten.IsKeyPressed(ebiten.KeyD) && !ebiten.IsKeyPressed(ebiten.KeyA)) {
-			g.player.Dy = -(0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier
-		}
-		if ebiten.IsKeyPressed(ebiten.KeyS) && (!ebiten.IsKeyPressed(ebiten.KeyA) && !ebiten.IsKeyPressed(ebiten.KeyD)) {
-			g.player.Dy = (0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier
-		}
-		if ebiten.IsKeyPressed(ebiten.KeyW) && ebiten.IsKeyPressed(ebiten.KeyD) {
-			g.player.Dx = ((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
-			g.player.Dy = -((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
-		}
-		if ebiten.IsKeyPressed(ebiten.KeyW) && ebiten.IsKeyPressed(ebiten.KeyA) {
-			g.player.Dx = -((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
-			g.player.Dy = -((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
-		}
-		if ebiten.IsKeyPressed(ebiten.KeyS) && ebiten.IsKeyPressed(ebiten.KeyD) {
-			g.player.Dx = ((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
-			g.player.Dy = ((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
-		}
-		if ebiten.IsKeyPressed(ebiten.KeyS) && ebiten.IsKeyPressed(ebiten.KeyA) {
-			g.player.Dx = -((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
-			g.player.Dy = ((0.1 + 2*(math.Log(1+g.player.Speed))) * g.player.SpeedMultiplier) / 1.4
-		}
-
 		g.player.X += g.player.Dx
 		CheckCollisionHorizontal(g.player.Sprite, g.colliders)
 
@@ -1000,7 +1003,7 @@ func (g *GameScene) Update() SceneId {
 	if g.gameOver || g.timePassed >= GenomLifetimeFrames {
 		fitness := currentGenom.EvaluateFitness(SCORE, g.foodEaten, g.enemyKilled, g.timePassed, g.player.CombatComp.Health())
 		currentGenom.Fitness = fitness
-		fmt.Printf("Genom %d fitness: %f\n", currentGenIndex, fitness)
+		//fmt.Printf("Genom %d fitness: %f\n", currentGenIndex, fitness)
 
 		currentGenIndex++
 		g.timePassed = 0
@@ -1017,9 +1020,9 @@ func (g *GameScene) Update() SceneId {
 					bestGenom = g
 				}
 			}
-			avgFitness := totalFitness / float64(len(population))
+			//avgFitness := totalFitness / float64(len(population))
 
-			data.AppendFitnessLog(generation, currentGenIndex, fitness, avgFitness, maxFitness)
+			data.AppendBestFitnessLog(generation, population)
 			fmt.Println("=== CREATING NEW GENERATION ===")
 			generation++
 			// Specjacja — resetujemy i przypisujemy genomy do gatunków
@@ -1116,54 +1119,36 @@ var NEARVITAMINS []([]float64) = make([][]float64, 0)
 func (g *GameScene) ControlByAI(genom *data.Genom) {
 	print("=== AI CONTROL ===")
 	inputs := g.PrepareInputs()
-	fmt.Printf("INPUTS to NEAT: %v\n", inputs)
+	//fmt.Printf("INPUTS to NEAT: %v\n", inputs)
 
-	outputs, _ := genom.Forward(inputs)
-	fmt.Printf("OUTPUTS z NEAT: %v (len: %d)\n", outputs, len(outputs))
-	if len(outputs) < 8 {
-		return
-	}
-	directions := [8][2]float64{
-		{0, -1},  // ↑
-		{0, 1},   // ↓
-		{-1, 0},  // ←
-		{1, 0},   // →
-		{-1, -1}, // ↖
-		{1, -1},  // ↗
-		{1, 1},   // ↘
-		{-1, 1},  // ↙
-	}
-	// szukamy kierunku o najwyższym output
-	bestIndex := 0
-	bestValue := outputs[0]
-	for i, val := range outputs {
-		if val > bestValue {
-			bestValue = val
-			bestIndex = i
-		}
-	}
-
-	moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
-	dir := directions[bestIndex]
 	outputs, decision := genom.Forward(inputs)
-	g.LastAIDecision = decision //zapisauje nawet jak gracz ma kontrolę
+	//outputs := []float64{1.0, 0.5}
 	//fmt.Printf("OUTPUTS z NEAT: %v (len: %d)\n", outputs, len(outputs))
-	//if len(outputs) < 2 {
-	//	return
-	//}
-	if !g.IsPlayerControlled && len(outputs) >= 2 { //gdy AI ma kontrole
-		moveScale := (0.1 + 2*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
-		g.player.Dx = (outputs[0]*2 - 1) * moveScale
-		g.player.Dy = (outputs[1]*2 - 1) * moveScale
-	}
 
-	length := math.Sqrt(dir[0]*dir[0] + dir[1]*dir[1])
-	if length != 0 {
-		dir[0] /= length
-		dir[1] /= length
+	g.LastAIDecision = decision // zapisz nawet jeśli gracz ma kontrolę
+
+	if isAIEnabled() && len(outputs) >= 2 {
+		moveScale := (0.1 + 3*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
+
+		// funkcja aktywująca do przekształcenia outputu z [0,1] -> [-1,1]
+
+		dx := outputs[0] * moveScale
+		dy := outputs[1] * moveScale
+
+		// opcjonalny próg martwej strefy (żeby nie drgał przy małych wartościach)
+		threshold := 0.05
+		if math.Abs(dx) < threshold {
+			dx = 0
+		}
+		if math.Abs(dy) < threshold {
+			dy = 0
+		}
+
+		g.player.Dx = dx
+		g.player.Dy = dy
+		fmt.Printf("dx: %f, dy: %f\n", dx, dy)
+
 	}
-	g.player.Dx = (dir[0]*2 - 1) * moveScale
-	g.player.Dy = (dir[1]*2 - 1) * moveScale
 }
 
 // przygotowanie inputow dla NEATA
@@ -1204,7 +1189,7 @@ func (g *GameScene) PrepareInputs() []float64 {
 	} else {
 		inputs = append(inputs, 1.0, 0.0, 0.0)
 	}
-	fmt.Printf("INPUTS to NEAT: %+v\n", inputs)
+	//fmt.Printf("INPUTS to NEAT: %+v\n", inputs)
 	return inputs
 }
 
