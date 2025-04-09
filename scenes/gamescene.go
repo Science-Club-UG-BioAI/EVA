@@ -34,7 +34,7 @@ var currentPopulation data.Population
 
 // Limit czasu trwania życia genomu (w sekundach i klatkach)
 
-const GenomLifetimeInSeconds = 15
+const GenomLifetimeInSeconds = 1
 
 const FramesPerSecond = 60
 const GenomLifetimeFrames = GenomLifetimeInSeconds * FramesPerSecond
