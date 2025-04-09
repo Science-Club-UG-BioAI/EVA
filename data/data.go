@@ -627,7 +627,7 @@ func SavePopulationToFile(pop *Population, generation int) error { //funkcja tes
 		fmt.Fprintf(file, "Average Fitness: %.2f\n", species.AverageFitness)
 		for genomIdx, genom := range species.Genoms {
 			fmt.Fprintf(file, "\n--- Genom %d (Fitness: %.2f) ---\n", genomIdx, genom.Fitness)
-
+			fmt.Fprintf(file, "Belongs to Species: %d\n", speciesIdx)
 			fmt.Fprintln(file, "Nodes:")
 			for _, node := range genom.Nodes {
 				fmt.Fprintf(file, "  Node ID: %d, Type: %s\n", node.ID, node.Type.String())
