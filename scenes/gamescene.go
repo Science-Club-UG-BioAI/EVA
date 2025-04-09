@@ -435,7 +435,11 @@ func (g *GameScene) FirstLoad() {
 	// 	// }
 	// 	population = append(population, g)
 	// 	currentPopulation.AddToSpecies(g)
+	//	currentGenIndex = 0
+	//	currentGenom = population[currentGenIndex]
 	// } // GENEROWANIE NOWE - KONIEC
+
+	// WCZYTYWANIE GENERACJI
 	pop, err := data.LoadPopulationFromFile("generation.txt", &globalInnovationHistory)
 	if err != nil {
 		log.Fatal("Nie udało się wczytać populacji:", err)
@@ -445,8 +449,8 @@ func (g *GameScene) FirstLoad() {
 	currentPopulation = *pop
 	currentGenIndex = 0
 	currentGenom = population[currentGenIndex]
-	currentGenIndex = 0
-	currentGenom = population[currentGenIndex]
+	// WCZYTYWANIE GENERACJI
+
 	// fmt.Println("Test fitness:", testGenom.EvaluateFitness(120, 3, 56, 32, 2)) //sprawdzanie dzialania funkcji fitness
 	// fmt.Printf("Utworzono populację z %d genomów\n", len(population)) //sprawdzanie czy populacja zostala stworzona
 	//print sprawdzajacy polaczenia w kazdym genomie
