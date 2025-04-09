@@ -407,7 +407,7 @@ func (g *GameScene) FirstLoad() {
 
 	//tworzenie ai do testow - START
 	currentPopulation = data.Population{
-		PopSize:   30,
+		PopSize:   10,
 		C1:        1.0,
 		C2:        0.5,
 		Threshold: 3.0,
