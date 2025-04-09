@@ -357,7 +357,7 @@ func (g *GameScene) FirstLoad() {
 			Y:    (constants.GameHeight / 2) + 16,
 			Size: 1,
 		},
-		Calories:             500.00,
+		Calories:             constants.StartingCalories,
 		Speed:                5,
 		Efficiency:           1,
 		SpeedMultiplier:      1,
@@ -943,7 +943,7 @@ func (g *GameScene) Update() SceneId {
 				tablica := []float64{dystans, kat}
 				NEARFOODS = append(NEARFOODS, tablica)
 			}
-			if enemy.Type == 1 && (g.player.Diet == 0 || g.player.Diet == 2) {
+			if enemy.Type == 1 && (g.player.Diet == 1 || g.player.Diet == 2) {
 				dystans := math.Sqrt(math.Pow(g.player.X-enemy.X, 2) + math.Pow(g.player.Y-enemy.Y, 2))
 				kat := math.Atan2(enemy.Y-g.player.Y, enemy.X-g.player.X) * (180 / math.Pi)
 				tablica := []float64{dystans, kat}
@@ -1202,7 +1202,7 @@ func (g *GameScene) ResetGameState() {
 	// Reset playera
 	g.player.X = (constants.GameWidth / 2) + 16
 	g.player.Y = (constants.GameHeight / 2) + 16
-	g.player.Calories = 500.0
+	g.player.Calories = constants.StartingCalories
 	g.player.Speed = 5
 	g.player.Efficiency = 1
 	g.player.SpeedMultiplier = 1
