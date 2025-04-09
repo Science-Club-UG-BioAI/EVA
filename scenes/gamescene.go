@@ -34,7 +34,7 @@ var currentPopulation data.Population
 
 // Limit czasu trwania życia genomu (w sekundach i klatkach)
 
-const GenomLifetimeInSeconds = 2
+const GenomLifetimeInSeconds = 15
 
 const FramesPerSecond = 60
 const GenomLifetimeFrames = GenomLifetimeInSeconds * FramesPerSecond
@@ -256,7 +256,7 @@ func (g *GameScene) Draw(screen *ebiten.Image) {
 		for i, output := range g.LastAIDecision.Outputs {
 			ebitenutil.DebugPrintAt(screen, fmt.Sprintf("%2d: %.2f", i+1, output), startX+10, y)
 			y += 16
-			if y > 400 {
+			if y > 450 {
 				break
 			}
 		}
@@ -272,10 +272,41 @@ func (g *GameScene) Draw(screen *ebiten.Image) {
 				startX+10, y)
 			y += 16
 			connectionCount++
-			if connectionCount > 15 || y > 450 {
+			if connectionCount > 15 || y > 600 {
 				break
 			}
 		}
+	}
+	// =============== DEBUGOWANIE KATOW ======================
+
+	centerX := float32(g.player.X + g.cam.X + float64(constants.Tilesize)/2)
+	centerY := float32(g.player.Y + g.cam.Y + float64(constants.Tilesize)/2)
+
+	// === Przeciwnik (fioletowy) ===
+	if len(ENEMIES) > 0 {
+		kat := ENEMIES[0][1] * (math.Pi / 180.0)
+		dystans := math.Min(ENEMIES[0][0], 100.0)
+		x2 := centerX + float32(dystans*math.Cos(kat))
+		y2 := centerY + float32(dystans*math.Sin(kat))
+		vector.StrokeLine(screen, centerX, centerY, x2, y2, 2, color.RGBA{255, 0, 255, 255}, true)
+	}
+
+	// === Jedzenie (zielony) ===
+	if len(NEARFOODS) > 0 {
+		kat := NEARFOODS[0][1] * (math.Pi / 180.0)
+		dystans := math.Min(NEARFOODS[0][0], 100.0)
+		x2 := centerX + float32(dystans*math.Cos(kat))
+		y2 := centerY + float32(dystans*math.Sin(kat))
+		vector.StrokeLine(screen, centerX, centerY, x2, y2, 2, color.RGBA{0, 255, 0, 255}, true)
+	}
+
+	// === Witamina (niebieski) ===
+	if len(NEARVITAMINS) > 0 {
+		kat := NEARVITAMINS[0][1] * (math.Pi / 180.0)
+		dystans := math.Min(NEARVITAMINS[0][0], 100.0)
+		x2 := centerX + float32(dystans*math.Cos(kat))
+		y2 := centerY + float32(dystans*math.Sin(kat))
+		vector.StrokeLine(screen, centerX, centerY, x2, y2, 2, color.RGBA{0, 128, 255, 255}, true)
 	}
 
 	if g.gameOver {
@@ -376,7 +407,7 @@ func (g *GameScene) FirstLoad() {
 
 	//tworzenie ai do testow - START
 	currentPopulation = data.Population{
-		PopSize:   20,
+		PopSize:   30,
 		C1:        1.0,
 		C2:        0.5,
 		Threshold: 3.0,
@@ -444,7 +475,7 @@ func (g *GameScene) Update() SceneId {
 		return PauseSceneId
 	}
 	if !g.gamePause && !g.gameOver {
-			// Log whether AI is enabled (used for tests)
+		// Log whether AI is enabled (used for tests)
 		if isAIEnabled() {
 			log.Println("AI is controlling the player.")
 		} else {
@@ -887,27 +918,48 @@ func (g *GameScene) Update() SceneId {
 		ENEMIES = make([][3]float64, 0)
 		NEARFOODS = make([][]float64, 0)
 		NEARVITAMINS = make([][]float64, 0)
+		//=========== WITAMINKI ================
+		for _, vitamin := range g.vitamins {
+			dystans := math.Sqrt(math.Pow(g.player.X-vitamin.X, 2) + math.Pow(g.player.Y-vitamin.Y, 2))
+			kat := math.Atan2(vitamin.Y-g.player.Y, vitamin.X-g.player.X) * (180 / math.Pi)
+			tablica := []float64{dystans, kat}
+			NEARVITAMINS = append(NEARVITAMINS, tablica)
+		}
+		deepsort.DeepSort(&NEARVITAMINS, []float64{0})
 		for _, enemy := range g.enemies {
 			if enemy.Type == 2 {
 				dystans := math.Sqrt(math.Pow(g.player.X-enemy.X, 2) + math.Pow(g.player.Y-enemy.Y, 2))
-				kat := g.player.X - enemy.X/g.player.Y - enemy.Y
+				kat := math.Atan2(enemy.Y-g.player.Y, enemy.X-g.player.X) * (180 / math.Pi)
 				hp := enemy.CombatComp.Health()
 				tablica := [3]float64{dystans, kat, hp}
 				ENEMIES = append(ENEMIES, tablica)
 			}
 			if enemy.Type == 0 && (g.player.Diet == 0 || g.player.Diet == 2) {
 				dystans := math.Sqrt(math.Pow(g.player.X-enemy.X, 2) + math.Pow(g.player.Y-enemy.Y, 2))
-				kat := g.player.X - enemy.X/g.player.Y - enemy.Y
+				kat := math.Atan2(enemy.Y-g.player.Y, enemy.X-g.player.X) * (180 / math.Pi)
 				tablica := []float64{dystans, kat}
 				NEARFOODS = append(NEARFOODS, tablica)
 			}
 			if enemy.Type == 1 && (g.player.Diet == 0 || g.player.Diet == 2) {
 				dystans := math.Sqrt(math.Pow(g.player.X-enemy.X, 2) + math.Pow(g.player.Y-enemy.Y, 2))
-				kat := g.player.X - enemy.X/g.player.Y - enemy.Y
+				kat := math.Atan2(enemy.Y-g.player.Y, enemy.X-g.player.X) * (180 / math.Pi)
 				tablica := []float64{dystans, kat}
 				NEARFOODS = append(NEARFOODS, tablica)
 			}
 		}
+		// ============== SORTOWANIE ENEMIES =============
+		convertedEnemies := make([][]float64, 0, len(ENEMIES))
+		for _, e := range ENEMIES {
+			convertedEnemies = append(convertedEnemies, []float64{e[0], e[1], e[2]})
+		}
+		deepsort.DeepSort(&convertedEnemies, []float64{0})
+
+		// opcjonalnie zaktualizuj ENEMIES z powrotem:
+		ENEMIES = make([][3]float64, len(convertedEnemies))
+		for i, e := range convertedEnemies {
+			ENEMIES[i] = [3]float64{e[0], e[1], e[2]}
+		}
+
 		deepsort.DeepSort(&NEARFOODS, []float64{0})
 		newNEARFOODS := make([][]float64, 0)
 		for index, _ := range NEARFOODS {
@@ -947,6 +999,7 @@ func (g *GameScene) Update() SceneId {
 	//zapisywanie informacji o populacji do pliku textowego
 	if g.gameOver || g.timePassed >= GenomLifetimeFrames {
 		fitness := currentGenom.EvaluateFitness(SCORE, g.foodEaten, g.enemyKilled, g.timePassed, g.player.CombatComp.Health())
+		currentGenom.Fitness = fitness
 		fmt.Printf("Genom %d fitness: %f\n", currentGenIndex, fitness)
 
 		currentGenIndex++
@@ -955,6 +1008,19 @@ func (g *GameScene) Update() SceneId {
 			currentGenom = population[currentGenIndex]
 			g.ResetGameState()
 		} else {
+			var totalFitness, maxFitness float64
+			var bestGenom *data.Genom
+			for _, g := range population {
+				totalFitness += g.Fitness
+				if g.Fitness > maxFitness || bestGenom == nil {
+					maxFitness = g.Fitness
+					bestGenom = g
+				}
+			}
+			avgFitness := totalFitness / float64(len(population))
+
+			data.AppendFitnessLog(generation, currentGenIndex, fitness, avgFitness, maxFitness)
+			data.SaveBestGenomToFile(bestGenom, generation)
 			fmt.Println("=== CREATING NEW GENERATION ===")
 			generation++
 			// Specjacja — resetujemy i przypisujemy genomy do gatunków
@@ -1104,43 +1170,47 @@ func (g *GameScene) ControlByAI(genom *data.Genom) {
 // przygotowanie inputow dla NEATA
 func (g *GameScene) PrepareInputs() []float64 {
 	inputs := []float64{
-		float64(SCORE) / 10.0,
-		PLAYERHP / 10.0,
-		PLAYERDMG / 10.0,
-		PLAYERSPEED / 10.0,
-		PLAYEREFFICIENCY / 10.0,
+		math.Tanh(float64(SCORE) / 100.0),
+		math.Tanh(PLAYERHP / 10.0),
+		math.Tanh(PLAYERDMG / 10.0),
+		math.Tanh(PLAYERSPEED / 10.0),
+		math.Tanh(PLAYEREFFICIENCY / 10.0),
 		PLAYERX / float64(constants.GameWidth),
 		PLAYERY / float64(constants.GameHeight),
-		PLAYERCALORIES / 10.0,
+		PLAYERCALORIES / 1000.0,
 	}
 
 	if len(NEARFOODS) > 0 {
-		distance := NEARFOODS[0][0] / 500.0
-		angle := NEARFOODS[0][1] / 180.0
+		distance := math.Min(NEARFOODS[0][0]/500.0, 1.0)
+		angle := normalizer(NEARFOODS[0][1])
 		inputs = append(inputs, distance, angle)
 	} else {
-		inputs = append(inputs, 0.0, 0.0)
+		inputs = append(inputs, 1.0, 0.0)
 
 	}
 
 	if len(NEARVITAMINS) > 0 {
-		distance := NEARVITAMINS[0][0] / 500.0
-		angle := NEARFOODS[0][1] / 180.0
+		distance := math.Min(NEARVITAMINS[0][0]/500.0, 1.0)
+		angle := normalizer(NEARVITAMINS[0][1])
 		inputs = append(inputs, distance, angle)
 	} else {
-		inputs = append(inputs, 0.0, 0.0)
+		inputs = append(inputs, 1.0, 0.0)
 	}
 
 	if len(ENEMIES) > 0 {
-		distance := ENEMIES[0][0] / 500.0
-		angle := ENEMIES[0][1] / 180.0
-		enemyHP := ENEMIES[0][2] / 10.0
+		distance := math.Min(ENEMIES[0][0]/500.0, 1.0)
+		angle := normalizer(ENEMIES[0][1])
+		enemyHP := math.Min(ENEMIES[0][2]/10.0, 1.0)
 		inputs = append(inputs, distance, angle, enemyHP)
 	} else {
-		inputs = append(inputs, 0.0, 0.0, 0.0)
+		inputs = append(inputs, 1.0, 0.0, 0.0)
 	}
 	fmt.Printf("INPUTS to NEAT: %+v\n", inputs)
 	return inputs
+}
+
+func normalizer(raw float64) float64 {
+	return (raw + 180) / 360
 }
 
 // funkcja resetujaca gre dla ai

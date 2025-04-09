@@ -1,10 +1,12 @@
 package data
 
 import (
+	"encoding/csv"
 	"fmt"
 	"math"
 	"math/rand"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -107,7 +109,7 @@ func (genom *Genom) CreateNetwork() {
 		if rand.Float64() < genom.ConnCreationRate {
 			node1, node2 := genom.randomNodes()
 			if !genom.connectionExist(node1, node2) {
-				weight := rand.Float64()
+				weight := rand.Float64()*2 - 1
 				genom.addConnetion(node1, node2, weight, true)
 			}
 		}
@@ -116,8 +118,15 @@ func (genom *Genom) CreateNetwork() {
 	genom.forceConnection()
 }
 
-func (genom *Genom) EvaluateFitness(score int, foodEaten int, enemiesKilled int, timeSurvived int, hp float64) float64 {
-	fitness := float64(score) + float64(foodEaten)*10 + float64(enemiesKilled)*20 + hp*5 - float64(timeSurvived)*0.1
+func (genom *Genom) EvaluateFitness(score int, foodEaten, enemiesKilled, timeSurvived int, hp float64) float64 {
+	fitness := float64(foodEaten)*10 + float64(enemiesKilled)*20 + (math.Min(hp/15, 1.0))*10 + (math.Min(float64(timeSurvived)/900.0, 1.0))*20.0
+	if foodEaten == 0 && enemiesKilled == 0 && score == 0 && timeSurvived > 840 {
+		fitness -= 80
+	}
+	if fitness < 0 {
+		fitness = 0
+	}
+
 	genom.Fitness = fitness
 	return fitness
 }
@@ -646,6 +655,26 @@ func AllGenomesFromPopulation(pop *Population) []*Genom {
 		all = append(all, species.Genoms...)
 	}
 	return all
+}
+
+func AppendFitnessLog(generation, genomeIndex int, fitness, avgFitness, maxFitness float64) error {
+	file, err := os.OpenFile("fitness_log.csv", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	record := []string{
+		strconv.Itoa(generation),
+		strconv.Itoa(genomeIndex),
+		strconv.FormatFloat(fitness, 'f', 4, 64),
+		strconv.FormatFloat(avgFitness, 'f', 4, 64),
+		strconv.FormatFloat(maxFitness, 'f', 4, 64),
+	}
+	return writer.Write(record)
 }
 
 // – – – – – – – – – – – – – – – – – TESTING – – – – – – – – – – – – – – – – – – – – – – –
