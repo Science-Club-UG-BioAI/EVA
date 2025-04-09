@@ -395,13 +395,17 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 			IH:               elite.IH,
 			TotalNodes:       elite.TotalNodes,
 			Fitness:          elite.Fitness,
+			Nodes:            make([]*Node, 0),      // Inicjalizacja pustej listy węzłów
+			Connections:      make([]Connection, 0), // Inicjalizacja pustej listy połączeń
+			IsElite:          true,                  // Oznaczenie jako elita
 		}
 
 		nodeMap := make(map[int]*Node)
 		for _, node := range elite.Nodes {
 			newNode := &Node{
-				ID:   node.ID,
-				Type: node.Type,
+				ID:            node.ID,
+				Type:          node.Type,
+				IncomingConns: make([]Connection, 0),
 			}
 			newElite.Nodes = append(newElite.Nodes, newNode)
 			nodeMap[node.ID] = newNode
