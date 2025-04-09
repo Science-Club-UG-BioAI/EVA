@@ -34,7 +34,7 @@ var currentPopulation data.Population
 
 // Limit czasu trwania życia genomu (w sekundach i klatkach)
 
-const GenomLifetimeInSeconds = 5
+const GenomLifetimeInSeconds = 15
 
 const FramesPerSecond = 60
 const GenomLifetimeFrames = GenomLifetimeInSeconds * FramesPerSecond
@@ -224,11 +224,11 @@ func (g *GameScene) Draw(screen *ebiten.Image) {
 			10, 450)
 	}
 	if g.ShowAIDebug && g.LastAIDecision.Inputs != nil {
-		const startX, startY = 630, 10 // miejsce tabeli ACTIVE AI
+		const startX, startY = 800, 10 // miejsce tabeli ACTIVE AI
 		y := startY
 
 		// Tło panelu
-		vector.DrawFilledRect(screen, startX-5, startY-5, 320, 500, color.RGBA{0, 0, 0, 180}, false)
+		vector.DrawFilledRect(screen, startX-20, startY-5, 140, 340, color.RGBA{0, 0, 0, 180}, false)
 
 		// Nagłówek
 		mode := "AI ACTIVE"
@@ -262,20 +262,20 @@ func (g *GameScene) Draw(screen *ebiten.Image) {
 		}
 
 		// Połączenia (ograniczenie do 15)
-		y += 10
-		ebitenutil.DebugPrintAt(screen, "Connections:", startX, y)
-		y += 16
-		connectionCount := 0
-		for _, conn := range g.LastAIDecision.Connections {
-			ebitenutil.DebugPrintAt(screen,
-				fmt.Sprintf("%3d → %3d (W:%.2f E:%.2f)", conn.From, conn.To, conn.Weight, conn.Effect),
-				startX+10, y)
-			y += 16
-			connectionCount++
-			if connectionCount > 15 || y > 600 {
-				break
-			}
-		}
+		// y += 10
+		// ebitenutil.DebugPrintAt(screen, "Connections:", startX, y)
+		// y += 16
+		// connectionCount := 0
+		// for _, conn := range g.LastAIDecision.Connections {
+		// 	ebitenutil.DebugPrintAt(screen,
+		// 		fmt.Sprintf("%3d → %3d (W:%.2f E:%.2f)", conn.From, conn.To, conn.Weight, conn.Effect),
+		// 		startX+10, y)
+		// 	y += 16
+		// 	connectionCount++
+		// 	if connectionCount > 15 || y > 600 {
+		// 		break
+		// 	}
+		// }
 	}
 	// =============== DEBUGOWANIE KATOW ======================
 
@@ -905,7 +905,7 @@ func (g *GameScene) Update() SceneId {
 				Follows:    true,
 				CombatComp: components.NewEnemyCombat(float64(randRange(int(g.player.MaxHealth*0.9), int(g.player.MaxHealth*1.1))), math.Max(1, float64(randRange(int(g.player.Dmg*0.9), int(g.player.Dmg*1.1)))), 3000),
 				Type:       2,
-				Speed:      float64(randRange(int(g.player.Speed*0.9), int(g.player.Speed*1.1))),
+				Speed:      float64(randRange(int(g.player.Speed*1.0), int(g.player.Speed*1.2))),
 			}
 			g.enemies = append(g.enemies, newEnemy)
 		}
@@ -1128,7 +1128,7 @@ func (g *GameScene) ControlByAI(genom *data.Genom) {
 	g.LastAIDecision = decision // zapisz nawet jeśli gracz ma kontrolę
 
 	if isAIEnabled() && len(outputs) >= 2 {
-		moveScale := (0.1 + 3*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
+		moveScale := (0.1 + 2.5*math.Log(1+g.player.Speed)) * g.player.SpeedMultiplier
 
 		// funkcja aktywująca do przekształcenia outputu z [0,1] -> [-1,1]
 
