@@ -7,6 +7,7 @@ import (
 	"math"
 	"math/rand"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -371,7 +372,23 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 		//fmt.Println("Brak gatunków — nie można wygenerować nowej populacji.")
 		return []*Genom{}
 	}
+	// --- ELITES ---
+	allGenomes := AllGenomesFromPopulation(pop)
+	sort.SliceStable(allGenomes, func(i, j int) bool {
+		return allGenomes[i].Fitness > allGenomes[j].Fitness
+	})
 
+	numElites := 2
+	if len(allGenomes) < numElites {
+		numElites = len(allGenomes)
+	}
+
+	eliteClones := []*Genom{}
+	for i := 0; i < numElites; i++ {
+		clone := CloneGenom(allGenomes[i])
+		eliteClones = append(eliteClones, clone)
+	}
+	newGenomes = append(newGenomes, eliteClones...)
 	//here we calculate the average fitness for species n how many offsprings a species can have
 	totalFitness := 0.0
 	for _, species := range pop.AllSpecies {
@@ -396,10 +413,10 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 
 			// Mutations in offsprings
 			child.mutateWeight()
-			if rand.Float64() < 0.7 {
+			if rand.Float64() < 0.8 {
 				child.mutateAddConnection()
 			}
-			if rand.Float64() < 0.2 {
+			if rand.Float64() < 0.35 {
 				child.mutateAddNode()
 			}
 			if rand.Float64() < 0.1 {
@@ -455,7 +472,21 @@ func GenerateNewPopulation(pop *Population) []*Genom {
 
 		newGenomes = append(newGenomes, newGen)
 	}
+	targetSpecies := 8
+	adjustStep := 0.1
+	if len(pop.AllSpecies) < targetSpecies {
+		pop.Threshold -= adjustStep
+	} else if len(pop.AllSpecies) > targetSpecies {
+		pop.Threshold += adjustStep
+	}
 
+	if pop.Threshold < 0.5 {
+		pop.Threshold = 0.5
+	}
+	if pop.Threshold > 10.0 {
+		pop.Threshold = 10.0
+	}
+	fmt.Printf("[ADAPT] New threshold: %.2f\n", pop.Threshold)
 	fmt.Printf("[INFO] New population – number of genoms: %d\n", len(newGenomes))
 	return newGenomes
 }
@@ -698,6 +729,42 @@ func AppendBestFitnessLog(generation int, population []*Genom) error {
 	return writer.Write(record)
 }
 
+// --- CLONE GENOM ---
+func CloneGenom(original *Genom) *Genom {
+	newGen := &Genom{
+		NumInputs:        original.NumInputs,
+		NumOutputs:       original.NumOutputs,
+		ConnCreationRate: original.ConnCreationRate,
+		IH:               original.IH,
+		TotalNodes:       original.TotalNodes,
+		Fitness:          original.Fitness,
+	}
+
+	nodeMap := make(map[int]*Node)
+	for _, node := range original.Nodes {
+		newNode := &Node{
+			ID:   node.ID,
+			Type: node.Type,
+		}
+		newGen.Nodes = append(newGen.Nodes, newNode)
+		nodeMap[node.ID] = newNode
+	}
+
+	for _, conn := range original.Connections {
+		newConn := Connection{
+			InNode:     nodeMap[conn.InNode.ID],
+			OutNode:    nodeMap[conn.OutNode.ID],
+			Weight:     conn.Weight,
+			Innovation: conn.Innovation,
+			Enabled:    conn.Enabled,
+		}
+		newGen.Connections = append(newGen.Connections, newConn)
+		nodeMap[conn.OutNode.ID].IncomingConns = append(nodeMap[conn.OutNode.ID].IncomingConns, newConn)
+	}
+
+	return newGen
+}
+
 // – – – – – – – – – – – – – – – – – TESTING – – – – – – – – – – – – – – – – – – – – – – –
 
 func (t NodeType) String() string {
@@ -877,7 +944,6 @@ func LoadPopulationFromFile(filename string, ih *InnovationHistory) (*Population
 
 	return pop, scanner.Err()
 }
-
 
 func PrintPopulation(pop *Population) {
 	fmt.Printf("=== POPULATION ===\n")
