@@ -34,7 +34,7 @@ var currentPopulation data.Population
 
 // Limit czasu trwania życia genomu (w sekundach i klatkach)
 
-const GenomLifetimeInSeconds = 15
+const GenomLifetimeInSeconds = 30
 
 const FramesPerSecond = 60
 const GenomLifetimeFrames = GenomLifetimeInSeconds * FramesPerSecond
@@ -406,50 +406,50 @@ func (g *GameScene) FirstLoad() {
 	g.timePassed = 0
 
 	//tworzenie ai do testow - START
-	// GENEROWANIE NOWE - START
-	currentPopulation = data.Population{
-		PopSize:   30,
-		C1:        1.0,
-		C2:        0.5,
-		Threshold: 3.0,
-	}
-	population = []*data.Genom{}
-	//sharedHistory := &data.InnovationHistory{}
-	for i := 0; i < currentPopulation.PopSize; i++ {
-		g := &data.Genom{
-			NumInputs:  15,
-			NumOutputs: 2,
-			//			TotalNodes:       23, //uwazac bo createnetwork tutaj dodaje - nie jest to wgl potrzebne tbh
-			Nodes:            []*data.Node{},
-			ConnCreationRate: 1.0,
-			IH:               &globalInnovationHistory, //sharedHistory,
-		}
-		g.CreateNetwork()
-		// fmt.Printf("\nGENOM #%d\n", i)
-		// for _, c := range g.Connections {
-		// 	fmt.Printf("Połączenie: In=%d (Type %d) → Out=%d (Type %d), Waga=%.2f\n",
-		// 		c.InNode.ID, c.InNode.Type,
-		// 		c.OutNode.ID, c.OutNode.Type,
-		// 		c.Weight,
-		// 	)
-		// }
-		population = append(population, g)
-		currentPopulation.AddToSpecies(g)
-		currentGenIndex = 0
-		currentGenom = population[currentGenIndex]
-	} // GENEROWANIE NOWE - KONIEC
-
-	// // WCZYTYWANIE GENERACJI
-	// pop, err := data.LoadPopulationFromFile("generation.txt", &globalInnovationHistory)
-	// if err != nil {
-	// 	log.Fatal("Nie udało się wczytać populacji:", err)
+	// // GENEROWANIE NOWE - START
+	// currentPopulation = data.Population{
+	// 	PopSize:   30,
+	// 	C1:        1.0,
+	// 	C2:        0.5,
+	// 	Threshold: 3.0,
 	// }
-	// data.PrintPopulation(pop)
-	// population = data.AllGenomesFromPopulation(pop)
-	// currentPopulation = *pop
-	// currentGenIndex = 0
-	// currentGenom = population[currentGenIndex]
-	// // WCZYTYWANIE GENERACJI
+	// population = []*data.Genom{}
+	// //sharedHistory := &data.InnovationHistory{}
+	// for i := 0; i < currentPopulation.PopSize; i++ {
+	// 	g := &data.Genom{
+	// 		NumInputs:  15,
+	// 		NumOutputs: 2,
+	// 		//			TotalNodes:       23, //uwazac bo createnetwork tutaj dodaje - nie jest to wgl potrzebne tbh
+	// 		Nodes:            []*data.Node{},
+	// 		ConnCreationRate: 1.0,
+	// 		IH:               &globalInnovationHistory, //sharedHistory,
+	// 	}
+	// 	g.CreateNetwork()
+	// 	// fmt.Printf("\nGENOM #%d\n", i)
+	// 	// for _, c := range g.Connections {
+	// 	// 	fmt.Printf("Połączenie: In=%d (Type %d) → Out=%d (Type %d), Waga=%.2f\n",
+	// 	// 		c.InNode.ID, c.InNode.Type,
+	// 	// 		c.OutNode.ID, c.OutNode.Type,
+	// 	// 		c.Weight,
+	// 	// 	)
+	// 	// }
+	// 	population = append(population, g)
+	// 	currentPopulation.AddToSpecies(g)
+	// 	currentGenIndex = 0
+	// 	currentGenom = population[currentGenIndex]
+	// } // GENEROWANIE NOWE - KONIEC
+
+	// WCZYTYWANIE GENERACJI
+	pop, err := data.LoadPopulationFromFile("generations/generation_6.txt", &globalInnovationHistory)
+	if err != nil {
+		log.Fatal("Nie udało się wczytać populacji:", err)
+	}
+	data.PrintPopulation(pop)
+	population = data.AllGenomesFromPopulation(pop)
+	currentPopulation = *pop
+	currentGenIndex = 0
+	currentGenom = population[currentGenIndex]
+	// WCZYTYWANIE GENERACJI
 
 	// fmt.Println("Test fitness:", testGenom.EvaluateFitness(120, 3, 56, 32, 2)) //sprawdzanie dzialania funkcji fitness
 	// fmt.Printf("Utworzono populację z %d genomów\n", len(population)) //sprawdzanie czy populacja zostala stworzona
@@ -1014,6 +1014,9 @@ func (g *GameScene) Update() SceneId {
 	// dane do funkcji kosztu
 	//przechodzenie po genomach - start
 	//zapisywanie informacji o populacji do pliku textowego
+	if PLAYERCALORIES < 0 {
+		g.gameOver = true
+	}
 	if g.gameOver || g.timePassed >= GenomLifetimeFrames {
 		fitness := currentGenom.EvaluateFitness(SCORE, g.foodEaten, g.enemyKilled, g.timePassed, g.player.CombatComp.Health())
 		currentGenom.Fitness = fitness
