@@ -122,7 +122,7 @@ func (genom *Genom) CreateNetwork() {
 }
 
 func (genom *Genom) EvaluateFitness(score int, foodEaten, enemiesKilled, timeSurvived int, hp float64) float64 {
-	fitness := float64(foodEaten)*10 + float64(enemiesKilled)*37 + (math.Min(hp/15, 1.0))*10 + (math.Min(float64(timeSurvived)/1800.0, 1.0))*20.0
+	fitness := float64(foodEaten)*10 + float64(enemiesKilled)*60 + (math.Min(hp/15, 1.0))*10 + (math.Min(float64(timeSurvived)/1800.0, 1.0))*20.0
 	if foodEaten == 0 && enemiesKilled == 0 && score == 0 && timeSurvived > 1780 {
 		fitness -= 80
 	}
