@@ -1,0 +1,3086 @@
+=== SPECIES 0 ===
+Average Fitness: 0.00
+
+--- Genom 0 (Fitness: 42.00) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.3299 | Enabled: true
+  5 -> 15 | Weight: 0.5286 | Enabled: false
+  4 -> 15 | Weight: 0.2775 | Enabled: true
+  14 -> 15 | Weight: -0.1575 | Enabled: true
+  8 -> 15 | Weight: -0.3213 | Enabled: false
+  13 -> 15 | Weight: -0.9542 | Enabled: true
+  11 -> 16 | Weight: 0.0326 | Enabled: true
+  10 -> 15 | Weight: -1.4617 | Enabled: true
+  1 -> 15 | Weight: -0.6546 | Enabled: true
+  9 -> 15 | Weight: 0.9013 | Enabled: true
+  2 -> 15 | Weight: 0.8660 | Enabled: false
+  11 -> 15 | Weight: 0.4434 | Enabled: true
+  2 -> 16 | Weight: -0.3618 | Enabled: true
+  7 -> 15 | Weight: -0.4854 | Enabled: true
+  14 -> 16 | Weight: -0.7140 | Enabled: true
+  12 -> 16 | Weight: -0.1600 | Enabled: true
+  0 -> 15 | Weight: -0.8249 | Enabled: true
+  6 -> 15 | Weight: 0.6970 | Enabled: false
+  8 -> 16 | Weight: -0.6821 | Enabled: false
+  3 -> 15 | Weight: -0.3200 | Enabled: true
+  9 -> 16 | Weight: 1.0672 | Enabled: true
+  12 -> 17 | Weight: 0.6507 | Enabled: false [mutation]
+  17 -> 16 | Weight: 0.3299 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.8646 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.5626 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.7058 | Enabled: true [mutation]
+  14 -> 18 | Weight: -0.3630 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.4486 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.3167 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.5054 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.6823 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.5241 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.5947 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.2814 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.2816 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.6128 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.1593 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.8831 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.4057 | Enabled: true [mutation]
+  20 -> 17 | Weight: -0.3990 | Enabled: true [mutation]
+  1 -> 16 | Weight: 0.1792 | Enabled: true
+  18 -> 22 | Weight: -0.5635 | Enabled: false [mutation]
+  22 -> 18 | Weight: 0.5272 | Enabled: true [mutation]
+  12 -> 23 | Weight: 1.4817 | Enabled: true [mutation]
+  23 -> 16 | Weight: -1.0059 | Enabled: true [mutation]
+  0 -> 19 | Weight: -0.6845 | Enabled: true [mutation]
+  10 -> 17 | Weight: 0.5174 | Enabled: true [mutation]
+  10 -> 24 | Weight: 0.9290 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.1469 | Enabled: true [mutation]
+  24 -> 22 | Weight: 0.2617 | Enabled: true [mutation]
+  13 -> 18 | Weight: -0.9021 | Enabled: true [mutation]
+  1 -> 18 | Weight: -1.0212 | Enabled: true [mutation]
+  5 -> 25 | Weight: 0.7835 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.2814 | Enabled: true [mutation]
+  19 -> 16 | Weight: 0.1849 | Enabled: true [mutation]
+  22 -> 26 | Weight: 1.0223 | Enabled: true [mutation]
+  26 -> 18 | Weight: -0.3822 | Enabled: true [mutation]
+  8 -> 22 | Weight: 0.0415 | Enabled: true [mutation]
+  10 -> 25 | Weight: -0.1966 | Enabled: true [mutation]
+  8 -> 27 | Weight: 0.8510 | Enabled: true [mutation]
+  27 -> 16 | Weight: -0.4083 | Enabled: true [mutation]
+  27 -> 24 | Weight: 0.6325 | Enabled: true [mutation]
+  23 -> 24 | Weight: 0.1695 | Enabled: true [mutation]
+
+--- Genom 1 (Fitness: 31.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+  Node ID: 30, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.0678 | Enabled: true
+  5 -> 15 | Weight: 0.4350 | Enabled: false
+  4 -> 15 | Weight: 0.5902 | Enabled: true
+  14 -> 15 | Weight: 0.8100 | Enabled: true
+  8 -> 15 | Weight: 0.3655 | Enabled: false
+  13 -> 15 | Weight: 0.6617 | Enabled: true
+  11 -> 16 | Weight: 0.5093 | Enabled: true
+  10 -> 15 | Weight: 0.4278 | Enabled: false
+  1 -> 15 | Weight: -0.2847 | Enabled: true
+  9 -> 15 | Weight: -0.2064 | Enabled: true
+  2 -> 15 | Weight: -0.7403 | Enabled: false
+  11 -> 15 | Weight: -0.5346 | Enabled: true
+  2 -> 16 | Weight: -0.3194 | Enabled: true
+  7 -> 15 | Weight: 0.0907 | Enabled: true
+  14 -> 16 | Weight: 0.2121 | Enabled: true
+  12 -> 16 | Weight: -0.1672 | Enabled: true
+  0 -> 15 | Weight: -0.9468 | Enabled: true
+  6 -> 15 | Weight: 0.3992 | Enabled: false
+  8 -> 16 | Weight: -0.6402 | Enabled: false
+  3 -> 15 | Weight: -0.9032 | Enabled: true
+  9 -> 16 | Weight: 1.3382 | Enabled: true
+  12 -> 17 | Weight: 0.5077 | Enabled: false [mutation]
+  17 -> 16 | Weight: 0.0939 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.1960 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.7977 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.7395 | Enabled: true [mutation]
+  14 -> 18 | Weight: -0.2114 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.3113 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.3408 | Enabled: true [mutation]
+  9 -> 18 | Weight: -0.0697 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.8759 | Enabled: true [mutation]
+  19 -> 15 | Weight: -0.8952 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.6650 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.3885 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.7271 | Enabled: true [mutation]
+  3 -> 19 | Weight: -1.1005 | Enabled: true [mutation]
+  12 -> 21 | Weight: 0.5097 | Enabled: false [mutation]
+  21 -> 17 | Weight: -0.2056 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.6052 | Enabled: true [mutation]
+  20 -> 17 | Weight: 0.1615 | Enabled: true [mutation]
+  1 -> 16 | Weight: 0.4223 | Enabled: true
+  18 -> 22 | Weight: -0.6826 | Enabled: false [mutation]
+  22 -> 18 | Weight: 0.0183 | Enabled: true [mutation]
+  12 -> 23 | Weight: -0.4065 | Enabled: true [mutation]
+  23 -> 16 | Weight: -1.2264 | Enabled: true [mutation]
+  0 -> 19 | Weight: -0.8469 | Enabled: true [mutation]
+  10 -> 17 | Weight: 1.0535 | Enabled: true [mutation]
+  10 -> 24 | Weight: 0.6553 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.6270 | Enabled: false [mutation]
+  24 -> 22 | Weight: 0.5549 | Enabled: true [mutation]
+  13 -> 18 | Weight: 0.0998 | Enabled: true [mutation]
+  1 -> 18 | Weight: 0.6719 | Enabled: true [mutation]
+  5 -> 25 | Weight: -0.9209 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.3555 | Enabled: true [mutation]
+  19 -> 16 | Weight: 0.2692 | Enabled: true [mutation]
+  22 -> 26 | Weight: -0.5468 | Enabled: true [mutation]
+  26 -> 18 | Weight: -0.8620 | Enabled: true [mutation]
+  8 -> 22 | Weight: -0.7254 | Enabled: true [mutation]
+  10 -> 25 | Weight: 0.5760 | Enabled: true [mutation]
+  8 -> 27 | Weight: 0.6661 | Enabled: true [mutation]
+  27 -> 16 | Weight: -0.4549 | Enabled: true [mutation]
+  12 -> 28 | Weight: 0.5468 | Enabled: false [mutation]
+  28 -> 21 | Weight: -0.3119 | Enabled: true [mutation]
+  23 -> 20 | Weight: 1.0161 | Enabled: true [mutation]
+  24 -> 29 | Weight: 0.8465 | Enabled: true [mutation]
+  29 -> 15 | Weight: -0.6043 | Enabled: true [mutation]
+  12 -> 30 | Weight: 1.0000 | Enabled: true [mutation]
+  30 -> 28 | Weight: 0.5468 | Enabled: true [mutation]
+
+--- Genom 2 (Fitness: 52.00) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.0661 | Enabled: true
+  5 -> 15 | Weight: -0.8660 | Enabled: false
+  4 -> 15 | Weight: 0.7755 | Enabled: true
+  14 -> 15 | Weight: -1.4033 | Enabled: true
+  8 -> 15 | Weight: -0.9713 | Enabled: false
+  13 -> 15 | Weight: -0.9338 | Enabled: true
+  11 -> 16 | Weight: -0.8414 | Enabled: true
+  10 -> 15 | Weight: -1.5604 | Enabled: true
+  1 -> 15 | Weight: -0.3939 | Enabled: true
+  9 -> 15 | Weight: 0.7411 | Enabled: true
+  2 -> 15 | Weight: 0.2715 | Enabled: false
+  11 -> 15 | Weight: 0.2974 | Enabled: true
+  2 -> 16 | Weight: -0.8052 | Enabled: true
+  7 -> 15 | Weight: -0.2798 | Enabled: true
+  14 -> 16 | Weight: -0.8535 | Enabled: true
+  12 -> 16 | Weight: 0.7451 | Enabled: true
+  0 -> 15 | Weight: -0.7983 | Enabled: true
+  6 -> 15 | Weight: 0.3080 | Enabled: false
+  8 -> 16 | Weight: -0.0751 | Enabled: true
+  3 -> 15 | Weight: -0.3276 | Enabled: false
+  9 -> 16 | Weight: 1.3047 | Enabled: true
+  12 -> 17 | Weight: 0.6959 | Enabled: false [mutation]
+  17 -> 16 | Weight: 0.1110 | Enabled: true [mutation]
+  1 -> 17 | Weight: -0.0551 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.8025 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.7570 | Enabled: true [mutation]
+  14 -> 18 | Weight: -0.2201 | Enabled: true [mutation]
+  18 -> 15 | Weight: -0.0988 | Enabled: true [mutation]
+  18 -> 18 | Weight: 1.1773 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.7938 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.0443 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.1112 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.3204 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.0651 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.2243 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.6531 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.7453 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.1659 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.6384 | Enabled: true [mutation]
+  20 -> 17 | Weight: 0.6137 | Enabled: true [mutation]
+  1 -> 16 | Weight: 0.4232 | Enabled: true
+  18 -> 22 | Weight: -0.3209 | Enabled: false [mutation]
+  22 -> 18 | Weight: 0.4606 | Enabled: true [mutation]
+  12 -> 23 | Weight: 0.2014 | Enabled: true [mutation]
+  23 -> 16 | Weight: 0.1270 | Enabled: true [mutation]
+  0 -> 19 | Weight: 0.8047 | Enabled: true [mutation]
+  10 -> 17 | Weight: 1.0037 | Enabled: false [mutation]
+  10 -> 24 | Weight: -0.2007 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.6332 | Enabled: true [mutation]
+  24 -> 22 | Weight: -0.9587 | Enabled: true [mutation]
+  13 -> 18 | Weight: -1.0410 | Enabled: true [mutation]
+  1 -> 18 | Weight: 0.4384 | Enabled: true [mutation]
+  5 -> 25 | Weight: 1.0713 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.1672 | Enabled: true [mutation]
+  6 -> 25 | Weight: 0.7305 | Enabled: true [mutation]
+  5 -> 19 | Weight: -0.2880 | Enabled: true [mutation]
+  18 -> 26 | Weight: -0.2332 | Enabled: false [mutation]
+  26 -> 22 | Weight: 0.4278 | Enabled: true [mutation]
+  5 -> 22 | Weight: 0.9301 | Enabled: true [mutation]
+  18 -> 27 | Weight: 1.2946 | Enabled: true [mutation]
+  27 -> 26 | Weight: 0.8194 | Enabled: true [mutation]
+  4 -> 25 | Weight: 0.4087 | Enabled: true [mutation]
+  18 -> 28 | Weight: 0.8661 | Enabled: true [mutation]
+  28 -> 26 | Weight: -0.0940 | Enabled: true [mutation]
+  27 -> 23 | Weight: 0.7169 | Enabled: true [mutation]
+
+--- Genom 3 (Fitness: 31.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.3207 | Enabled: true
+  5 -> 15 | Weight: -1.0152 | Enabled: false
+  4 -> 15 | Weight: 0.6821 | Enabled: true
+  14 -> 15 | Weight: -0.1902 | Enabled: true
+  8 -> 15 | Weight: -0.5083 | Enabled: false
+  13 -> 15 | Weight: -0.9396 | Enabled: true
+  11 -> 16 | Weight: -0.4202 | Enabled: true
+  10 -> 15 | Weight: -1.5207 | Enabled: true
+  1 -> 15 | Weight: 0.7113 | Enabled: true
+  9 -> 15 | Weight: 0.8342 | Enabled: true
+  2 -> 15 | Weight: 0.9399 | Enabled: false
+  11 -> 15 | Weight: -0.7531 | Enabled: true
+  2 -> 16 | Weight: -0.1573 | Enabled: true
+  7 -> 15 | Weight: -0.4543 | Enabled: true
+  14 -> 16 | Weight: 0.4755 | Enabled: true
+  12 -> 16 | Weight: -0.6899 | Enabled: true
+  0 -> 15 | Weight: -0.4571 | Enabled: true
+  6 -> 15 | Weight: 0.4017 | Enabled: false
+  8 -> 16 | Weight: -0.4613 | Enabled: false
+  3 -> 15 | Weight: -0.8947 | Enabled: true
+  9 -> 16 | Weight: -0.4159 | Enabled: true
+  12 -> 17 | Weight: 0.6427 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.5803 | Enabled: true [mutation]
+  1 -> 17 | Weight: -0.1530 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.5779 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.7207 | Enabled: true [mutation]
+  14 -> 18 | Weight: -0.6176 | Enabled: true [mutation]
+  18 -> 15 | Weight: -0.1648 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.6889 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.1100 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.0106 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.4611 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.2835 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.6709 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.1323 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.8149 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.5888 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.3243 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.7888 | Enabled: true [mutation]
+  20 -> 17 | Weight: -0.3286 | Enabled: true [mutation]
+  1 -> 16 | Weight: 0.1879 | Enabled: true
+  18 -> 22 | Weight: 0.4722 | Enabled: false [mutation]
+  22 -> 18 | Weight: 0.2184 | Enabled: true [mutation]
+  12 -> 23 | Weight: 0.2596 | Enabled: true [mutation]
+  23 -> 16 | Weight: 0.1586 | Enabled: true [mutation]
+  0 -> 19 | Weight: 0.4990 | Enabled: true [mutation]
+  10 -> 17 | Weight: -0.3283 | Enabled: true [mutation]
+  10 -> 24 | Weight: -0.2063 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.6610 | Enabled: true [mutation]
+  24 -> 22 | Weight: -0.5996 | Enabled: true [mutation]
+  13 -> 18 | Weight: 1.0222 | Enabled: true [mutation]
+  1 -> 18 | Weight: 0.5871 | Enabled: true [mutation]
+  5 -> 25 | Weight: 0.8305 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.1432 | Enabled: true [mutation]
+  6 -> 25 | Weight: 0.4419 | Enabled: true [mutation]
+  5 -> 19 | Weight: 0.8465 | Enabled: true [mutation]
+  18 -> 26 | Weight: 0.1038 | Enabled: false [mutation]
+  26 -> 22 | Weight: 0.6967 | Enabled: true [mutation]
+  5 -> 22 | Weight: 0.8561 | Enabled: true [mutation]
+  18 -> 27 | Weight: 0.2962 | Enabled: true [mutation]
+  27 -> 26 | Weight: -0.2171 | Enabled: true [mutation]
+  4 -> 25 | Weight: 0.4727 | Enabled: true [mutation]
+  18 -> 28 | Weight: 0.8082 | Enabled: true [mutation]
+  28 -> 26 | Weight: -0.2850 | Enabled: true [mutation]
+  2 -> 18 | Weight: 0.6408 | Enabled: true [mutation]
+
+--- Genom 4 (Fitness: 41.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.2761 | Enabled: true
+  5 -> 15 | Weight: 0.2399 | Enabled: false
+  4 -> 15 | Weight: -0.0128 | Enabled: true
+  14 -> 15 | Weight: -0.2105 | Enabled: true
+  8 -> 15 | Weight: -0.4364 | Enabled: false
+  13 -> 15 | Weight: 0.2069 | Enabled: true
+  11 -> 16 | Weight: -0.9295 | Enabled: true
+  10 -> 15 | Weight: 0.1658 | Enabled: false
+  1 -> 15 | Weight: 0.7669 | Enabled: true
+  9 -> 15 | Weight: 0.0408 | Enabled: true
+  2 -> 15 | Weight: -0.6512 | Enabled: false
+  11 -> 15 | Weight: -0.7581 | Enabled: true
+  2 -> 16 | Weight: -0.6119 | Enabled: true
+  7 -> 15 | Weight: -0.9884 | Enabled: true
+  14 -> 16 | Weight: -0.0459 | Enabled: true
+  12 -> 16 | Weight: -0.9547 | Enabled: true
+  0 -> 15 | Weight: 0.3392 | Enabled: true
+  6 -> 15 | Weight: 0.5647 | Enabled: false
+  8 -> 16 | Weight: -0.4264 | Enabled: false
+  3 -> 15 | Weight: 0.3726 | Enabled: true
+  9 -> 16 | Weight: -0.4227 | Enabled: true
+  12 -> 17 | Weight: -0.3150 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.5957 | Enabled: true [mutation]
+  1 -> 17 | Weight: -0.9132 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.2182 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.7536 | Enabled: true [mutation]
+  14 -> 18 | Weight: 0.0284 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.0598 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.7331 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.7147 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.2416 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.6962 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.3727 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.8751 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.1170 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.4830 | Enabled: true [mutation]
+  12 -> 21 | Weight: 0.7183 | Enabled: false [mutation]
+  21 -> 17 | Weight: -0.7455 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.7316 | Enabled: true [mutation]
+  20 -> 17 | Weight: -1.0275 | Enabled: true [mutation]
+  1 -> 16 | Weight: 0.3678 | Enabled: true
+  18 -> 22 | Weight: 0.2906 | Enabled: false [mutation]
+  22 -> 18 | Weight: -0.5454 | Enabled: true [mutation]
+  12 -> 23 | Weight: 0.8616 | Enabled: true [mutation]
+  23 -> 16 | Weight: 0.3174 | Enabled: true [mutation]
+  0 -> 19 | Weight: 0.1159 | Enabled: true [mutation]
+  10 -> 17 | Weight: -0.4953 | Enabled: true [mutation]
+  10 -> 24 | Weight: -0.0701 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.4595 | Enabled: true [mutation]
+  24 -> 22 | Weight: -0.0926 | Enabled: true [mutation]
+  13 -> 18 | Weight: -0.1265 | Enabled: true [mutation]
+  1 -> 18 | Weight: 0.3130 | Enabled: true [mutation]
+  5 -> 25 | Weight: 0.7313 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.3921 | Enabled: true [mutation]
+  19 -> 16 | Weight: 0.6224 | Enabled: true [mutation]
+  22 -> 26 | Weight: -0.5440 | Enabled: true [mutation]
+  26 -> 18 | Weight: -0.4227 | Enabled: true [mutation]
+  8 -> 22 | Weight: -0.9904 | Enabled: true [mutation]
+  10 -> 25 | Weight: -0.2247 | Enabled: true [mutation]
+  8 -> 27 | Weight: 0.7105 | Enabled: true [mutation]
+  27 -> 16 | Weight: 0.9022 | Enabled: true [mutation]
+  9 -> 19 | Weight: 0.8563 | Enabled: true [mutation]
+  1 -> 28 | Weight: -0.8096 | Enabled: true [mutation]
+  28 -> 17 | Weight: 0.1335 | Enabled: true [mutation]
+  28 -> 20 | Weight: 0.6610 | Enabled: true [mutation]
+  27 -> 27 | Weight: 0.7742 | Enabled: true [mutation]
+  24 -> 18 | Weight: 0.8048 | Enabled: false [mutation]
+  18 -> 17 | Weight: 0.1001 | Enabled: true [mutation]
+
+--- Genom 5 (Fitness: 31.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.0822 | Enabled: true
+  5 -> 15 | Weight: 0.0356 | Enabled: false
+  4 -> 15 | Weight: 0.1087 | Enabled: true
+  14 -> 15 | Weight: -1.1238 | Enabled: true
+  8 -> 15 | Weight: -0.2953 | Enabled: false
+  13 -> 15 | Weight: -0.3694 | Enabled: true
+  11 -> 16 | Weight: 0.1304 | Enabled: true
+  10 -> 15 | Weight: -0.8546 | Enabled: false
+  1 -> 15 | Weight: -0.3072 | Enabled: true
+  9 -> 15 | Weight: -0.5791 | Enabled: true
+  2 -> 15 | Weight: -0.1958 | Enabled: false
+  11 -> 15 | Weight: -0.8417 | Enabled: true
+  2 -> 16 | Weight: -0.2596 | Enabled: true
+  7 -> 15 | Weight: 0.3576 | Enabled: true
+  14 -> 16 | Weight: 0.3459 | Enabled: true
+  12 -> 16 | Weight: -0.2113 | Enabled: true
+  0 -> 15 | Weight: 0.0086 | Enabled: true
+  6 -> 15 | Weight: 0.3204 | Enabled: false
+  8 -> 16 | Weight: -0.7581 | Enabled: false
+  3 -> 15 | Weight: -0.1974 | Enabled: true
+  9 -> 16 | Weight: 0.9410 | Enabled: true
+  12 -> 17 | Weight: -0.8875 | Enabled: false [mutation]
+  17 -> 16 | Weight: 0.9959 | Enabled: true [mutation]
+  1 -> 17 | Weight: -0.0141 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.3264 | Enabled: true [mutation]
+  0 -> 17 | Weight: -0.0738 | Enabled: false [mutation]
+  14 -> 18 | Weight: -0.6027 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.0345 | Enabled: false [mutation]
+  18 -> 18 | Weight: 0.3990 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.5694 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.7566 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.5823 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.3370 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.3739 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.7937 | Enabled: true [mutation]
+  3 -> 19 | Weight: -1.0392 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.6031 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.6914 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.0926 | Enabled: true [mutation]
+  20 -> 17 | Weight: 0.7587 | Enabled: true [mutation]
+  1 -> 16 | Weight: -0.6607 | Enabled: true
+  18 -> 22 | Weight: -0.8060 | Enabled: false [mutation]
+  22 -> 18 | Weight: 0.6902 | Enabled: true [mutation]
+  12 -> 23 | Weight: -0.3364 | Enabled: true [mutation]
+  23 -> 16 | Weight: 0.5903 | Enabled: true [mutation]
+  0 -> 19 | Weight: 0.6316 | Enabled: true [mutation]
+  10 -> 17 | Weight: -0.7364 | Enabled: true [mutation]
+  10 -> 24 | Weight: 0.5167 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.6902 | Enabled: true [mutation]
+  24 -> 22 | Weight: -0.2958 | Enabled: true [mutation]
+  13 -> 18 | Weight: 1.1098 | Enabled: true [mutation]
+  1 -> 18 | Weight: 0.0669 | Enabled: true [mutation]
+  5 -> 25 | Weight: -1.3880 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.2141 | Enabled: true [mutation]
+  19 -> 16 | Weight: 0.4048 | Enabled: true [mutation]
+  22 -> 26 | Weight: 0.8336 | Enabled: true [mutation]
+  26 -> 18 | Weight: 0.8958 | Enabled: true [mutation]
+  8 -> 22 | Weight: 0.4360 | Enabled: true [mutation]
+  10 -> 25 | Weight: -0.6075 | Enabled: true [mutation]
+  8 -> 27 | Weight: 0.2680 | Enabled: true [mutation]
+  27 -> 16 | Weight: -0.9656 | Enabled: true [mutation]
+  27 -> 24 | Weight: 0.5850 | Enabled: true [mutation]
+  5 -> 23 | Weight: 0.6519 | Enabled: true [mutation]
+  18 -> 28 | Weight: -0.8166 | Enabled: true [mutation]
+  28 -> 15 | Weight: 0.0637 | Enabled: true [mutation]
+  19 -> 28 | Weight: 0.3796 | Enabled: true [mutation]
+  0 -> 29 | Weight: 1.0000 | Enabled: true [mutation]
+  29 -> 17 | Weight: -0.0738 | Enabled: true [mutation]
+
+--- Genom 6 (Fitness: 31.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.1812 | Enabled: true
+  5 -> 15 | Weight: 0.4540 | Enabled: false
+  4 -> 15 | Weight: 0.3131 | Enabled: true
+  14 -> 15 | Weight: -0.3126 | Enabled: true
+  8 -> 15 | Weight: -0.1424 | Enabled: false
+  13 -> 15 | Weight: 0.7788 | Enabled: true
+  11 -> 16 | Weight: 0.0913 | Enabled: true
+  10 -> 15 | Weight: -1.2736 | Enabled: true
+  1 -> 15 | Weight: -0.6661 | Enabled: true
+  9 -> 15 | Weight: 0.7775 | Enabled: true
+  2 -> 15 | Weight: -0.0417 | Enabled: false
+  11 -> 15 | Weight: 0.6300 | Enabled: true
+  2 -> 16 | Weight: -0.2757 | Enabled: true
+  7 -> 15 | Weight: 0.2141 | Enabled: true
+  14 -> 16 | Weight: -0.7358 | Enabled: true
+  12 -> 16 | Weight: -0.0552 | Enabled: true
+  0 -> 15 | Weight: -1.0083 | Enabled: true
+  6 -> 15 | Weight: 0.5882 | Enabled: false
+  8 -> 16 | Weight: -0.8646 | Enabled: false
+  3 -> 15 | Weight: -0.1993 | Enabled: true
+  9 -> 16 | Weight: 1.0110 | Enabled: true
+  12 -> 17 | Weight: 0.5599 | Enabled: false [mutation]
+  17 -> 16 | Weight: 0.4605 | Enabled: false [mutation]
+  1 -> 17 | Weight: 1.0587 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.2387 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.7529 | Enabled: true [mutation]
+  14 -> 18 | Weight: -0.3726 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.3716 | Enabled: true [mutation]
+  18 -> 18 | Weight: -0.5955 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.7122 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.6682 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.5087 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.4134 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.1342 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.6852 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.6212 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.0886 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.2959 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.6445 | Enabled: true [mutation]
+  20 -> 17 | Weight: -0.3538 | Enabled: true [mutation]
+  1 -> 16 | Weight: -0.9459 | Enabled: true
+  18 -> 22 | Weight: -0.4616 | Enabled: false [mutation]
+  22 -> 18 | Weight: -0.4489 | Enabled: true [mutation]
+  12 -> 23 | Weight: 1.4033 | Enabled: true [mutation]
+  23 -> 16 | Weight: -1.1994 | Enabled: true [mutation]
+  0 -> 19 | Weight: -0.5397 | Enabled: true [mutation]
+  10 -> 17 | Weight: 0.6173 | Enabled: true [mutation]
+  10 -> 24 | Weight: 1.0245 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.2169 | Enabled: true [mutation]
+  24 -> 22 | Weight: 0.3134 | Enabled: true [mutation]
+  13 -> 18 | Weight: -0.7323 | Enabled: true [mutation]
+  1 -> 18 | Weight: -0.8995 | Enabled: true [mutation]
+  5 -> 25 | Weight: 0.9707 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.2638 | Enabled: true [mutation]
+  19 -> 16 | Weight: 0.1269 | Enabled: true [mutation]
+  22 -> 26 | Weight: 0.9672 | Enabled: true [mutation]
+  26 -> 18 | Weight: -0.0858 | Enabled: true [mutation]
+  8 -> 22 | Weight: 0.8951 | Enabled: true [mutation]
+  10 -> 25 | Weight: -0.0123 | Enabled: true [mutation]
+  8 -> 27 | Weight: 0.7711 | Enabled: true [mutation]
+  27 -> 16 | Weight: -0.5204 | Enabled: true [mutation]
+  27 -> 24 | Weight: -0.5577 | Enabled: true [mutation]
+  23 -> 24 | Weight: -0.7872 | Enabled: true [mutation]
+  17 -> 28 | Weight: 1.0000 | Enabled: true [mutation]
+  28 -> 16 | Weight: 0.4605 | Enabled: true [mutation]
+
+--- Genom 7 (Fitness: 9.09) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.4957 | Enabled: true
+  5 -> 15 | Weight: 0.5142 | Enabled: false
+  4 -> 15 | Weight: -0.7885 | Enabled: true
+  14 -> 15 | Weight: -0.0894 | Enabled: true
+  8 -> 15 | Weight: -0.5030 | Enabled: false
+  13 -> 15 | Weight: 0.1078 | Enabled: true
+  11 -> 16 | Weight: -0.3750 | Enabled: true
+  10 -> 15 | Weight: 0.7861 | Enabled: true
+  1 -> 15 | Weight: 0.5420 | Enabled: true
+  9 -> 15 | Weight: -0.1113 | Enabled: true
+  2 -> 15 | Weight: 0.7780 | Enabled: false
+  11 -> 15 | Weight: 0.4735 | Enabled: true
+  2 -> 16 | Weight: -0.5796 | Enabled: true
+  7 -> 15 | Weight: -0.7895 | Enabled: true
+  14 -> 16 | Weight: -0.2704 | Enabled: true
+  12 -> 16 | Weight: -0.2239 | Enabled: true
+  0 -> 15 | Weight: -0.6040 | Enabled: true
+  6 -> 15 | Weight: 0.6269 | Enabled: false
+  8 -> 16 | Weight: -0.9130 | Enabled: false
+  3 -> 15 | Weight: -0.9505 | Enabled: true
+  9 -> 16 | Weight: 0.9097 | Enabled: true
+  12 -> 17 | Weight: -0.0903 | Enabled: false [mutation]
+  17 -> 16 | Weight: 0.5173 | Enabled: true [mutation]
+  1 -> 17 | Weight: -0.2074 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.1324 | Enabled: true [mutation]
+  0 -> 17 | Weight: -0.5835 | Enabled: true [mutation]
+  14 -> 18 | Weight: 0.8375 | Enabled: true [mutation]
+  18 -> 15 | Weight: -0.8609 | Enabled: true [mutation]
+  18 -> 18 | Weight: -0.7441 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.4125 | Enabled: true [mutation]
+  6 -> 19 | Weight: -0.4258 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.6304 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.2695 | Enabled: true [mutation]
+  3 -> 20 | Weight: 0.0972 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.3808 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.5448 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.3922 | Enabled: false [mutation]
+  21 -> 17 | Weight: -0.8529 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.3650 | Enabled: true [mutation]
+  20 -> 17 | Weight: -0.8998 | Enabled: true [mutation]
+  1 -> 16 | Weight: 0.3750 | Enabled: true
+  18 -> 22 | Weight: 1.0737 | Enabled: false [mutation]
+  22 -> 18 | Weight: -0.2031 | Enabled: true [mutation]
+  12 -> 23 | Weight: 1.0189 | Enabled: true [mutation]
+  23 -> 16 | Weight: -0.1410 | Enabled: true [mutation]
+  0 -> 19 | Weight: 0.5101 | Enabled: true [mutation]
+  10 -> 17 | Weight: 0.7433 | Enabled: true [mutation]
+  10 -> 24 | Weight: 0.8724 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.3535 | Enabled: false [mutation]
+  24 -> 22 | Weight: -0.7366 | Enabled: true [mutation]
+  13 -> 18 | Weight: 1.0402 | Enabled: true [mutation]
+  1 -> 18 | Weight: -0.9843 | Enabled: true [mutation]
+  5 -> 25 | Weight: 0.4172 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.5276 | Enabled: true [mutation]
+  19 -> 16 | Weight: 0.0998 | Enabled: true [mutation]
+  22 -> 26 | Weight: -0.8937 | Enabled: true [mutation]
+  26 -> 18 | Weight: -0.4460 | Enabled: true [mutation]
+  8 -> 22 | Weight: -0.6879 | Enabled: true [mutation]
+  10 -> 25 | Weight: -0.3835 | Enabled: true [mutation]
+  8 -> 27 | Weight: 1.1376 | Enabled: true [mutation]
+  27 -> 16 | Weight: -0.6127 | Enabled: true [mutation]
+  12 -> 28 | Weight: 0.3408 | Enabled: true [mutation]
+  28 -> 21 | Weight: 0.1279 | Enabled: true [mutation]
+  24 -> 29 | Weight: 1.0000 | Enabled: true [mutation]
+  29 -> 15 | Weight: -0.3535 | Enabled: true [mutation]
+
+--- Genom 8 (Fitness: 0.00) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.0086 | Enabled: true
+  5 -> 15 | Weight: -0.5053 | Enabled: false
+  4 -> 15 | Weight: 0.6363 | Enabled: true
+  14 -> 15 | Weight: -1.3249 | Enabled: true
+  8 -> 15 | Weight: -0.7242 | Enabled: false
+  13 -> 15 | Weight: -0.8610 | Enabled: true
+  11 -> 16 | Weight: -0.7269 | Enabled: true
+  10 -> 15 | Weight: 0.3530 | Enabled: true
+  1 -> 15 | Weight: -0.1729 | Enabled: true
+  9 -> 15 | Weight: 0.7934 | Enabled: true
+  2 -> 15 | Weight: 0.3592 | Enabled: false
+  11 -> 15 | Weight: 0.2324 | Enabled: true
+  2 -> 16 | Weight: -0.1588 | Enabled: true
+  7 -> 15 | Weight: -0.5860 | Enabled: true
+  14 -> 16 | Weight: -0.5854 | Enabled: true
+  12 -> 16 | Weight: -0.3413 | Enabled: true
+  0 -> 15 | Weight: -0.9352 | Enabled: true
+  6 -> 15 | Weight: 0.3800 | Enabled: false
+  8 -> 16 | Weight: -0.2815 | Enabled: true
+  3 -> 15 | Weight: -0.5575 | Enabled: false
+  9 -> 16 | Weight: 0.9531 | Enabled: true
+  12 -> 17 | Weight: 0.6010 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.3997 | Enabled: true [mutation]
+  1 -> 17 | Weight: -0.2242 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.1707 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.2754 | Enabled: true [mutation]
+  14 -> 18 | Weight: -0.1153 | Enabled: true [mutation]
+  18 -> 15 | Weight: -0.2144 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.8292 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.7123 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.6786 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.1178 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.1633 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.5848 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.3377 | Enabled: true [mutation]
+  3 -> 19 | Weight: -1.0137 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.6739 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.5494 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.2855 | Enabled: true [mutation]
+  20 -> 17 | Weight: -0.7889 | Enabled: true [mutation]
+  1 -> 16 | Weight: 0.1550 | Enabled: true
+  18 -> 22 | Weight: 0.5328 | Enabled: false [mutation]
+  22 -> 18 | Weight: -0.2349 | Enabled: true [mutation]
+  12 -> 23 | Weight: 0.2723 | Enabled: true [mutation]
+  23 -> 16 | Weight: 0.5925 | Enabled: true [mutation]
+  0 -> 19 | Weight: -0.8705 | Enabled: true [mutation]
+  10 -> 17 | Weight: 1.0280 | Enabled: false [mutation]
+  10 -> 24 | Weight: -0.1574 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.5223 | Enabled: true [mutation]
+  24 -> 22 | Weight: -0.2927 | Enabled: true [mutation]
+  13 -> 18 | Weight: -1.0083 | Enabled: true [mutation]
+  1 -> 18 | Weight: -0.5750 | Enabled: true [mutation]
+  5 -> 25 | Weight: 0.4469 | Enabled: false [mutation]
+  25 -> 15 | Weight: -0.3417 | Enabled: true [mutation]
+  6 -> 25 | Weight: 0.6489 | Enabled: true [mutation]
+  5 -> 19 | Weight: 0.0758 | Enabled: true [mutation]
+  18 -> 26 | Weight: 0.0660 | Enabled: false [mutation]
+  26 -> 22 | Weight: 0.6980 | Enabled: true [mutation]
+  5 -> 22 | Weight: 0.9461 | Enabled: true [mutation]
+  18 -> 27 | Weight: -0.4374 | Enabled: true [mutation]
+  27 -> 26 | Weight: 0.8529 | Enabled: true [mutation]
+  4 -> 25 | Weight: 0.3714 | Enabled: true [mutation]
+  18 -> 28 | Weight: 1.0398 | Enabled: true [mutation]
+  28 -> 26 | Weight: 0.0222 | Enabled: true [mutation]
+  14 -> 25 | Weight: 0.6390 | Enabled: true [mutation]
+
+--- Genom 9 (Fitness: 61.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.0792 | Enabled: true
+  5 -> 15 | Weight: -0.4459 | Enabled: false
+  4 -> 15 | Weight: -0.0457 | Enabled: true
+  14 -> 15 | Weight: -0.3090 | Enabled: true
+  8 -> 15 | Weight: -0.6863 | Enabled: false
+  13 -> 15 | Weight: -0.7086 | Enabled: true
+  11 -> 16 | Weight: 0.8880 | Enabled: true
+  10 -> 15 | Weight: -1.5369 | Enabled: true
+  1 -> 15 | Weight: 0.5827 | Enabled: true
+  9 -> 15 | Weight: 0.7522 | Enabled: true
+  2 -> 15 | Weight: -0.0691 | Enabled: false
+  11 -> 15 | Weight: -0.0774 | Enabled: true
+  2 -> 16 | Weight: -0.1372 | Enabled: true
+  7 -> 15 | Weight: -0.6933 | Enabled: true
+  14 -> 16 | Weight: -0.4452 | Enabled: true
+  12 -> 16 | Weight: -0.2189 | Enabled: true
+  0 -> 15 | Weight: -0.7332 | Enabled: true
+  6 -> 15 | Weight: 0.4326 | Enabled: false
+  8 -> 16 | Weight: -0.8089 | Enabled: true
+  3 -> 15 | Weight: -0.4999 | Enabled: false
+  9 -> 16 | Weight: 1.3023 | Enabled: true
+  12 -> 17 | Weight: 0.6378 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.0749 | Enabled: true [mutation]
+  1 -> 17 | Weight: -0.2888 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.0195 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.6606 | Enabled: true [mutation]
+  14 -> 18 | Weight: -0.0264 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.4794 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.3848 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.9429 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.2139 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.3310 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.2624 | Enabled: true [mutation]
+  3 -> 20 | Weight: 0.2072 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.2453 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.2579 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.6440 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.1558 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.7145 | Enabled: true [mutation]
+  20 -> 17 | Weight: 0.8398 | Enabled: true [mutation]
+  1 -> 16 | Weight: -0.6872 | Enabled: true
+  18 -> 22 | Weight: 0.4959 | Enabled: true [mutation]
+  22 -> 18 | Weight: -0.1255 | Enabled: true [mutation]
+  12 -> 23 | Weight: 0.2237 | Enabled: true [mutation]
+  23 -> 16 | Weight: 0.2585 | Enabled: true [mutation]
+  0 -> 19 | Weight: 0.0307 | Enabled: true [mutation]
+  10 -> 17 | Weight: 0.9132 | Enabled: false [mutation]
+  10 -> 24 | Weight: 0.0883 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.5586 | Enabled: true [mutation]
+  24 -> 22 | Weight: -0.2448 | Enabled: true [mutation]
+  13 -> 18 | Weight: -1.0144 | Enabled: true [mutation]
+  1 -> 18 | Weight: -0.6297 | Enabled: true [mutation]
+  5 -> 25 | Weight: 1.0600 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.8192 | Enabled: true [mutation]
+  6 -> 25 | Weight: 0.6057 | Enabled: true [mutation]
+  5 -> 19 | Weight: -0.1490 | Enabled: true [mutation]
+  18 -> 26 | Weight: 1.1555 | Enabled: false [mutation]
+  26 -> 22 | Weight: 0.6459 | Enabled: true [mutation]
+  5 -> 22 | Weight: 0.9753 | Enabled: true [mutation]
+  18 -> 27 | Weight: -0.4055 | Enabled: true [mutation]
+  27 -> 26 | Weight: 1.0667 | Enabled: true [mutation]
+  4 -> 25 | Weight: 0.1905 | Enabled: true [mutation]
+  18 -> 28 | Weight: 1.1714 | Enabled: true [mutation]
+  28 -> 26 | Weight: 0.9801 | Enabled: true [mutation]
+  0 -> 20 | Weight: 0.0420 | Enabled: true [mutation]
+
+--- Genom 10 (Fitness: 0.00) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.7034 | Enabled: true
+  5 -> 15 | Weight: 0.4897 | Enabled: false
+  4 -> 15 | Weight: 0.8789 | Enabled: true
+  14 -> 15 | Weight: 0.4402 | Enabled: true
+  8 -> 15 | Weight: -0.4906 | Enabled: false
+  13 -> 15 | Weight: -1.1520 | Enabled: true
+  11 -> 16 | Weight: 0.1662 | Enabled: true
+  10 -> 15 | Weight: -0.6300 | Enabled: false
+  1 -> 15 | Weight: -1.0428 | Enabled: true
+  9 -> 15 | Weight: 0.7390 | Enabled: true
+  2 -> 15 | Weight: -0.5389 | Enabled: false
+  11 -> 15 | Weight: 0.6134 | Enabled: true
+  2 -> 16 | Weight: -0.3203 | Enabled: true
+  7 -> 15 | Weight: -0.0871 | Enabled: true
+  14 -> 16 | Weight: 0.0593 | Enabled: true
+  12 -> 16 | Weight: -0.9454 | Enabled: true
+  0 -> 15 | Weight: 0.4740 | Enabled: true
+  6 -> 15 | Weight: 0.7652 | Enabled: false
+  8 -> 16 | Weight: 0.1086 | Enabled: true
+  3 -> 15 | Weight: -0.2602 | Enabled: false
+  9 -> 16 | Weight: 1.1231 | Enabled: true
+  12 -> 17 | Weight: -0.5948 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.5116 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.1852 | Enabled: false [mutation]
+  4 -> 17 | Weight: 0.7053 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.3166 | Enabled: true [mutation]
+  14 -> 18 | Weight: -0.3791 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.5254 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.2739 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.2008 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.6700 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.6814 | Enabled: true [mutation]
+  10 -> 19 | Weight: 0.0245 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.3511 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.0022 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.7486 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.1666 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.8856 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.3192 | Enabled: true [mutation]
+  20 -> 17 | Weight: 0.4788 | Enabled: true [mutation]
+  1 -> 16 | Weight: 0.3469 | Enabled: true
+  18 -> 22 | Weight: 1.2633 | Enabled: true [mutation]
+  22 -> 18 | Weight: 0.5820 | Enabled: true [mutation]
+  12 -> 23 | Weight: 0.0216 | Enabled: true [mutation]
+  23 -> 16 | Weight: -0.9806 | Enabled: true [mutation]
+  0 -> 19 | Weight: 0.8047 | Enabled: true [mutation]
+  10 -> 17 | Weight: -0.8394 | Enabled: true [mutation]
+  10 -> 24 | Weight: 0.5944 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.3885 | Enabled: true [mutation]
+  24 -> 22 | Weight: -0.3277 | Enabled: true [mutation]
+  13 -> 18 | Weight: -0.1550 | Enabled: true [mutation]
+  1 -> 18 | Weight: -1.0186 | Enabled: true [mutation]
+  5 -> 25 | Weight: 0.8366 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.3127 | Enabled: true [mutation]
+  19 -> 16 | Weight: 0.3583 | Enabled: true [mutation]
+  22 -> 26 | Weight: 0.9153 | Enabled: true [mutation]
+  26 -> 18 | Weight: -1.4384 | Enabled: true [mutation]
+  8 -> 22 | Weight: 0.2183 | Enabled: true [mutation]
+  10 -> 25 | Weight: -0.2074 | Enabled: true [mutation]
+  8 -> 27 | Weight: 0.5542 | Enabled: true [mutation]
+  27 -> 16 | Weight: 0.5668 | Enabled: true [mutation]
+  27 -> 24 | Weight: 0.5558 | Enabled: true [mutation]
+  23 -> 24 | Weight: 0.0931 | Enabled: true [mutation]
+
+--- Genom 11 (Fitness: 0.00) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.3574 | Enabled: true
+  5 -> 15 | Weight: -0.1694 | Enabled: false
+  4 -> 15 | Weight: 0.3256 | Enabled: true
+  14 -> 15 | Weight: -0.9516 | Enabled: true
+  8 -> 15 | Weight: 0.4559 | Enabled: false
+  13 -> 15 | Weight: 0.4073 | Enabled: true
+  11 -> 16 | Weight: 0.4609 | Enabled: true
+  10 -> 15 | Weight: 0.2880 | Enabled: false
+  1 -> 15 | Weight: 0.5937 | Enabled: true
+  9 -> 15 | Weight: -0.0129 | Enabled: true
+  2 -> 15 | Weight: -0.1460 | Enabled: false
+  11 -> 15 | Weight: 0.1447 | Enabled: true
+  2 -> 16 | Weight: 0.3145 | Enabled: true
+  7 -> 15 | Weight: -0.1142 | Enabled: true
+  14 -> 16 | Weight: 0.9787 | Enabled: true
+  12 -> 16 | Weight: -0.1824 | Enabled: true
+  0 -> 15 | Weight: 0.9397 | Enabled: true
+  6 -> 15 | Weight: 0.3715 | Enabled: false
+  8 -> 16 | Weight: -0.7361 | Enabled: false
+  3 -> 15 | Weight: 0.0864 | Enabled: false
+  9 -> 16 | Weight: -0.0835 | Enabled: true
+  12 -> 17 | Weight: -0.1913 | Enabled: false [mutation]
+  17 -> 16 | Weight: 0.1314 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.1526 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.3922 | Enabled: true [mutation]
+  0 -> 17 | Weight: -0.8620 | Enabled: true [mutation]
+  14 -> 18 | Weight: -0.2330 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.2562 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.4959 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.7012 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.7986 | Enabled: true [mutation]
+  19 -> 15 | Weight: -1.1618 | Enabled: true [mutation]
+  10 -> 19 | Weight: 0.1369 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.1518 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.1388 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.0110 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.8591 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.1451 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.1383 | Enabled: true [mutation]
+  20 -> 17 | Weight: -0.8192 | Enabled: true [mutation]
+  1 -> 16 | Weight: 0.3886 | Enabled: true
+  18 -> 22 | Weight: 0.0893 | Enabled: true [mutation]
+  22 -> 18 | Weight: 0.7917 | Enabled: true [mutation]
+  12 -> 23 | Weight: 0.7472 | Enabled: true [mutation]
+  23 -> 16 | Weight: -1.1922 | Enabled: true [mutation]
+  0 -> 19 | Weight: -1.0194 | Enabled: true [mutation]
+  10 -> 17 | Weight: 0.5097 | Enabled: true [mutation]
+  10 -> 24 | Weight: -0.6892 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.2549 | Enabled: true [mutation]
+  24 -> 22 | Weight: 0.5856 | Enabled: true [mutation]
+  13 -> 18 | Weight: -1.0903 | Enabled: true [mutation]
+  1 -> 18 | Weight: -0.8801 | Enabled: true [mutation]
+  5 -> 25 | Weight: -0.8928 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.3312 | Enabled: true [mutation]
+  19 -> 16 | Weight: 0.1482 | Enabled: true [mutation]
+  22 -> 26 | Weight: -0.6060 | Enabled: true [mutation]
+  26 -> 18 | Weight: -0.7465 | Enabled: true [mutation]
+  8 -> 22 | Weight: -0.9860 | Enabled: true [mutation]
+  10 -> 25 | Weight: 0.1485 | Enabled: true [mutation]
+  8 -> 27 | Weight: 0.8163 | Enabled: true [mutation]
+  27 -> 16 | Weight: -0.3006 | Enabled: true [mutation]
+  12 -> 28 | Weight: 1.1279 | Enabled: true [mutation]
+  28 -> 21 | Weight: -0.2453 | Enabled: true [mutation]
+  23 -> 20 | Weight: 0.8396 | Enabled: true [mutation]
+  24 -> 29 | Weight: 1.1404 | Enabled: true [mutation]
+  29 -> 15 | Weight: -0.3750 | Enabled: true [mutation]
+
+--- Genom 12 (Fitness: 41.33) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.1311 | Enabled: true
+  5 -> 15 | Weight: -0.8231 | Enabled: false
+  4 -> 15 | Weight: 0.4052 | Enabled: true
+  14 -> 15 | Weight: -0.1857 | Enabled: true
+  8 -> 15 | Weight: -0.3105 | Enabled: false
+  13 -> 15 | Weight: -0.3443 | Enabled: true
+  11 -> 16 | Weight: 0.8134 | Enabled: true
+  10 -> 15 | Weight: -0.5802 | Enabled: false
+  1 -> 15 | Weight: 0.6992 | Enabled: true
+  9 -> 15 | Weight: 0.8669 | Enabled: true
+  2 -> 15 | Weight: -0.7502 | Enabled: false
+  11 -> 15 | Weight: 0.3583 | Enabled: true
+  2 -> 16 | Weight: -0.5280 | Enabled: true
+  7 -> 15 | Weight: -0.6674 | Enabled: true
+  14 -> 16 | Weight: 0.2020 | Enabled: true
+  12 -> 16 | Weight: -0.6021 | Enabled: true
+  0 -> 15 | Weight: -0.7755 | Enabled: true
+  6 -> 15 | Weight: 0.0343 | Enabled: false
+  8 -> 16 | Weight: -0.7646 | Enabled: false
+  3 -> 15 | Weight: -0.9834 | Enabled: true
+  9 -> 16 | Weight: -0.4099 | Enabled: true
+  12 -> 17 | Weight: 0.5942 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.3567 | Enabled: true [mutation]
+  1 -> 17 | Weight: -0.9413 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.7623 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.7723 | Enabled: true [mutation]
+  14 -> 18 | Weight: -0.2619 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.2643 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.4217 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.7180 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.0271 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.3825 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.7764 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.1314 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.3286 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.6743 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.3851 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.7021 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.6709 | Enabled: true [mutation]
+  20 -> 17 | Weight: -0.5579 | Enabled: true [mutation]
+  1 -> 16 | Weight: 0.1685 | Enabled: true
+  18 -> 22 | Weight: -0.4888 | Enabled: false [mutation]
+  22 -> 18 | Weight: 0.2851 | Enabled: true [mutation]
+  12 -> 23 | Weight: -0.1112 | Enabled: true [mutation]
+  23 -> 16 | Weight: -1.0317 | Enabled: true [mutation]
+  0 -> 19 | Weight: 0.8605 | Enabled: true [mutation]
+  10 -> 17 | Weight: 0.5088 | Enabled: true [mutation]
+  10 -> 24 | Weight: 0.8556 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.1426 | Enabled: true [mutation]
+  24 -> 22 | Weight: 0.0868 | Enabled: true [mutation]
+  13 -> 18 | Weight: 0.4338 | Enabled: true [mutation]
+  1 -> 18 | Weight: 0.8391 | Enabled: true [mutation]
+  5 -> 25 | Weight: 0.9560 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.2095 | Enabled: true [mutation]
+  19 -> 16 | Weight: 0.4573 | Enabled: true [mutation]
+  22 -> 26 | Weight: -0.6489 | Enabled: true [mutation]
+  26 -> 18 | Weight: 0.5758 | Enabled: true [mutation]
+  8 -> 22 | Weight: 0.4173 | Enabled: true [mutation]
+  10 -> 25 | Weight: -0.0613 | Enabled: true [mutation]
+  8 -> 27 | Weight: -0.9494 | Enabled: true [mutation]
+  27 -> 16 | Weight: -0.4233 | Enabled: true [mutation]
+  27 -> 24 | Weight: 0.7203 | Enabled: true [mutation]
+  23 -> 24 | Weight: 0.3057 | Enabled: true [mutation]
+  0 -> 25 | Weight: 0.0081 | Enabled: true [mutation]
+  6 -> 28 | Weight: 1.0000 | Enabled: true [mutation]
+  28 -> 15 | Weight: 0.0343 | Enabled: true [mutation]
+
+--- Genom 13 (Fitness: 52.00) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.9736 | Enabled: true
+  5 -> 15 | Weight: -0.8205 | Enabled: false
+  4 -> 15 | Weight: -0.4740 | Enabled: true
+  14 -> 15 | Weight: -0.2848 | Enabled: true
+  8 -> 15 | Weight: -0.7367 | Enabled: false
+  13 -> 15 | Weight: -0.6019 | Enabled: true
+  11 -> 16 | Weight: -0.5211 | Enabled: true
+  10 -> 15 | Weight: -1.3871 | Enabled: true
+  1 -> 15 | Weight: 0.1300 | Enabled: true
+  9 -> 15 | Weight: 0.9224 | Enabled: true
+  2 -> 15 | Weight: 0.7569 | Enabled: false
+  11 -> 15 | Weight: -0.4347 | Enabled: true
+  2 -> 16 | Weight: -0.0368 | Enabled: true
+  7 -> 15 | Weight: 0.2799 | Enabled: true
+  14 -> 16 | Weight: 0.3903 | Enabled: true
+  12 -> 16 | Weight: -0.4680 | Enabled: true
+  0 -> 15 | Weight: -0.7883 | Enabled: true
+  6 -> 15 | Weight: 0.9601 | Enabled: false
+  8 -> 16 | Weight: -0.6332 | Enabled: false
+  3 -> 15 | Weight: -0.3298 | Enabled: true
+  9 -> 16 | Weight: 1.1800 | Enabled: true
+  12 -> 17 | Weight: 0.0520 | Enabled: false [mutation]
+  17 -> 16 | Weight: 0.5643 | Enabled: true [mutation]
+  1 -> 17 | Weight: -0.0096 | Enabled: false [mutation]
+  4 -> 17 | Weight: 0.7073 | Enabled: true [mutation]
+  0 -> 17 | Weight: -0.9021 | Enabled: true [mutation]
+  14 -> 18 | Weight: -0.5435 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.3460 | Enabled: true [mutation]
+  18 -> 18 | Weight: -1.2131 | Enabled: false [mutation]
+  9 -> 18 | Weight: 0.5721 | Enabled: true [mutation]
+  6 -> 19 | Weight: -0.0795 | Enabled: true [mutation]
+  19 -> 15 | Weight: -0.7962 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.2977 | Enabled: true [mutation]
+  3 -> 20 | Weight: 0.4351 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.9935 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.1766 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.9220 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.3540 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.1966 | Enabled: true [mutation]
+  20 -> 17 | Weight: -0.6276 | Enabled: true [mutation]
+  1 -> 16 | Weight: -0.2836 | Enabled: true
+  18 -> 22 | Weight: -0.0715 | Enabled: false [mutation]
+  22 -> 18 | Weight: 0.4775 | Enabled: true [mutation]
+  12 -> 23 | Weight: 0.4906 | Enabled: false [mutation]
+  23 -> 16 | Weight: -1.2256 | Enabled: true [mutation]
+  0 -> 19 | Weight: -0.0167 | Enabled: true [mutation]
+  10 -> 17 | Weight: -0.1138 | Enabled: true [mutation]
+  10 -> 24 | Weight: 0.7012 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.6811 | Enabled: true [mutation]
+  24 -> 22 | Weight: 0.4043 | Enabled: true [mutation]
+  13 -> 18 | Weight: -0.7281 | Enabled: true [mutation]
+  1 -> 18 | Weight: 1.0423 | Enabled: true [mutation]
+  5 -> 25 | Weight: 0.9173 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.1217 | Enabled: true [mutation]
+  19 -> 16 | Weight: 0.3321 | Enabled: true [mutation]
+  22 -> 26 | Weight: 0.7943 | Enabled: true [mutation]
+  26 -> 18 | Weight: -0.5258 | Enabled: true [mutation]
+  8 -> 22 | Weight: 0.2554 | Enabled: true [mutation]
+  10 -> 25 | Weight: 0.0439 | Enabled: true [mutation]
+  8 -> 27 | Weight: 1.0847 | Enabled: true [mutation]
+  27 -> 16 | Weight: -0.5201 | Enabled: true [mutation]
+  27 -> 24 | Weight: 0.4354 | Enabled: true [mutation]
+  17 -> 25 | Weight: 0.6347 | Enabled: true [mutation]
+  18 -> 28 | Weight: 0.8100 | Enabled: true [mutation]
+  28 -> 18 | Weight: 0.5621 | Enabled: true [mutation]
+  25 -> 16 | Weight: 0.1534 | Enabled: true [mutation]
+
+--- Genom 14 (Fitness: 0.00) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.1060 | Enabled: true
+  5 -> 15 | Weight: -0.4491 | Enabled: false
+  4 -> 15 | Weight: -0.2755 | Enabled: true
+  14 -> 15 | Weight: -0.9051 | Enabled: true
+  8 -> 15 | Weight: 0.5397 | Enabled: false
+  13 -> 15 | Weight: -1.0944 | Enabled: true
+  11 -> 16 | Weight: -0.7560 | Enabled: true
+  10 -> 15 | Weight: -1.4420 | Enabled: true
+  1 -> 15 | Weight: 0.8317 | Enabled: true
+  9 -> 15 | Weight: 0.7645 | Enabled: true
+  2 -> 15 | Weight: 0.3426 | Enabled: false
+  11 -> 15 | Weight: 0.4947 | Enabled: true
+  2 -> 16 | Weight: 0.0848 | Enabled: true
+  7 -> 15 | Weight: -0.5742 | Enabled: true
+  14 -> 16 | Weight: 0.6649 | Enabled: true
+  12 -> 16 | Weight: -0.3086 | Enabled: true
+  0 -> 15 | Weight: -0.7825 | Enabled: true
+  6 -> 15 | Weight: 0.4137 | Enabled: false
+  8 -> 16 | Weight: -0.3066 | Enabled: true
+  3 -> 15 | Weight: -0.3369 | Enabled: false
+  9 -> 16 | Weight: 0.2148 | Enabled: true
+  12 -> 17 | Weight: 0.3669 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.2949 | Enabled: true [mutation]
+  1 -> 17 | Weight: -0.0441 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.7337 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.4906 | Enabled: true [mutation]
+  14 -> 18 | Weight: 0.0308 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.1082 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.8142 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.7597 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.3383 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.1274 | Enabled: true [mutation]
+  10 -> 19 | Weight: 0.1752 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.5148 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.0021 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.0236 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.1818 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.3895 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.2517 | Enabled: true [mutation]
+  20 -> 17 | Weight: -0.6772 | Enabled: true [mutation]
+  1 -> 16 | Weight: -0.8512 | Enabled: true
+  18 -> 22 | Weight: 0.4760 | Enabled: true [mutation]
+  22 -> 18 | Weight: -0.0899 | Enabled: true [mutation]
+  12 -> 23 | Weight: 0.0068 | Enabled: true [mutation]
+  23 -> 16 | Weight: 0.2692 | Enabled: true [mutation]
+  0 -> 19 | Weight: 0.2341 | Enabled: true [mutation]
+  10 -> 17 | Weight: 0.7858 | Enabled: false [mutation]
+  10 -> 24 | Weight: 0.0069 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.5432 | Enabled: true [mutation]
+  24 -> 22 | Weight: -0.2069 | Enabled: true [mutation]
+  13 -> 18 | Weight: 0.3788 | Enabled: true [mutation]
+  1 -> 18 | Weight: -0.1061 | Enabled: true [mutation]
+  5 -> 25 | Weight: 0.6708 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.0818 | Enabled: true [mutation]
+  6 -> 25 | Weight: 0.9060 | Enabled: true [mutation]
+  5 -> 19 | Weight: 0.5843 | Enabled: true [mutation]
+  18 -> 26 | Weight: 1.2904 | Enabled: false [mutation]
+  26 -> 22 | Weight: 0.4995 | Enabled: true [mutation]
+  5 -> 22 | Weight: 0.7996 | Enabled: true [mutation]
+  18 -> 27 | Weight: 0.5377 | Enabled: true [mutation]
+  27 -> 26 | Weight: 0.9660 | Enabled: true [mutation]
+  4 -> 25 | Weight: 0.3133 | Enabled: true [mutation]
+  18 -> 28 | Weight: 1.0145 | Enabled: true [mutation]
+  28 -> 26 | Weight: -0.0010 | Enabled: true [mutation]
+
+--- Genom 15 (Fitness: 0.00) ---
+Belongs to Species: 0
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+Connections:
+  13 -> 16 | Weight: -0.3331 | Enabled: true
+  5 -> 15 | Weight: -0.6259 | Enabled: false
+  4 -> 15 | Weight: 0.5450 | Enabled: true
+  14 -> 15 | Weight: 0.6450 | Enabled: true
+  8 -> 15 | Weight: 0.4722 | Enabled: false
+  13 -> 15 | Weight: 0.1462 | Enabled: true
+  11 -> 16 | Weight: -0.0188 | Enabled: true
+  10 -> 15 | Weight: -1.5524 | Enabled: true
+  1 -> 15 | Weight: -0.8540 | Enabled: true
+  9 -> 15 | Weight: 0.7248 | Enabled: true
+  2 -> 15 | Weight: 0.8940 | Enabled: false
+  11 -> 15 | Weight: 0.2637 | Enabled: true
+  2 -> 16 | Weight: -0.4295 | Enabled: true
+  7 -> 15 | Weight: -0.6476 | Enabled: true
+  14 -> 16 | Weight: -0.5703 | Enabled: true
+  12 -> 16 | Weight: 0.0175 | Enabled: true
+  0 -> 15 | Weight: -0.7625 | Enabled: true
+  6 -> 15 | Weight: 0.7005 | Enabled: false
+  8 -> 16 | Weight: -0.7920 | Enabled: false
+  3 -> 15 | Weight: -0.9924 | Enabled: true
+  9 -> 16 | Weight: 1.5421 | Enabled: true
+  12 -> 17 | Weight: 0.1855 | Enabled: false [mutation]
+  17 -> 16 | Weight: 0.9437 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.2679 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.6558 | Enabled: true [mutation]
+  0 -> 17 | Weight: -0.8586 | Enabled: true [mutation]
+  14 -> 18 | Weight: 0.4583 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.2041 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.4998 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.5927 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.1639 | Enabled: true [mutation]
+  19 -> 15 | Weight: -1.0628 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.5666 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.4619 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.7405 | Enabled: true [mutation]
+  3 -> 19 | Weight: 0.0841 | Enabled: true [mutation]
+  12 -> 21 | Weight: -0.2067 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.7875 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.7701 | Enabled: true [mutation]
+  20 -> 17 | Weight: 0.1374 | Enabled: true [mutation]
+  1 -> 16 | Weight: 0.3681 | Enabled: true
+  18 -> 22 | Weight: -0.6220 | Enabled: false [mutation]
+  22 -> 18 | Weight: 0.6631 | Enabled: true [mutation]
+  12 -> 23 | Weight: 1.5916 | Enabled: true [mutation]
+  23 -> 16 | Weight: -1.1148 | Enabled: true [mutation]
+  0 -> 19 | Weight: -0.9383 | Enabled: true [mutation]
+  10 -> 17 | Weight: 1.0128 | Enabled: true [mutation]
+  10 -> 24 | Weight: -0.3032 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.1651 | Enabled: true [mutation]
+  24 -> 22 | Weight: -0.5122 | Enabled: true [mutation]
+  13 -> 18 | Weight: 0.0038 | Enabled: true [mutation]
+  1 -> 18 | Weight: 0.5511 | Enabled: true [mutation]
+  5 -> 25 | Weight: -1.0680 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.4186 | Enabled: true [mutation]
+  19 -> 16 | Weight: 0.2310 | Enabled: true [mutation]
+  22 -> 26 | Weight: 1.0196 | Enabled: true [mutation]
+  26 -> 18 | Weight: -0.0670 | Enabled: true [mutation]
+  8 -> 22 | Weight: 0.1494 | Enabled: true [mutation]
+  10 -> 25 | Weight: 0.6688 | Enabled: true [mutation]
+  8 -> 27 | Weight: 0.7690 | Enabled: true [mutation]
+  27 -> 16 | Weight: -0.4360 | Enabled: true [mutation]
+  27 -> 24 | Weight: 0.4556 | Enabled: true [mutation]
+  23 -> 24 | Weight: 0.0284 | Enabled: true [mutation]
+  21 -> 22 | Weight: 0.2645 | Enabled: true [mutation]
+
+=== SPECIES 1 ===
+Average Fitness: 0.00
+
+--- Genom 0 (Fitness: 42.00) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.1442 | Enabled: true
+  5 -> 15 | Weight: 0.5069 | Enabled: false
+  4 -> 15 | Weight: -0.0454 | Enabled: true
+  14 -> 15 | Weight: -0.8730 | Enabled: true
+  8 -> 15 | Weight: 0.5133 | Enabled: false
+  13 -> 15 | Weight: 0.4937 | Enabled: true
+  11 -> 16 | Weight: 0.1827 | Enabled: true
+  10 -> 15 | Weight: -0.8260 | Enabled: true
+  1 -> 15 | Weight: 0.5395 | Enabled: true
+  9 -> 15 | Weight: 0.2720 | Enabled: true
+  2 -> 15 | Weight: -0.1224 | Enabled: true
+  11 -> 15 | Weight: -1.2694 | Enabled: true
+  2 -> 16 | Weight: 0.4324 | Enabled: true
+  7 -> 15 | Weight: 0.1563 | Enabled: true
+  14 -> 16 | Weight: 0.5736 | Enabled: true
+  12 -> 16 | Weight: -0.6630 | Enabled: true
+  0 -> 15 | Weight: -0.4273 | Enabled: true
+  6 -> 15 | Weight: 0.2323 | Enabled: false
+  8 -> 16 | Weight: -0.3609 | Enabled: true
+  3 -> 15 | Weight: -1.0916 | Enabled: true
+  9 -> 16 | Weight: 2.1583 | Enabled: true
+  12 -> 17 | Weight: -0.1023 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.5102 | Enabled: true [mutation]
+  1 -> 17 | Weight: 1.0417 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.0350 | Enabled: true [mutation]
+  0 -> 17 | Weight: -0.3199 | Enabled: true [mutation]
+  14 -> 18 | Weight: -1.0777 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.5901 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.7066 | Enabled: true [mutation]
+  9 -> 18 | Weight: -0.1400 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.6642 | Enabled: true [mutation]
+  19 -> 15 | Weight: -0.2404 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.0776 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.2529 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.8751 | Enabled: true [mutation]
+  3 -> 19 | Weight: 0.8134 | Enabled: false [mutation]
+  12 -> 21 | Weight: 0.5010 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.2915 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.0413 | Enabled: true [mutation]
+  3 -> 18 | Weight: 0.4226 | Enabled: true [mutation]
+  18 -> 22 | Weight: 1.1825 | Enabled: true [mutation]
+  22 -> 21 | Weight: -0.6932 | Enabled: true [mutation]
+  2 -> 21 | Weight: 1.0308 | Enabled: false [mutation]
+  12 -> 15 | Weight: -0.2250 | Enabled: true
+  5 -> 17 | Weight: 0.8207 | Enabled: true [mutation]
+  11 -> 21 | Weight: -0.5138 | Enabled: true [mutation]
+  21 -> 23 | Weight: -0.3965 | Enabled: true [mutation]
+  23 -> 17 | Weight: -0.6865 | Enabled: true [mutation]
+  21 -> 18 | Weight: 0.3969 | Enabled: true [mutation]
+  3 -> 24 | Weight: 0.0521 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.3299 | Enabled: false [mutation]
+  12 -> 19 | Weight: -0.7717 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.6469 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.3488 | Enabled: true [mutation]
+  0 -> 21 | Weight: 0.7814 | Enabled: false [mutation]
+  24 -> 16 | Weight: -0.8898 | Enabled: false [mutation]
+  24 -> 26 | Weight: -0.3012 | Enabled: true [mutation]
+  26 -> 16 | Weight: 0.2295 | Enabled: true [mutation]
+  3 -> 17 | Weight: -0.0213 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.7350 | Enabled: true [mutation]
+  27 -> 17 | Weight: -0.5265 | Enabled: false [mutation]
+  8 -> 28 | Weight: -0.0862 | Enabled: true [mutation]
+  28 -> 15 | Weight: -0.4896 | Enabled: true [mutation]
+  21 -> 21 | Weight: 0.2513 | Enabled: true [mutation]
+  9 -> 23 | Weight: 0.5291 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.0447 | Enabled: true [mutation]
+  17 -> 18 | Weight: 0.4590 | Enabled: true [mutation]
+  6 -> 29 | Weight: -0.5709 | Enabled: true [mutation]
+  29 -> 15 | Weight: 0.1624 | Enabled: true [mutation]
+  20 -> 18 | Weight: 0.8371 | Enabled: true [mutation]
+
+--- Genom 1 (Fitness: 42.00) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.1428 | Enabled: true
+  5 -> 15 | Weight: -0.4749 | Enabled: false
+  4 -> 15 | Weight: 0.1806 | Enabled: true
+  14 -> 15 | Weight: -0.5931 | Enabled: true
+  8 -> 15 | Weight: 0.4399 | Enabled: false
+  13 -> 15 | Weight: -0.8529 | Enabled: true
+  11 -> 16 | Weight: 0.3936 | Enabled: true
+  10 -> 15 | Weight: 0.6546 | Enabled: true
+  1 -> 15 | Weight: 0.9373 | Enabled: true
+  9 -> 15 | Weight: -0.8356 | Enabled: true
+  2 -> 15 | Weight: -0.8838 | Enabled: false
+  11 -> 15 | Weight: -1.2620 | Enabled: true
+  2 -> 16 | Weight: 0.5716 | Enabled: true
+  7 -> 15 | Weight: -0.1252 | Enabled: true
+  14 -> 16 | Weight: -0.6474 | Enabled: true
+  12 -> 16 | Weight: -0.9341 | Enabled: true
+  0 -> 15 | Weight: -0.4264 | Enabled: true
+  6 -> 15 | Weight: -0.1863 | Enabled: false
+  8 -> 16 | Weight: 0.9790 | Enabled: true
+  3 -> 15 | Weight: -0.7564 | Enabled: true
+  9 -> 16 | Weight: 0.7513 | Enabled: true
+  12 -> 17 | Weight: 0.1748 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.1471 | Enabled: true [mutation]
+  1 -> 17 | Weight: -0.7915 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.7224 | Enabled: true [mutation]
+  0 -> 17 | Weight: -0.6591 | Enabled: false [mutation]
+  14 -> 18 | Weight: -1.1166 | Enabled: true [mutation]
+  18 -> 15 | Weight: 1.1890 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.8052 | Enabled: true [mutation]
+  9 -> 18 | Weight: -0.0620 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.4872 | Enabled: true [mutation]
+  19 -> 15 | Weight: -0.0750 | Enabled: true [mutation]
+  10 -> 19 | Weight: 0.5860 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.2573 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.0499 | Enabled: true [mutation]
+  3 -> 19 | Weight: 0.4279 | Enabled: false [mutation]
+  12 -> 21 | Weight: 0.3525 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.2574 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.3278 | Enabled: true [mutation]
+  3 -> 18 | Weight: 0.5088 | Enabled: true [mutation]
+  18 -> 22 | Weight: 0.5368 | Enabled: true [mutation]
+  22 -> 21 | Weight: 0.7110 | Enabled: true [mutation]
+  2 -> 21 | Weight: 0.7029 | Enabled: true [mutation]
+  12 -> 15 | Weight: -0.0396 | Enabled: true
+  5 -> 17 | Weight: 0.9159 | Enabled: true [mutation]
+  11 -> 21 | Weight: -0.1766 | Enabled: true [mutation]
+  21 -> 23 | Weight: -0.4129 | Enabled: true [mutation]
+  23 -> 17 | Weight: -0.5897 | Enabled: true [mutation]
+  21 -> 18 | Weight: -0.0198 | Enabled: true [mutation]
+  3 -> 24 | Weight: -0.6272 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.6797 | Enabled: false [mutation]
+  12 -> 19 | Weight: -0.9370 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.6467 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.6604 | Enabled: true [mutation]
+  0 -> 21 | Weight: 0.8059 | Enabled: false [mutation]
+  24 -> 16 | Weight: -0.3146 | Enabled: false [mutation]
+  24 -> 26 | Weight: -0.3853 | Enabled: true [mutation]
+  26 -> 16 | Weight: 0.2599 | Enabled: true [mutation]
+  3 -> 17 | Weight: 0.4227 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.6129 | Enabled: true [mutation]
+  27 -> 17 | Weight: -0.9162 | Enabled: false [mutation]
+  8 -> 28 | Weight: -0.2216 | Enabled: true [mutation]
+  28 -> 15 | Weight: -0.5959 | Enabled: true [mutation]
+  21 -> 21 | Weight: 0.1579 | Enabled: true [mutation]
+  9 -> 23 | Weight: 0.6866 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.4890 | Enabled: true [mutation]
+  17 -> 18 | Weight: 0.5546 | Enabled: true [mutation]
+  6 -> 29 | Weight: -0.0148 | Enabled: true [mutation]
+  29 -> 15 | Weight: 0.1283 | Enabled: true [mutation]
+  2 -> 29 | Weight: 0.1661 | Enabled: true [mutation]
+
+--- Genom 2 (Fitness: 51.33) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.2697 | Enabled: true
+  5 -> 15 | Weight: -0.5910 | Enabled: false
+  4 -> 15 | Weight: 0.1882 | Enabled: true
+  14 -> 15 | Weight: -0.1039 | Enabled: true
+  8 -> 15 | Weight: 0.1718 | Enabled: false
+  13 -> 15 | Weight: 0.7314 | Enabled: true
+  11 -> 16 | Weight: 0.2436 | Enabled: true
+  10 -> 15 | Weight: 0.7720 | Enabled: true
+  1 -> 15 | Weight: 0.4304 | Enabled: true
+  9 -> 15 | Weight: -0.9544 | Enabled: true
+  2 -> 15 | Weight: -0.8625 | Enabled: false
+  11 -> 15 | Weight: -1.2413 | Enabled: true
+  2 -> 16 | Weight: 0.4516 | Enabled: true
+  7 -> 15 | Weight: 0.7813 | Enabled: true
+  14 -> 16 | Weight: -0.8232 | Enabled: true
+  12 -> 16 | Weight: -0.7165 | Enabled: true
+  0 -> 15 | Weight: -0.2168 | Enabled: true
+  6 -> 15 | Weight: -0.2581 | Enabled: false
+  8 -> 16 | Weight: -0.9730 | Enabled: true
+  3 -> 15 | Weight: -0.5983 | Enabled: true
+  9 -> 16 | Weight: 2.1565 | Enabled: true
+  12 -> 17 | Weight: -0.5885 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.9222 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.9582 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.8238 | Enabled: true [mutation]
+  0 -> 17 | Weight: -0.5123 | Enabled: true [mutation]
+  14 -> 18 | Weight: 0.8719 | Enabled: true [mutation]
+  18 -> 15 | Weight: -0.2801 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.5085 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.0360 | Enabled: true [mutation]
+  6 -> 19 | Weight: -0.2672 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.2408 | Enabled: true [mutation]
+  10 -> 19 | Weight: 0.6408 | Enabled: true [mutation]
+  3 -> 20 | Weight: 0.0974 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.5844 | Enabled: true [mutation]
+  3 -> 19 | Weight: 0.7626 | Enabled: false [mutation]
+  12 -> 21 | Weight: -1.1356 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.1466 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.2979 | Enabled: true [mutation]
+  3 -> 18 | Weight: 0.6703 | Enabled: true [mutation]
+  18 -> 22 | Weight: 1.3170 | Enabled: true [mutation]
+  22 -> 21 | Weight: -0.8807 | Enabled: true [mutation]
+  2 -> 21 | Weight: 0.8094 | Enabled: false [mutation]
+  12 -> 15 | Weight: -0.7846 | Enabled: true
+  5 -> 17 | Weight: 0.8066 | Enabled: true [mutation]
+  11 -> 21 | Weight: 0.6270 | Enabled: true [mutation]
+  21 -> 23 | Weight: 0.8341 | Enabled: true [mutation]
+  23 -> 17 | Weight: -0.8330 | Enabled: true [mutation]
+  21 -> 18 | Weight: 0.4139 | Enabled: true [mutation]
+  3 -> 24 | Weight: -0.0818 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.4691 | Enabled: false [mutation]
+  12 -> 19 | Weight: 0.0628 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.5241 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.1753 | Enabled: true [mutation]
+  0 -> 21 | Weight: 0.0182 | Enabled: false [mutation]
+  24 -> 16 | Weight: -1.0541 | Enabled: false [mutation]
+  24 -> 26 | Weight: 0.2565 | Enabled: true [mutation]
+  26 -> 16 | Weight: 0.0379 | Enabled: true [mutation]
+  3 -> 17 | Weight: 0.2760 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.8188 | Enabled: true [mutation]
+  27 -> 17 | Weight: 0.0247 | Enabled: false [mutation]
+  8 -> 28 | Weight: 0.0635 | Enabled: true [mutation]
+  28 -> 15 | Weight: 0.1925 | Enabled: true [mutation]
+  21 -> 21 | Weight: 0.3022 | Enabled: true [mutation]
+  9 -> 23 | Weight: 0.7376 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.6537 | Enabled: true [mutation]
+  17 -> 18 | Weight: 0.5201 | Enabled: true [mutation]
+  6 -> 29 | Weight: 0.9605 | Enabled: true [mutation]
+  29 -> 15 | Weight: 0.2641 | Enabled: true [mutation]
+  13 -> 20 | Weight: 0.0106 | Enabled: true [mutation]
+
+--- Genom 3 (Fitness: 0.00) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.4720 | Enabled: true
+  5 -> 15 | Weight: -0.5985 | Enabled: false
+  4 -> 15 | Weight: -1.1496 | Enabled: true
+  14 -> 15 | Weight: -0.6485 | Enabled: true
+  8 -> 15 | Weight: 0.6630 | Enabled: false
+  13 -> 15 | Weight: 0.7616 | Enabled: true
+  11 -> 16 | Weight: -0.0471 | Enabled: true
+  10 -> 15 | Weight: -0.7428 | Enabled: true
+  1 -> 15 | Weight: 0.5415 | Enabled: true
+  9 -> 15 | Weight: -0.8225 | Enabled: true
+  2 -> 15 | Weight: -0.7155 | Enabled: false
+  11 -> 15 | Weight: -1.1166 | Enabled: true
+  2 -> 16 | Weight: -0.4108 | Enabled: true
+  7 -> 15 | Weight: 0.8757 | Enabled: true
+  14 -> 16 | Weight: -0.4889 | Enabled: true
+  12 -> 16 | Weight: 0.7848 | Enabled: true
+  0 -> 15 | Weight: 0.0236 | Enabled: true
+  6 -> 15 | Weight: -0.2265 | Enabled: false
+  8 -> 16 | Weight: -0.6506 | Enabled: true
+  3 -> 15 | Weight: -0.1426 | Enabled: true
+  9 -> 16 | Weight: -0.8132 | Enabled: true
+  12 -> 17 | Weight: 0.1896 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.1876 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.8941 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.0591 | Enabled: false [mutation]
+  0 -> 17 | Weight: -0.8372 | Enabled: false [mutation]
+  14 -> 18 | Weight: 0.0023 | Enabled: true [mutation]
+  18 -> 15 | Weight: 1.1283 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.7340 | Enabled: true [mutation]
+  9 -> 18 | Weight: -0.7759 | Enabled: true [mutation]
+  6 -> 19 | Weight: -0.2531 | Enabled: true [mutation]
+  19 -> 15 | Weight: 1.5970 | Enabled: true [mutation]
+  10 -> 19 | Weight: 0.4230 | Enabled: true [mutation]
+  3 -> 20 | Weight: 0.5545 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.0439 | Enabled: true [mutation]
+  3 -> 19 | Weight: 1.1009 | Enabled: false [mutation]
+  12 -> 21 | Weight: 0.3571 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.2875 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.4810 | Enabled: true [mutation]
+  3 -> 18 | Weight: 0.4507 | Enabled: true [mutation]
+  18 -> 22 | Weight: 0.3607 | Enabled: true [mutation]
+  22 -> 21 | Weight: 0.2715 | Enabled: true [mutation]
+  2 -> 21 | Weight: 0.4421 | Enabled: true [mutation]
+  12 -> 15 | Weight: 0.5853 | Enabled: true
+  5 -> 17 | Weight: 0.7095 | Enabled: true [mutation]
+  11 -> 21 | Weight: 0.0976 | Enabled: true [mutation]
+  21 -> 23 | Weight: -0.5252 | Enabled: true [mutation]
+  23 -> 17 | Weight: -0.7746 | Enabled: true [mutation]
+  21 -> 18 | Weight: 0.2850 | Enabled: true [mutation]
+  3 -> 24 | Weight: 0.6921 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.2447 | Enabled: false [mutation]
+  12 -> 19 | Weight: -0.1249 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.3011 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.7858 | Enabled: true [mutation]
+  0 -> 21 | Weight: 0.5673 | Enabled: false [mutation]
+  24 -> 16 | Weight: 0.2243 | Enabled: false [mutation]
+  24 -> 26 | Weight: 0.2765 | Enabled: true [mutation]
+  26 -> 16 | Weight: -0.1307 | Enabled: false [mutation]
+  3 -> 17 | Weight: 0.1386 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.0907 | Enabled: true [mutation]
+  27 -> 17 | Weight: -0.4648 | Enabled: false [mutation]
+  8 -> 28 | Weight: -0.5144 | Enabled: true [mutation]
+  28 -> 15 | Weight: 0.1860 | Enabled: true [mutation]
+  21 -> 21 | Weight: 0.6781 | Enabled: true [mutation]
+  9 -> 23 | Weight: -0.5907 | Enabled: true [mutation]
+  25 -> 17 | Weight: 1.1599 | Enabled: true [mutation]
+  26 -> 29 | Weight: 0.3903 | Enabled: false [mutation]
+  29 -> 16 | Weight: 0.3799 | Enabled: true [mutation]
+  25 -> 29 | Weight: 0.6832 | Enabled: true [mutation]
+  13 -> 24 | Weight: 0.5871 | Enabled: true [mutation]
+
+--- Genom 4 (Fitness: 32.00) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.1769 | Enabled: true
+  5 -> 15 | Weight: 0.9477 | Enabled: false
+  4 -> 15 | Weight: 0.1181 | Enabled: true
+  14 -> 15 | Weight: -0.5930 | Enabled: true
+  8 -> 15 | Weight: 0.7640 | Enabled: false
+  13 -> 15 | Weight: 0.1942 | Enabled: true
+  11 -> 16 | Weight: 0.1748 | Enabled: true
+  10 -> 15 | Weight: 0.1665 | Enabled: true
+  1 -> 15 | Weight: 0.4955 | Enabled: true
+  9 -> 15 | Weight: -0.5585 | Enabled: true
+  2 -> 15 | Weight: -0.2186 | Enabled: true
+  11 -> 15 | Weight: -1.0478 | Enabled: true
+  2 -> 16 | Weight: 0.5127 | Enabled: true
+  7 -> 15 | Weight: 0.0852 | Enabled: true
+  14 -> 16 | Weight: 0.7915 | Enabled: true
+  12 -> 16 | Weight: -1.0005 | Enabled: true
+  0 -> 15 | Weight: -0.2800 | Enabled: true
+  6 -> 15 | Weight: -0.4057 | Enabled: false
+  8 -> 16 | Weight: 0.0354 | Enabled: true
+  3 -> 15 | Weight: -1.0065 | Enabled: true
+  9 -> 16 | Weight: -0.8535 | Enabled: true
+  12 -> 17 | Weight: -0.0671 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.5110 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.9364 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.7008 | Enabled: false [mutation]
+  0 -> 17 | Weight: -0.7330 | Enabled: true [mutation]
+  14 -> 18 | Weight: 0.7739 | Enabled: true [mutation]
+  18 -> 15 | Weight: -0.1287 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.7443 | Enabled: true [mutation]
+  9 -> 18 | Weight: -0.0360 | Enabled: true [mutation]
+  6 -> 19 | Weight: -0.7020 | Enabled: true [mutation]
+  19 -> 15 | Weight: -0.2279 | Enabled: true [mutation]
+  10 -> 19 | Weight: 0.1756 | Enabled: true [mutation]
+  3 -> 20 | Weight: 0.2249 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.9152 | Enabled: true [mutation]
+  3 -> 19 | Weight: 0.7288 | Enabled: false [mutation]
+  12 -> 21 | Weight: 0.7682 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.3085 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.0022 | Enabled: true [mutation]
+  3 -> 18 | Weight: -0.7921 | Enabled: true [mutation]
+  18 -> 22 | Weight: 1.2172 | Enabled: true [mutation]
+  22 -> 21 | Weight: 0.0387 | Enabled: true [mutation]
+  2 -> 21 | Weight: 0.1075 | Enabled: true [mutation]
+  12 -> 15 | Weight: -0.2106 | Enabled: true
+  5 -> 17 | Weight: 0.0740 | Enabled: true [mutation]
+  11 -> 21 | Weight: -0.3414 | Enabled: true [mutation]
+  21 -> 23 | Weight: -0.3778 | Enabled: true [mutation]
+  23 -> 17 | Weight: -0.7284 | Enabled: true [mutation]
+  21 -> 18 | Weight: 0.2494 | Enabled: true [mutation]
+  3 -> 24 | Weight: 0.2688 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.1278 | Enabled: false [mutation]
+  12 -> 19 | Weight: -0.5733 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.9810 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.2715 | Enabled: true [mutation]
+  0 -> 21 | Weight: 0.5207 | Enabled: false [mutation]
+  24 -> 16 | Weight: -0.8391 | Enabled: false [mutation]
+  24 -> 26 | Weight: -0.9797 | Enabled: true [mutation]
+  26 -> 16 | Weight: -0.5952 | Enabled: true [mutation]
+  3 -> 17 | Weight: 0.1921 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.6777 | Enabled: true [mutation]
+  27 -> 17 | Weight: -0.6342 | Enabled: false [mutation]
+  8 -> 28 | Weight: -0.3417 | Enabled: true [mutation]
+  28 -> 15 | Weight: -0.6129 | Enabled: true [mutation]
+  21 -> 21 | Weight: -0.5724 | Enabled: true [mutation]
+  9 -> 23 | Weight: 0.5723 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.9559 | Enabled: true [mutation]
+  17 -> 18 | Weight: 0.2417 | Enabled: true [mutation]
+  6 -> 29 | Weight: 0.5735 | Enabled: true [mutation]
+  29 -> 15 | Weight: 0.1556 | Enabled: true [mutation]
+  27 -> 22 | Weight: 0.2487 | Enabled: true [mutation]
+
+--- Genom 5 (Fitness: 0.00) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.3426 | Enabled: true
+  5 -> 15 | Weight: 0.2419 | Enabled: false
+  4 -> 15 | Weight: 0.0246 | Enabled: true
+  14 -> 15 | Weight: -0.0243 | Enabled: true
+  8 -> 15 | Weight: 0.2357 | Enabled: false
+  13 -> 15 | Weight: 0.4490 | Enabled: false
+  11 -> 16 | Weight: -0.3180 | Enabled: true
+  10 -> 15 | Weight: 0.4179 | Enabled: true
+  1 -> 15 | Weight: 0.6432 | Enabled: true
+  9 -> 15 | Weight: -0.6996 | Enabled: true
+  2 -> 15 | Weight: 0.4792 | Enabled: false
+  11 -> 15 | Weight: -0.4645 | Enabled: true
+  2 -> 16 | Weight: 0.3648 | Enabled: true
+  7 -> 15 | Weight: -0.7594 | Enabled: true
+  14 -> 16 | Weight: 0.0979 | Enabled: true
+  12 -> 16 | Weight: 0.3996 | Enabled: true
+  0 -> 15 | Weight: -0.1624 | Enabled: true
+  6 -> 15 | Weight: -0.1504 | Enabled: false
+  8 -> 16 | Weight: 0.9304 | Enabled: true
+  3 -> 15 | Weight: -0.9288 | Enabled: true
+  9 -> 16 | Weight: -0.2752 | Enabled: true
+  12 -> 17 | Weight: -1.1347 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.9656 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.3153 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.3028 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.8176 | Enabled: false [mutation]
+  14 -> 18 | Weight: 0.9434 | Enabled: true [mutation]
+  18 -> 15 | Weight: -0.7740 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.3626 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.0289 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.0712 | Enabled: true [mutation]
+  19 -> 15 | Weight: 1.3573 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.2437 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.4956 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.5374 | Enabled: true [mutation]
+  3 -> 19 | Weight: 0.1072 | Enabled: false [mutation]
+  12 -> 21 | Weight: -0.8245 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.2547 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.2813 | Enabled: true [mutation]
+  3 -> 18 | Weight: 0.0944 | Enabled: true [mutation]
+  18 -> 22 | Weight: 1.5085 | Enabled: true [mutation]
+  22 -> 21 | Weight: 0.9978 | Enabled: true [mutation]
+  2 -> 21 | Weight: 0.7735 | Enabled: true [mutation]
+  12 -> 15 | Weight: 0.9645 | Enabled: true
+  5 -> 17 | Weight: -0.5232 | Enabled: true [mutation]
+  11 -> 21 | Weight: 0.4984 | Enabled: true [mutation]
+  21 -> 23 | Weight: 0.9149 | Enabled: true [mutation]
+  23 -> 17 | Weight: 0.3169 | Enabled: true [mutation]
+  21 -> 18 | Weight: -0.6710 | Enabled: true [mutation]
+  3 -> 24 | Weight: -0.0160 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.8652 | Enabled: false [mutation]
+  12 -> 19 | Weight: -0.5433 | Enabled: true [mutation]
+  13 -> 25 | Weight: 0.8149 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.0174 | Enabled: true [mutation]
+  0 -> 21 | Weight: 0.2819 | Enabled: false [mutation]
+  24 -> 16 | Weight: 0.3534 | Enabled: false [mutation]
+  24 -> 26 | Weight: 0.3967 | Enabled: true [mutation]
+  26 -> 16 | Weight: -0.1762 | Enabled: false [mutation]
+  3 -> 17 | Weight: 0.0864 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.9962 | Enabled: true [mutation]
+  27 -> 17 | Weight: 0.1302 | Enabled: false [mutation]
+  8 -> 28 | Weight: 0.1027 | Enabled: true [mutation]
+  28 -> 15 | Weight: 0.2224 | Enabled: true [mutation]
+  21 -> 21 | Weight: 0.1605 | Enabled: true [mutation]
+  9 -> 23 | Weight: 0.4454 | Enabled: true [mutation]
+  25 -> 17 | Weight: 0.7128 | Enabled: true [mutation]
+  26 -> 29 | Weight: 1.2462 | Enabled: true [mutation]
+  29 -> 16 | Weight: 0.8963 | Enabled: true [mutation]
+  28 -> 27 | Weight: 0.0130 | Enabled: true [mutation]
+  5 -> 25 | Weight: 0.3702 | Enabled: true [mutation]
+
+--- Genom 6 (Fitness: 0.00) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.0590 | Enabled: true
+  5 -> 15 | Weight: 0.3589 | Enabled: false
+  4 -> 15 | Weight: 0.3575 | Enabled: true
+  14 -> 15 | Weight: -0.5345 | Enabled: true
+  8 -> 15 | Weight: -0.0025 | Enabled: false
+  13 -> 15 | Weight: 0.4272 | Enabled: true
+  11 -> 16 | Weight: 0.1474 | Enabled: true
+  10 -> 15 | Weight: 0.5672 | Enabled: true
+  1 -> 15 | Weight: -0.3236 | Enabled: true
+  9 -> 15 | Weight: 0.1965 | Enabled: true
+  2 -> 15 | Weight: -1.0153 | Enabled: false
+  11 -> 15 | Weight: -0.9334 | Enabled: true
+  2 -> 16 | Weight: -0.1749 | Enabled: true
+  7 -> 15 | Weight: 0.5210 | Enabled: true
+  14 -> 16 | Weight: -0.1329 | Enabled: true
+  12 -> 16 | Weight: -0.6629 | Enabled: true
+  0 -> 15 | Weight: 0.0601 | Enabled: true
+  6 -> 15 | Weight: 0.2240 | Enabled: false
+  8 -> 16 | Weight: 0.9187 | Enabled: true
+  3 -> 15 | Weight: -0.5887 | Enabled: true
+  9 -> 16 | Weight: -0.2899 | Enabled: true
+  12 -> 17 | Weight: -1.2509 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.1607 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.4544 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.2273 | Enabled: true [mutation]
+  0 -> 17 | Weight: -0.3462 | Enabled: true [mutation]
+  14 -> 18 | Weight: -1.2698 | Enabled: true [mutation]
+  18 -> 15 | Weight: -0.8406 | Enabled: true [mutation]
+  18 -> 18 | Weight: -0.5024 | Enabled: true [mutation]
+  9 -> 18 | Weight: -0.3043 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.8183 | Enabled: true [mutation]
+  19 -> 15 | Weight: 1.2165 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.0812 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.2322 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.4207 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.1637 | Enabled: false [mutation]
+  12 -> 21 | Weight: 0.6136 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.3993 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.0111 | Enabled: true [mutation]
+  3 -> 18 | Weight: 0.6215 | Enabled: true [mutation]
+  18 -> 22 | Weight: 1.5020 | Enabled: true [mutation]
+  22 -> 21 | Weight: 0.5197 | Enabled: true [mutation]
+  2 -> 21 | Weight: 1.1914 | Enabled: false [mutation]
+  12 -> 15 | Weight: -0.0423 | Enabled: true
+  5 -> 17 | Weight: 0.9225 | Enabled: true [mutation]
+  11 -> 21 | Weight: 0.3563 | Enabled: true [mutation]
+  21 -> 23 | Weight: -0.6850 | Enabled: true [mutation]
+  23 -> 17 | Weight: -1.2471 | Enabled: true [mutation]
+  21 -> 18 | Weight: 0.3974 | Enabled: true [mutation]
+  3 -> 24 | Weight: -0.1210 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.5313 | Enabled: false [mutation]
+  12 -> 19 | Weight: -0.8473 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.2630 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.4538 | Enabled: true [mutation]
+  0 -> 21 | Weight: -0.9147 | Enabled: false [mutation]
+  24 -> 16 | Weight: -0.8364 | Enabled: false [mutation]
+  24 -> 26 | Weight: -0.4244 | Enabled: true [mutation]
+  26 -> 16 | Weight: -0.1617 | Enabled: false [mutation]
+  3 -> 17 | Weight: -0.0519 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.1875 | Enabled: true [mutation]
+  27 -> 17 | Weight: -0.0785 | Enabled: false [mutation]
+  8 -> 28 | Weight: 0.0129 | Enabled: true [mutation]
+  28 -> 15 | Weight: 0.1577 | Enabled: true [mutation]
+  21 -> 21 | Weight: 0.2745 | Enabled: true [mutation]
+  9 -> 23 | Weight: 0.5655 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.0464 | Enabled: true [mutation]
+  17 -> 18 | Weight: -0.6693 | Enabled: true [mutation]
+  6 -> 29 | Weight: 0.1777 | Enabled: true [mutation]
+  29 -> 15 | Weight: -0.5115 | Enabled: true [mutation]
+  20 -> 18 | Weight: 0.6428 | Enabled: false [mutation]
+  19 -> 27 | Weight: 0.2993 | Enabled: true [mutation]
+
+--- Genom 7 (Fitness: 0.00) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+  Node ID: 30, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.2384 | Enabled: true
+  5 -> 15 | Weight: -0.4954 | Enabled: false
+  4 -> 15 | Weight: -0.1317 | Enabled: true
+  14 -> 15 | Weight: -0.4476 | Enabled: true
+  8 -> 15 | Weight: -0.0308 | Enabled: false
+  13 -> 15 | Weight: 0.6033 | Enabled: true
+  11 -> 16 | Weight: 0.2540 | Enabled: true
+  10 -> 15 | Weight: 0.9421 | Enabled: true
+  1 -> 15 | Weight: -0.5566 | Enabled: true
+  9 -> 15 | Weight: -0.8373 | Enabled: true
+  2 -> 15 | Weight: -0.2164 | Enabled: true
+  11 -> 15 | Weight: 0.6508 | Enabled: true
+  2 -> 16 | Weight: 0.6858 | Enabled: true
+  7 -> 15 | Weight: 0.6076 | Enabled: true
+  14 -> 16 | Weight: 0.7118 | Enabled: true
+  12 -> 16 | Weight: -0.8947 | Enabled: true
+  0 -> 15 | Weight: -0.1166 | Enabled: true
+  6 -> 15 | Weight: 0.0932 | Enabled: false
+  8 -> 16 | Weight: -1.0754 | Enabled: true
+  3 -> 15 | Weight: -0.8688 | Enabled: true
+  9 -> 16 | Weight: -0.8455 | Enabled: true
+  12 -> 17 | Weight: 0.0821 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.1976 | Enabled: true [mutation]
+  1 -> 17 | Weight: 1.0733 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.8642 | Enabled: true [mutation]
+  0 -> 17 | Weight: -0.5646 | Enabled: false [mutation]
+  14 -> 18 | Weight: 0.9578 | Enabled: true [mutation]
+  18 -> 15 | Weight: -0.1686 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.6190 | Enabled: true [mutation]
+  9 -> 18 | Weight: -0.1223 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.5791 | Enabled: true [mutation]
+  19 -> 15 | Weight: 0.0590 | Enabled: true [mutation]
+  10 -> 19 | Weight: 0.7018 | Enabled: true [mutation]
+  3 -> 20 | Weight: 0.2188 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.3015 | Enabled: true [mutation]
+  3 -> 19 | Weight: 0.5442 | Enabled: false [mutation]
+  12 -> 21 | Weight: -0.7494 | Enabled: true [mutation]
+  21 -> 17 | Weight: -0.7461 | Enabled: false [mutation]
+  18 -> 21 | Weight: -0.3308 | Enabled: true [mutation]
+  3 -> 18 | Weight: 0.3398 | Enabled: true [mutation]
+  18 -> 22 | Weight: 0.4234 | Enabled: true [mutation]
+  22 -> 21 | Weight: -0.8908 | Enabled: true [mutation]
+  2 -> 21 | Weight: 0.2945 | Enabled: true [mutation]
+  12 -> 15 | Weight: -0.1310 | Enabled: true
+  5 -> 17 | Weight: 0.9762 | Enabled: true [mutation]
+  11 -> 21 | Weight: -0.4979 | Enabled: true [mutation]
+  21 -> 23 | Weight: 0.7464 | Enabled: true [mutation]
+  23 -> 17 | Weight: 0.1541 | Enabled: true [mutation]
+  21 -> 18 | Weight: 0.2543 | Enabled: true [mutation]
+  3 -> 24 | Weight: -0.9052 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.4083 | Enabled: false [mutation]
+  12 -> 19 | Weight: -1.1040 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.5536 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.2777 | Enabled: true [mutation]
+  0 -> 21 | Weight: 0.4454 | Enabled: false [mutation]
+  24 -> 16 | Weight: -0.0553 | Enabled: false [mutation]
+  24 -> 26 | Weight: -0.6524 | Enabled: true [mutation]
+  26 -> 16 | Weight: 0.1389 | Enabled: true [mutation]
+  3 -> 17 | Weight: 0.6876 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.7842 | Enabled: true [mutation]
+  27 -> 17 | Weight: 0.0246 | Enabled: false [mutation]
+  8 -> 28 | Weight: -0.1646 | Enabled: true [mutation]
+  28 -> 15 | Weight: -0.3496 | Enabled: true [mutation]
+  21 -> 21 | Weight: 0.2079 | Enabled: true [mutation]
+  9 -> 23 | Weight: -0.1546 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.4203 | Enabled: true [mutation]
+  17 -> 18 | Weight: 0.2731 | Enabled: true [mutation]
+  6 -> 29 | Weight: 0.1602 | Enabled: true [mutation]
+  29 -> 15 | Weight: -0.1208 | Enabled: true [mutation]
+  18 -> 25 | Weight: 0.2143 | Enabled: true [mutation]
+  21 -> 30 | Weight: 1.0000 | Enabled: true [mutation]
+  30 -> 17 | Weight: -0.7461 | Enabled: true [mutation]
+
+--- Genom 8 (Fitness: 0.00) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.0536 | Enabled: true
+  5 -> 15 | Weight: -0.4949 | Enabled: false
+  4 -> 15 | Weight: -0.5434 | Enabled: false
+  14 -> 15 | Weight: 0.1384 | Enabled: true
+  8 -> 15 | Weight: -0.7908 | Enabled: false
+  13 -> 15 | Weight: -0.9124 | Enabled: false
+  11 -> 16 | Weight: -0.2997 | Enabled: true
+  10 -> 15 | Weight: 0.8129 | Enabled: true
+  1 -> 15 | Weight: 0.9046 | Enabled: true
+  9 -> 15 | Weight: -0.5242 | Enabled: true
+  2 -> 15 | Weight: -0.6854 | Enabled: false
+  11 -> 15 | Weight: -0.4507 | Enabled: true
+  2 -> 16 | Weight: 0.6816 | Enabled: true
+  7 -> 15 | Weight: -0.9221 | Enabled: true
+  14 -> 16 | Weight: -0.7129 | Enabled: true
+  12 -> 16 | Weight: 0.4225 | Enabled: true
+  0 -> 15 | Weight: 0.7440 | Enabled: true
+  6 -> 15 | Weight: 0.9553 | Enabled: false
+  8 -> 16 | Weight: 0.6683 | Enabled: true
+  3 -> 15 | Weight: -1.1067 | Enabled: true
+  9 -> 16 | Weight: 0.4425 | Enabled: true
+  12 -> 17 | Weight: 0.4089 | Enabled: false [mutation]
+  17 -> 16 | Weight: 0.9210 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.3772 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.4984 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.7635 | Enabled: false [mutation]
+  14 -> 18 | Weight: 0.2093 | Enabled: true [mutation]
+  18 -> 15 | Weight: 1.0985 | Enabled: false [mutation]
+  18 -> 18 | Weight: 0.7056 | Enabled: true [mutation]
+  9 -> 18 | Weight: -0.5267 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.2888 | Enabled: true [mutation]
+  19 -> 15 | Weight: -0.2405 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.0097 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.1622 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.6975 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.2191 | Enabled: false [mutation]
+  12 -> 21 | Weight: -1.0491 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.4171 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.2585 | Enabled: true [mutation]
+  3 -> 18 | Weight: -0.3109 | Enabled: true [mutation]
+  18 -> 22 | Weight: -0.3780 | Enabled: true [mutation]
+  22 -> 21 | Weight: 0.9641 | Enabled: true [mutation]
+  2 -> 21 | Weight: 1.0982 | Enabled: false [mutation]
+  12 -> 15 | Weight: 0.5695 | Enabled: true
+  5 -> 17 | Weight: -0.2165 | Enabled: true [mutation]
+  11 -> 21 | Weight: 0.5663 | Enabled: true [mutation]
+  21 -> 23 | Weight: 0.9326 | Enabled: true [mutation]
+  23 -> 17 | Weight: -1.0249 | Enabled: true [mutation]
+  21 -> 18 | Weight: -0.9361 | Enabled: true [mutation]
+  3 -> 24 | Weight: 0.4535 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.4855 | Enabled: false [mutation]
+  12 -> 19 | Weight: -0.8635 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.9131 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.4168 | Enabled: true [mutation]
+  0 -> 21 | Weight: -0.3824 | Enabled: false [mutation]
+  24 -> 16 | Weight: 0.6074 | Enabled: false [mutation]
+  24 -> 26 | Weight: 0.3553 | Enabled: true [mutation]
+  26 -> 16 | Weight: -0.2781 | Enabled: true [mutation]
+  3 -> 17 | Weight: -0.7843 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.2645 | Enabled: true [mutation]
+  27 -> 17 | Weight: 0.7316 | Enabled: false [mutation]
+  8 -> 28 | Weight: 0.1410 | Enabled: true [mutation]
+  28 -> 15 | Weight: -0.9452 | Enabled: true [mutation]
+  21 -> 21 | Weight: -0.7992 | Enabled: true [mutation]
+  4 -> 23 | Weight: 1.1260 | Enabled: true [mutation]
+  4 -> 29 | Weight: 0.9925 | Enabled: true [mutation]
+  29 -> 15 | Weight: -0.4011 | Enabled: true [mutation]
+  5 -> 27 | Weight: -0.6317 | Enabled: true [mutation]
+  21 -> 26 | Weight: -0.0801 | Enabled: true [mutation]
+  23 -> 28 | Weight: 0.7116 | Enabled: true [mutation]
+  9 -> 26 | Weight: 0.6976 | Enabled: true [mutation]
+
+--- Genom 9 (Fitness: 41.33) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.2613 | Enabled: true
+  5 -> 15 | Weight: -0.7789 | Enabled: false
+  4 -> 15 | Weight: 0.6305 | Enabled: true
+  14 -> 15 | Weight: -0.4873 | Enabled: true
+  8 -> 15 | Weight: 0.1696 | Enabled: false
+  13 -> 15 | Weight: 0.7728 | Enabled: true
+  11 -> 16 | Weight: 0.4136 | Enabled: true
+  10 -> 15 | Weight: 0.8026 | Enabled: true
+  1 -> 15 | Weight: 0.7557 | Enabled: true
+  9 -> 15 | Weight: -0.6088 | Enabled: true
+  2 -> 15 | Weight: -0.3235 | Enabled: true
+  11 -> 15 | Weight: -1.2366 | Enabled: true
+  2 -> 16 | Weight: -0.1133 | Enabled: true
+  7 -> 15 | Weight: 0.1077 | Enabled: true
+  14 -> 16 | Weight: 0.5373 | Enabled: true
+  12 -> 16 | Weight: 0.7005 | Enabled: true
+  0 -> 15 | Weight: -0.9382 | Enabled: true
+  6 -> 15 | Weight: 0.6660 | Enabled: false
+  8 -> 16 | Weight: -1.0800 | Enabled: true
+  3 -> 15 | Weight: -1.0719 | Enabled: true
+  9 -> 16 | Weight: 2.0951 | Enabled: true
+  12 -> 17 | Weight: 0.0936 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.1362 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.3810 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.2616 | Enabled: true [mutation]
+  0 -> 17 | Weight: 1.0642 | Enabled: false [mutation]
+  14 -> 18 | Weight: 0.9817 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.2606 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.7242 | Enabled: true [mutation]
+  9 -> 18 | Weight: -0.0087 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.6456 | Enabled: true [mutation]
+  19 -> 15 | Weight: -0.0156 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.3727 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.3730 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.8228 | Enabled: true [mutation]
+  3 -> 19 | Weight: -0.8205 | Enabled: false [mutation]
+  12 -> 21 | Weight: 0.6043 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.2331 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.4954 | Enabled: true [mutation]
+  3 -> 18 | Weight: 0.4930 | Enabled: true [mutation]
+  18 -> 22 | Weight: 1.4015 | Enabled: true [mutation]
+  22 -> 21 | Weight: 0.2405 | Enabled: true [mutation]
+  2 -> 21 | Weight: 0.4494 | Enabled: true [mutation]
+  12 -> 15 | Weight: 0.6787 | Enabled: true
+  5 -> 17 | Weight: 0.6232 | Enabled: true [mutation]
+  11 -> 21 | Weight: 0.4621 | Enabled: true [mutation]
+  21 -> 23 | Weight: -0.4414 | Enabled: true [mutation]
+  23 -> 17 | Weight: -1.2378 | Enabled: true [mutation]
+  21 -> 18 | Weight: 0.4796 | Enabled: true [mutation]
+  3 -> 24 | Weight: -0.8198 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.7441 | Enabled: false [mutation]
+  12 -> 19 | Weight: -0.5260 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.9161 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.1517 | Enabled: true [mutation]
+  0 -> 21 | Weight: 0.8427 | Enabled: false [mutation]
+  24 -> 16 | Weight: -1.1556 | Enabled: false [mutation]
+  24 -> 26 | Weight: 0.3645 | Enabled: true [mutation]
+  26 -> 16 | Weight: -0.0928 | Enabled: false [mutation]
+  3 -> 17 | Weight: 0.2225 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.9823 | Enabled: true [mutation]
+  27 -> 17 | Weight: -0.5274 | Enabled: false [mutation]
+  8 -> 28 | Weight: -0.3401 | Enabled: true [mutation]
+  28 -> 15 | Weight: 0.1097 | Enabled: true [mutation]
+  21 -> 21 | Weight: 0.1849 | Enabled: true [mutation]
+  9 -> 23 | Weight: 0.7412 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.6393 | Enabled: true [mutation]
+  17 -> 18 | Weight: 0.1934 | Enabled: true [mutation]
+  6 -> 29 | Weight: -0.6122 | Enabled: true [mutation]
+  29 -> 15 | Weight: 0.0590 | Enabled: true [mutation]
+
+--- Genom 10 (Fitness: 31.33) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+  Node ID: 30, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.5577 | Enabled: true
+  5 -> 15 | Weight: -0.7149 | Enabled: false
+  4 -> 15 | Weight: -1.2195 | Enabled: true
+  14 -> 15 | Weight: -0.7405 | Enabled: true
+  8 -> 15 | Weight: 0.6670 | Enabled: false
+  13 -> 15 | Weight: 0.4292 | Enabled: true
+  11 -> 16 | Weight: 0.0177 | Enabled: true
+  10 -> 15 | Weight: -0.7982 | Enabled: true
+  1 -> 15 | Weight: 0.5365 | Enabled: true
+  9 -> 15 | Weight: -0.8279 | Enabled: true
+  2 -> 15 | Weight: -0.8940 | Enabled: true
+  11 -> 15 | Weight: -1.1453 | Enabled: true
+  2 -> 16 | Weight: 0.2875 | Enabled: true
+  7 -> 15 | Weight: 1.0173 | Enabled: true
+  14 -> 16 | Weight: 0.6210 | Enabled: true
+  12 -> 16 | Weight: 1.0061 | Enabled: true
+  0 -> 15 | Weight: -0.6991 | Enabled: true
+  6 -> 15 | Weight: 0.4236 | Enabled: false
+  8 -> 16 | Weight: -0.4422 | Enabled: true
+  3 -> 15 | Weight: -0.4256 | Enabled: true
+  9 -> 16 | Weight: -0.5273 | Enabled: true
+  12 -> 17 | Weight: 0.2273 | Enabled: false [mutation]
+  17 -> 16 | Weight: 0.1242 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.9008 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.0463 | Enabled: true [mutation]
+  0 -> 17 | Weight: 0.2365 | Enabled: false [mutation]
+  14 -> 18 | Weight: 0.2231 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.7451 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.9435 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.1584 | Enabled: true [mutation]
+  6 -> 19 | Weight: -0.2916 | Enabled: true [mutation]
+  19 -> 15 | Weight: -0.4359 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.7961 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.2849 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.0162 | Enabled: true [mutation]
+  3 -> 19 | Weight: 1.0762 | Enabled: false [mutation]
+  12 -> 21 | Weight: 0.4046 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.1555 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.1586 | Enabled: true [mutation]
+  3 -> 18 | Weight: 0.4093 | Enabled: true [mutation]
+  18 -> 22 | Weight: 1.0639 | Enabled: true [mutation]
+  22 -> 21 | Weight: 0.4264 | Enabled: true [mutation]
+  2 -> 21 | Weight: 0.6543 | Enabled: true [mutation]
+  12 -> 15 | Weight: -0.4034 | Enabled: true
+  5 -> 17 | Weight: 0.3826 | Enabled: true [mutation]
+  11 -> 21 | Weight: 0.2520 | Enabled: true [mutation]
+  21 -> 23 | Weight: -0.5593 | Enabled: true [mutation]
+  23 -> 17 | Weight: -1.3720 | Enabled: false [mutation]
+  21 -> 18 | Weight: 0.4674 | Enabled: true [mutation]
+  3 -> 24 | Weight: 0.4928 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.4909 | Enabled: false [mutation]
+  12 -> 19 | Weight: -0.8753 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.5646 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.1749 | Enabled: true [mutation]
+  0 -> 21 | Weight: 0.4983 | Enabled: false [mutation]
+  24 -> 16 | Weight: -0.9334 | Enabled: false [mutation]
+  24 -> 26 | Weight: 0.2802 | Enabled: true [mutation]
+  26 -> 16 | Weight: 0.0399 | Enabled: true [mutation]
+  3 -> 17 | Weight: 0.2239 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.6840 | Enabled: true [mutation]
+  27 -> 17 | Weight: -0.3894 | Enabled: false [mutation]
+  8 -> 28 | Weight: -0.1956 | Enabled: true [mutation]
+  28 -> 15 | Weight: -0.3353 | Enabled: true [mutation]
+  21 -> 21 | Weight: -0.2684 | Enabled: true [mutation]
+  9 -> 23 | Weight: 0.4963 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.0859 | Enabled: true [mutation]
+  17 -> 18 | Weight: 0.3414 | Enabled: true [mutation]
+  6 -> 29 | Weight: -0.7295 | Enabled: true [mutation]
+  29 -> 15 | Weight: 0.2899 | Enabled: true [mutation]
+  20 -> 18 | Weight: 0.9065 | Enabled: true [mutation]
+  26 -> 27 | Weight: 0.2857 | Enabled: true [mutation]
+  23 -> 30 | Weight: 1.0000 | Enabled: true [mutation]
+  30 -> 17 | Weight: -1.3720 | Enabled: true [mutation]
+
+--- Genom 11 (Fitness: 31.33) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+  Node ID: 30, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.2534 | Enabled: true
+  5 -> 15 | Weight: 0.5732 | Enabled: false
+  4 -> 15 | Weight: -0.2032 | Enabled: true
+  14 -> 15 | Weight: -0.7910 | Enabled: true
+  8 -> 15 | Weight: -0.0127 | Enabled: false
+  13 -> 15 | Weight: 0.4032 | Enabled: true
+  11 -> 16 | Weight: 0.0827 | Enabled: true
+  10 -> 15 | Weight: -0.6309 | Enabled: true
+  1 -> 15 | Weight: 0.7032 | Enabled: true
+  9 -> 15 | Weight: 0.2237 | Enabled: true
+  2 -> 15 | Weight: 0.0047 | Enabled: true
+  11 -> 15 | Weight: -1.3418 | Enabled: true
+  2 -> 16 | Weight: 0.2964 | Enabled: true
+  7 -> 15 | Weight: -0.8248 | Enabled: true
+  14 -> 16 | Weight: 0.6739 | Enabled: true
+  12 -> 16 | Weight: -0.6324 | Enabled: true
+  0 -> 15 | Weight: -0.3909 | Enabled: true
+  6 -> 15 | Weight: 0.3983 | Enabled: false
+  8 -> 16 | Weight: -0.2097 | Enabled: true
+  3 -> 15 | Weight: -1.0207 | Enabled: true
+  9 -> 16 | Weight: 0.6004 | Enabled: true
+  12 -> 17 | Weight: -0.0912 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.7022 | Enabled: true [mutation]
+  1 -> 17 | Weight: 1.2219 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.1315 | Enabled: false [mutation]
+  0 -> 17 | Weight: -0.3970 | Enabled: true [mutation]
+  14 -> 18 | Weight: -1.0411 | Enabled: true [mutation]
+  18 -> 15 | Weight: 0.4768 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.6915 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.0550 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.7171 | Enabled: true [mutation]
+  19 -> 15 | Weight: -0.1106 | Enabled: true [mutation]
+  10 -> 19 | Weight: 0.0988 | Enabled: true [mutation]
+  3 -> 20 | Weight: -0.0547 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.7416 | Enabled: true [mutation]
+  3 -> 19 | Weight: 0.7803 | Enabled: false [mutation]
+  12 -> 21 | Weight: 0.6918 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.3446 | Enabled: true [mutation]
+  18 -> 21 | Weight: 0.0417 | Enabled: true [mutation]
+  3 -> 18 | Weight: 0.4846 | Enabled: true [mutation]
+  18 -> 22 | Weight: 1.2118 | Enabled: true [mutation]
+  22 -> 21 | Weight: 0.9229 | Enabled: true [mutation]
+  2 -> 21 | Weight: 0.8725 | Enabled: false [mutation]
+  12 -> 15 | Weight: 0.4172 | Enabled: true
+  5 -> 17 | Weight: 0.7270 | Enabled: true [mutation]
+  11 -> 21 | Weight: -0.6487 | Enabled: true [mutation]
+  21 -> 23 | Weight: -0.7995 | Enabled: true [mutation]
+  23 -> 17 | Weight: 0.6814 | Enabled: true [mutation]
+  21 -> 18 | Weight: 0.4518 | Enabled: true [mutation]
+  3 -> 24 | Weight: 0.2298 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.4006 | Enabled: false [mutation]
+  12 -> 19 | Weight: -0.7090 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.7693 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.4128 | Enabled: true [mutation]
+  0 -> 21 | Weight: 0.6238 | Enabled: false [mutation]
+  24 -> 16 | Weight: -0.8947 | Enabled: false [mutation]
+  24 -> 26 | Weight: 0.4756 | Enabled: true [mutation]
+  26 -> 16 | Weight: 0.2580 | Enabled: true [mutation]
+  3 -> 17 | Weight: 0.0008 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.7134 | Enabled: true [mutation]
+  27 -> 17 | Weight: -0.4836 | Enabled: false [mutation]
+  8 -> 28 | Weight: -0.0736 | Enabled: true [mutation]
+  28 -> 15 | Weight: -0.6330 | Enabled: true [mutation]
+  21 -> 21 | Weight: 0.1566 | Enabled: true [mutation]
+  9 -> 23 | Weight: 0.4782 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.9232 | Enabled: true [mutation]
+  17 -> 18 | Weight: 0.4658 | Enabled: true [mutation]
+  6 -> 29 | Weight: -0.3822 | Enabled: true [mutation]
+  29 -> 15 | Weight: 0.2933 | Enabled: true [mutation]
+  20 -> 18 | Weight: 1.0038 | Enabled: true [mutation]
+  4 -> 30 | Weight: 1.0000 | Enabled: true [mutation]
+  30 -> 17 | Weight: -0.1315 | Enabled: true [mutation]
+
+--- Genom 12 (Fitness: 61.33) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+  Node ID: 30, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.0893 | Enabled: true
+  5 -> 15 | Weight: 0.4079 | Enabled: false
+  4 -> 15 | Weight: 0.1814 | Enabled: true
+  14 -> 15 | Weight: -0.5003 | Enabled: true
+  8 -> 15 | Weight: 0.5182 | Enabled: false
+  13 -> 15 | Weight: 0.7381 | Enabled: true
+  11 -> 16 | Weight: 0.1734 | Enabled: true
+  10 -> 15 | Weight: 0.2313 | Enabled: true
+  1 -> 15 | Weight: 0.7517 | Enabled: true
+  9 -> 15 | Weight: -0.7267 | Enabled: true
+  2 -> 15 | Weight: -0.2828 | Enabled: true
+  11 -> 15 | Weight: -1.1029 | Enabled: true
+  2 -> 16 | Weight: 0.6546 | Enabled: true
+  7 -> 15 | Weight: -0.1980 | Enabled: true
+  14 -> 16 | Weight: 0.5050 | Enabled: true
+  12 -> 16 | Weight: -0.7889 | Enabled: true
+  0 -> 15 | Weight: -0.3964 | Enabled: true
+  6 -> 15 | Weight: 0.0208 | Enabled: false
+  8 -> 16 | Weight: -0.9956 | Enabled: true
+  3 -> 15 | Weight: -0.7855 | Enabled: true
+  9 -> 16 | Weight: 2.3062 | Enabled: true
+  12 -> 17 | Weight: -0.0179 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.3844 | Enabled: true [mutation]
+  1 -> 17 | Weight: 0.5740 | Enabled: true [mutation]
+  4 -> 17 | Weight: -0.3989 | Enabled: true [mutation]
+  0 -> 17 | Weight: -0.4947 | Enabled: true [mutation]
+  14 -> 18 | Weight: -1.0749 | Enabled: true [mutation]
+  18 -> 15 | Weight: -0.3272 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.6274 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.0491 | Enabled: false [mutation]
+  6 -> 19 | Weight: 0.3937 | Enabled: true [mutation]
+  19 -> 15 | Weight: -0.2344 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.0512 | Enabled: true [mutation]
+  3 -> 20 | Weight: 0.2647 | Enabled: false [mutation]
+  20 -> 15 | Weight: 0.7476 | Enabled: true [mutation]
+  3 -> 19 | Weight: 0.7555 | Enabled: false [mutation]
+  12 -> 21 | Weight: 0.5212 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.0502 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.1042 | Enabled: true [mutation]
+  3 -> 18 | Weight: 0.1752 | Enabled: true [mutation]
+  18 -> 22 | Weight: 1.3619 | Enabled: true [mutation]
+  22 -> 21 | Weight: -0.6888 | Enabled: true [mutation]
+  2 -> 21 | Weight: 0.8011 | Enabled: false [mutation]
+  12 -> 15 | Weight: 0.0550 | Enabled: true
+  5 -> 17 | Weight: 0.8725 | Enabled: true [mutation]
+  11 -> 21 | Weight: -0.5294 | Enabled: true [mutation]
+  21 -> 23 | Weight: 0.7791 | Enabled: true [mutation]
+  23 -> 17 | Weight: -0.7454 | Enabled: true [mutation]
+  21 -> 18 | Weight: 0.4197 | Enabled: true [mutation]
+  3 -> 24 | Weight: -0.9500 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.3566 | Enabled: false [mutation]
+  12 -> 19 | Weight: -1.1574 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.6426 | Enabled: true [mutation]
+  25 -> 15 | Weight: -0.0286 | Enabled: true [mutation]
+  0 -> 21 | Weight: 0.6810 | Enabled: false [mutation]
+  24 -> 16 | Weight: -1.1059 | Enabled: false [mutation]
+  24 -> 26 | Weight: -0.9190 | Enabled: true [mutation]
+  26 -> 16 | Weight: -0.0930 | Enabled: true [mutation]
+  3 -> 17 | Weight: -0.0621 | Enabled: true [mutation]
+  12 -> 27 | Weight: -0.2809 | Enabled: true [mutation]
+  27 -> 17 | Weight: -0.4560 | Enabled: false [mutation]
+  8 -> 28 | Weight: -0.2342 | Enabled: true [mutation]
+  28 -> 15 | Weight: -0.5900 | Enabled: true [mutation]
+  21 -> 21 | Weight: 0.3557 | Enabled: true [mutation]
+  9 -> 23 | Weight: 0.5710 | Enabled: true [mutation]
+  24 -> 15 | Weight: 0.6161 | Enabled: true [mutation]
+  17 -> 18 | Weight: 0.4856 | Enabled: true [mutation]
+  6 -> 29 | Weight: 1.1561 | Enabled: true [mutation]
+  29 -> 15 | Weight: 0.1601 | Enabled: true [mutation]
+  9 -> 30 | Weight: 1.0000 | Enabled: true [mutation]
+  30 -> 18 | Weight: 0.0491 | Enabled: true [mutation]
+
+--- Genom 13 (Fitness: 0.00) ---
+Belongs to Species: 1
+Nodes:
+  Node ID: 0, Type: Input
+  Node ID: 1, Type: Input
+  Node ID: 2, Type: Input
+  Node ID: 3, Type: Input
+  Node ID: 4, Type: Input
+  Node ID: 5, Type: Input
+  Node ID: 6, Type: Input
+  Node ID: 7, Type: Input
+  Node ID: 8, Type: Input
+  Node ID: 9, Type: Input
+  Node ID: 10, Type: Input
+  Node ID: 11, Type: Input
+  Node ID: 12, Type: Input
+  Node ID: 13, Type: Input
+  Node ID: 14, Type: Input
+  Node ID: 15, Type: Output
+  Node ID: 16, Type: Output
+  Node ID: 17, Type: Hidden
+  Node ID: 18, Type: Hidden
+  Node ID: 19, Type: Hidden
+  Node ID: 20, Type: Hidden
+  Node ID: 21, Type: Hidden
+  Node ID: 22, Type: Hidden
+  Node ID: 23, Type: Hidden
+  Node ID: 24, Type: Hidden
+  Node ID: 25, Type: Hidden
+  Node ID: 26, Type: Hidden
+  Node ID: 27, Type: Hidden
+  Node ID: 28, Type: Hidden
+  Node ID: 29, Type: Hidden
+  Node ID: 30, Type: Hidden
+Connections:
+  13 -> 16 | Weight: 0.3752 | Enabled: true
+  5 -> 15 | Weight: -0.5171 | Enabled: false
+  4 -> 15 | Weight: 0.0387 | Enabled: true
+  14 -> 15 | Weight: 1.0692 | Enabled: true
+  8 -> 15 | Weight: 0.0454 | Enabled: false
+  13 -> 15 | Weight: 0.7535 | Enabled: true
+  11 -> 16 | Weight: -0.8251 | Enabled: true
+  10 -> 15 | Weight: 0.5459 | Enabled: true
+  1 -> 15 | Weight: 0.9542 | Enabled: true
+  9 -> 15 | Weight: -1.0465 | Enabled: true
+  2 -> 15 | Weight: -0.5833 | Enabled: false
+  11 -> 15 | Weight: -1.1885 | Enabled: true
+  2 -> 16 | Weight: 0.0675 | Enabled: true
+  7 -> 15 | Weight: 0.6334 | Enabled: true
+  14 -> 16 | Weight: -0.7272 | Enabled: true
+  12 -> 16 | Weight: -0.6892 | Enabled: true
+  0 -> 15 | Weight: -0.2113 | Enabled: true
+  6 -> 15 | Weight: -0.1414 | Enabled: false
+  8 -> 16 | Weight: -0.5983 | Enabled: true
+  3 -> 15 | Weight: -1.2012 | Enabled: false
+  9 -> 16 | Weight: 0.7889 | Enabled: true
+  12 -> 17 | Weight: -0.2354 | Enabled: false [mutation]
+  17 -> 16 | Weight: -0.6339 | Enabled: true [mutation]
+  1 -> 17 | Weight: -0.8828 | Enabled: true [mutation]
+  4 -> 17 | Weight: 0.0583 | Enabled: false [mutation]
+  0 -> 17 | Weight: -0.3663 | Enabled: false [mutation]
+  14 -> 18 | Weight: -0.4387 | Enabled: true [mutation]
+  18 -> 15 | Weight: 1.2512 | Enabled: true [mutation]
+  18 -> 18 | Weight: 0.7847 | Enabled: true [mutation]
+  9 -> 18 | Weight: 0.0299 | Enabled: true [mutation]
+  6 -> 19 | Weight: 0.5957 | Enabled: true [mutation]
+  19 -> 15 | Weight: -0.0714 | Enabled: true [mutation]
+  10 -> 19 | Weight: -0.7816 | Enabled: true [mutation]
+  3 -> 20 | Weight: 0.0713 | Enabled: false [mutation]
+  20 -> 15 | Weight: -0.2315 | Enabled: true [mutation]
+  3 -> 19 | Weight: 0.6251 | Enabled: false [mutation]
+  12 -> 21 | Weight: -0.3949 | Enabled: true [mutation]
+  21 -> 17 | Weight: 0.2864 | Enabled: true [mutation]
+  18 -> 21 | Weight: -0.2072 | Enabled: true [mutation]
+  3 -> 18 | Weight: 0.4507 | Enabled: true [mutation]
+  18 -> 22 | Weight: 0.4176 | Enabled: true [mutation]
+  22 -> 21 | Weight: 0.5358 | Enabled: true [mutation]
+  2 -> 21 | Weight: 0.2631 | Enabled: true [mutation]
+  12 -> 15 | Weight: 0.3572 | Enabled: true
+  5 -> 17 | Weight: 0.9712 | Enabled: true [mutation]
+  11 -> 21 | Weight: 0.6524 | Enabled: true [mutation]
+  21 -> 23 | Weight: -0.4752 | Enabled: true [mutation]
+  23 -> 17 | Weight: 0.2808 | Enabled: true [mutation]
+  21 -> 18 | Weight: 0.3229 | Enabled: true [mutation]
+  3 -> 24 | Weight: -0.3101 | Enabled: true [mutation]
+  24 -> 19 | Weight: 0.4297 | Enabled: false [mutation]
+  12 -> 19 | Weight: -1.1925 | Enabled: true [mutation]
+  13 -> 25 | Weight: -0.8306 | Enabled: true [mutation]
+  25 -> 15 | Weight: 0.7375 | Enabled: true [mutation]
+  0 -> 21 | Weight: 0.6149 | Enabled: false [mutation]
+  24 -> 16 | Weight: 0.9940 | Enabled: false [mutation]
+  24 -> 26 | Weight: 0.6517 | Enabled: true [mutation]
+  26 -> 16 | Weight: 0.1447 | Enabled: true [mutation]
+  3 -> 17 | Weight: 0.7616 | Enabled: true [mutation]
+  12 -> 27 | Weight: 0.7036 | Enabled: true [mutation]
+  27 -> 17 | Weight: -0.7337 | Enabled: false [mutation]
+  8 -> 28 | Weight: 0.2291 | Enabled: true [mutation]
+  28 -> 15 | Weight: 0.9939 | Enabled: true [mutation]
+  21 -> 21 | Weight: 0.0704 | Enabled: true [mutation]
+  9 -> 23 | Weight: 0.6798 | Enabled: true [mutation]
+  24 -> 15 | Weight: -0.3394 | Enabled: true [mutation]
+  17 -> 18 | Weight: 0.3762 | Enabled: true [mutation]
+  6 -> 29 | Weight: 0.0037 | Enabled: true [mutation]
+  29 -> 15 | Weight: -0.0850 | Enabled: true [mutation]
+  10 -> 28 | Weight: 0.7889 | Enabled: true [mutation]
+  6 -> 30 | Weight: 1.0000 | Enabled: true [mutation]
+  30 -> 15 | Weight: -0.1414 | Enabled: true [mutation]
+
+
+--- TOTAL GENOMES: 30 ---
