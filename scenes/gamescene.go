@@ -440,7 +440,7 @@ func (g *GameScene) FirstLoad() {
 	// } // GENEROWANIE NOWE - KONIEC
 
 	// WCZYTYWANIE GENERACJI
-	pop, err := data.LoadPopulationFromFile("generations/generation_6.txt", &globalInnovationHistory)
+	pop, err := data.LoadPopulationFromFile("generation_43.txt", &globalInnovationHistory)
 	if err != nil {
 		log.Fatal("Nie udało się wczytać populacji:", err)
 	}
